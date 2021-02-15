@@ -1,8 +1,9 @@
 #pragma once
+#include "opengl_object.h"
 
 namespace mk
 {
-    class Texture
+    class Texture : public mk::OpenGLObject
     {
     public:
         int width, height, channels; //stores image information
@@ -10,8 +11,5 @@ namespace mk
         Texture() {}
         bool load(const char *path);
         void use();
-
-    private:
-        unsigned int texture_id;
     };
 } // namespace mk

@@ -1,6 +1,7 @@
 #pragma once
 #include "shader.h"
 #include "texture.h"
+#include "opengl_object.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -11,7 +12,7 @@ namespace mk
     {
     public:
         Sprite() {}
-        void load(Texture *texture, Shader *shader, glm::mat4 projection);
+        void load(const char *texture_resource_name, const char *shader_resource_name);
         void draw(glm::vec2 position, glm::vec2 scale = {1, 1});
 
     private:

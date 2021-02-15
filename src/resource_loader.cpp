@@ -52,6 +52,36 @@ bool mk::ResourceLoader::exists(const char *key)
     {
         return true;
     }
-
     return false;
+}
+
+void mk::ResourceLoader::delete_resource(const char *resource_name, RESOURCE_TYPE resource_type)
+{
+    //for debug
+    std::string resource_type_string(resource_type == RESOURCE_TYPE::SHADER ? "shader " : "texture ");
+
+    if (exists(resource_name) == true)
+    {
+        void *resource_pointer = resources.at(resource_name);
+        resources.erase(resource_name);
+
+        if (resource_type == RESOURCE_TYPE::SHADER)
+        {
+            mk::Shader *shader = static_cast<mk::Shader *>(resource_pointer);
+            glDeleteShader(shader->id);
+            log_info("shader " << resource_name << " deleted");
+            return;
+        }
+
+        if (resource_type == RESOURCE_TYPE::TEXTURE)
+        {
+            mk::Texture *texture = static_cast<mk::Texture *>(resource_pointer);
+            glDeleteTextures(1, &texture->id);
+            log_info("texture " << resource_name << " deleted");
+            return;
+        }
+        return;
+    }
+
+    log_info(resource_type << resource_name << " does not exist");
 }

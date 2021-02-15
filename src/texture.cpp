@@ -14,11 +14,12 @@ bool mk::Texture::load(const char *path)
     if (image_data == NULL)
     {
         log_info("failed to load texture " << path);
+        stbi_image_free(image_data);
         return false;
     }
 
-    glGenTextures(1, &this->texture_id);
-    glBindTexture(GL_TEXTURE_2D, this->texture_id);
+    glGenTextures(1, &this->id);
+    glBindTexture(GL_TEXTURE_2D, this->id);
 
     //set texture wrapping parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -39,5 +40,5 @@ bool mk::Texture::load(const char *path)
 void mk::Texture::use()
 {
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, this->texture_id);
+    glBindTexture(GL_TEXTURE_2D, this->id);
 }

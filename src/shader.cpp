@@ -14,7 +14,7 @@ bool mk::Shader::load(const char *vert_path, const char *frag_path)
     this->id = glCreateProgram();
     glAttachShader(this->id, vertex_id);
     glAttachShader(this->id, fragment_id);
-    glLinkProgram(id);
+    glLinkProgram(this->id);
 
     glDeleteShader(vertex_id);
     glDeleteShader(fragment_id);
@@ -26,7 +26,7 @@ bool mk::Shader::load(const char *vert_path, const char *frag_path)
 unsigned int mk::Shader::create_shader(const char *path, unsigned int type)
 {
     //create shader
-    unsigned int id = glCreateShader(type);
+    unsigned int tmp_id = glCreateShader(type);
 
     //load source code
     std::string shader_source;
@@ -34,26 +34,26 @@ unsigned int mk::Shader::create_shader(const char *path, unsigned int type)
         return 0;
 
     const char *c_src = shader_source.c_str();
-    glShaderSource(id, 1, &c_src, NULL);
+    glShaderSource(tmp_id, 1, &c_src, NULL);
 
     //compile
-    glCompileShader(id);
+    glCompileShader(tmp_id);
 
     //compilation data
     int success;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+    glGetShaderiv(tmp_id, GL_COMPILE_STATUS, &success);
 
     if (!success)
     {
         char info_log[512];
-        glGetShaderInfoLog(id, 512, NULL, info_log);
+        glGetShaderInfoLog(tmp_id, 512, NULL, info_log);
         log_info("shader compilation error (" << (type == GL_VERTEX_SHADER ? "vertex)" : "fragment)")
                                               << "\n"
                                               << info_log);
         return 0;
     }
 
-    return id;
+    return tmp_id;
 }
 
 void mk::Shader::use()
@@ -69,9 +69,4 @@ unsigned int mk::Shader::get_uniform_location(const char *uniform_name)
 void mk::Shader::set_mat4(const char *uniform_name, const glm::mat4 &matrix)
 {
     glUniformMatrix4fv(this->get_uniform_location(uniform_name), 1, GL_FALSE, &matrix[0][0]);
-}
-
-unsigned int mk::Shader::get()
-{
-    return this->id;
 }

@@ -1,21 +1,34 @@
 #include "sprite.h"
 #include "log.h"
+#include "resource_loader.h"
+#include "engine.h"
 
 #include <glad/glad.h>
 
-void mk::Sprite::load(Texture *txt, Shader *shd, glm::mat4 projection)
+#include <iostream>
+
+void mk::Sprite::load(const char *texture_resource_name, const char *shader_resource_name)
 {
-    this->shader = shd;
-    this->texture = txt;
+    this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get(shader_resource_name));
+    this->texture = static_cast<mk::Texture *>(mk::ResourceLoader::get(texture_resource_name));
+
+    if (shader == NULL)
+        log_info("warning: shader " << shader_resource_name << " could not be loaded");
+
+    if (texture == NULL)
+        log_info("warning: texture " << texture_resource_name << " could not be loaded");
 
     this->setup_vertex_data();
 
     this->shader->use();
-    this->shader->set_mat4("projection", projection);
+    this->shader->set_mat4("projection", mk::Engine::projection);
 }
 
 void mk::Sprite::draw(glm::vec2 position, glm::vec2 scale)
 {
+    if (this->shader == NULL || this->texture == NULL)
+        return;
+
     this->shader->use();
     glm::mat4 model_matrix = glm::mat4(1);
     model_matrix = glm::translate(model_matrix, {position, 0});

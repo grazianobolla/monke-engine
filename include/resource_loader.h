@@ -6,6 +6,12 @@
 
 namespace mk
 {
+    enum RESOURCE_TYPE
+    {
+        SHADER,
+        TEXTURE
+    };
+
     class ResourceLoader
     {
     public:
@@ -13,6 +19,7 @@ namespace mk
         static void load_shader(const char *vert_path, const char *frag_path, const char *key);
         static void load_texture(const char *path, const char *key);
         static void *get(const char *resource_name);
+        static void delete_resource(const char *resource_name, RESOURCE_TYPE resource_type);
 
     private:
         static std::map<const char *, void *> resources;

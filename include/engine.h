@@ -16,7 +16,6 @@ namespace mk
         virtual void start() = 0;
         virtual void update() = 0;
 
-    protected:
-        glm::mat4 projection;
+        static glm::mat4 projection;
     };
 } // namespace mk
