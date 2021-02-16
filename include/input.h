@@ -7,6 +7,12 @@ namespace mk
     class Input
     {
     public:
+        enum KEY_STATE
+        {
+            NONE,
+            PRESSED
+        };
+
         Input() {}
         void set(GLFWwindow *window);
         static int key_states[GLFW_KEY_LAST];

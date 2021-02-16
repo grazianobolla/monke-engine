@@ -2,8 +2,6 @@
 #include "sprite.h"
 #include "resource_loader.h"
 
-static void input_cb(GLFWwindow *window, int key, int scancode, int action, int mods);
-
 class Game : public mk::Engine
 {
     mk::Sprite sprite, sprite_1;
@@ -24,27 +22,25 @@ class Game : public mk::Engine
         sprite_1.draw(pos);
         sprite.draw(input.mouse_position, {.3, .3});
 
-        if (input.key_states[GLFW_KEY_D] > 0)
+        if (input.key_states[GLFW_KEY_D] == mk::Input::PRESSED)
         {
             pos.x += 500 * delta;
         }
 
-        if (input.key_states[GLFW_KEY_A] > 0)
+        if (input.key_states[GLFW_KEY_A] == mk::Input::PRESSED)
         {
             pos.x -= 500 * delta;
         }
 
-        if (input.key_states[GLFW_KEY_W] > 0)
+        if (input.key_states[GLFW_KEY_W] == mk::Input::PRESSED)
         {
             pos.y -= 500 * delta;
         }
 
-        if (input.key_states[GLFW_KEY_S] > 0)
+        if (input.key_states[GLFW_KEY_S] == mk::Input::PRESSED)
         {
             pos.y += 500 * delta;
         }
-
-        fst("x:" << pos.x << " y:" << pos.y << " mouse: x:" << input.mouse_position.x << " y:" << input.mouse_position.y);
     }
 };
 

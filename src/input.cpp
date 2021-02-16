@@ -10,12 +10,12 @@ void mk::Input::set(GLFWwindow *window)
 
     //initialize key array
     for (int i = 0; i < GLFW_KEY_LAST; i++)
-        this->key_states[i] = 0;
+        this->key_states[i] = KEY_STATE::NONE;
 }
 
 void mk::Input::key_input_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    key_states[key] = action;
+    key_states[key] = action > 0 ? KEY_STATE::PRESSED : KEY_STATE::NONE;
 }
 
 void mk::Input::cursor_position_callback(GLFWwindow *window, double x, double y)
