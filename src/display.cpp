@@ -1,5 +1,7 @@
 #include "display.h"
 
+glm::mat4 mk::Display::projection;
+
 void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor)
 {
     //save data
@@ -8,6 +10,9 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
     this->title = t;
     this->opengl_major = gl_major;
     this->opengl_minor = gl_minor;
+
+    //create projection matrix
+    this->projection = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 
     //initialize opengl
     glfwInit();
@@ -36,7 +41,9 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
-void mk::Display::framebuffer_resize_cb(GLFWwindow *window, int width, int height)
+
+void mk::Display::framebuffer_resize_cb(GLFWwindow *window, int new_width, int new_height)
 {
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, new_width, new_height);
+    projection = glm::ortho(0.0f, static_cast<float>(new_width), static_cast<float>(new_height), 0.0f, -1.0f, 1.0f);
 }

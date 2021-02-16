@@ -5,10 +5,14 @@
 
 #include <glad/glad.h>
 
-#include <iostream>
+unsigned int mk::Sprite::sprite_vao_id = 0;
 
 void mk::Sprite::load(const char *texture_resource_name, const char *shader_resource_name)
 {
+    //if it does not exist, we create the global vao that will be used by all sprites
+    if (this->sprite_vao_id == 0)
+        this->setup_sprite_vertex_data();
+
     this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get(shader_resource_name));
     this->texture = static_cast<mk::Texture *>(mk::ResourceLoader::get(texture_resource_name));
 
@@ -17,11 +21,6 @@ void mk::Sprite::load(const char *texture_resource_name, const char *shader_reso
 
     if (texture == NULL)
         log_info("warning: texture " << texture_resource_name << " could not be loaded");
-
-    this->setup_vertex_data();
-
-    this->shader->use();
-    this->shader->set_mat4("projection", mk::Engine::projection);
 }
 
 void mk::Sprite::draw(glm::vec2 position, glm::vec2 scale)
@@ -30,6 +29,8 @@ void mk::Sprite::draw(glm::vec2 position, glm::vec2 scale)
         return;
 
     this->shader->use();
+    this->shader->set_mat4("projection", mk::Display::projection);
+
     glm::mat4 model_matrix = glm::mat4(1);
     model_matrix = glm::translate(model_matrix, {position, 0});
 
@@ -41,11 +42,11 @@ void mk::Sprite::draw(glm::vec2 position, glm::vec2 scale)
 
     this->texture->use();
 
-    glBindVertexArray(this->vao_id);
+    glBindVertexArray(this->sprite_vao_id);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
-void mk::Sprite::setup_vertex_data()
+void mk::Sprite::setup_sprite_vertex_data()
 {
     float vertices[] = {
         0, 1, 0, 1,
@@ -57,8 +58,8 @@ void mk::Sprite::setup_vertex_data()
         2, 3, 1,
         2, 0, 1};
 
-    glGenVertexArrays(1, &this->vao_id);
-    glBindVertexArray(this->vao_id);
+    glGenVertexArrays(1, &this->sprite_vao_id);
+    glBindVertexArray(this->sprite_vao_id);
 
     unsigned int vbo, ebo;
     glGenBuffers(1, &vbo);
@@ -71,4 +72,6 @@ void mk::Sprite::setup_vertex_data()
 
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
+
+    log_info("created sprite vertex array");
 }

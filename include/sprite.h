@@ -16,13 +16,14 @@ namespace mk
         void draw(glm::vec2 position, glm::vec2 scale = {1, 1});
 
     private:
-        unsigned int vao_id;
+        //stores the id of the vao that will be used by all sprites
+        static unsigned int sprite_vao_id;
 
         //pointers to shader and texture data, necessary to
         //render the sprite, can be shared among Sprites
         Shader *shader;
         Texture *texture;
 
-        void setup_vertex_data();
+        void setup_sprite_vertex_data();
     };
 } // namespace mk
