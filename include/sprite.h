@@ -13,7 +13,8 @@ namespace mk
     public:
         Sprite() {}
         void load(const char *texture_resource_name, const char *shader_resource_name);
-        void draw(glm::vec2 position, glm::vec2 scale = {1, 1});
+        void draw(const glm::vec2 &position, const glm::vec2 &scale = {1, 1});
+        void set_tint(const glm::vec4 &tint);
 
     private:
         //stores the id of the vao that will be used by all sprites

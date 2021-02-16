@@ -23,7 +23,7 @@ void mk::Sprite::load(const char *texture_resource_name, const char *shader_reso
         log_info("warning: texture " << texture_resource_name << " could not be loaded");
 }
 
-void mk::Sprite::draw(glm::vec2 position, glm::vec2 scale)
+void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
 {
     if (this->shader == NULL || this->texture == NULL)
         return;
@@ -44,6 +44,11 @@ void mk::Sprite::draw(glm::vec2 position, glm::vec2 scale)
 
     glBindVertexArray(this->sprite_vao_id);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+
+void mk::Sprite::set_tint(const glm::vec4 &tint)
+{
+    this->shader->set_vec4("tint", tint);
 }
 
 void mk::Sprite::setup_sprite_vertex_data()

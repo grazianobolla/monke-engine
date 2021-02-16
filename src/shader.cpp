@@ -70,3 +70,8 @@ void mk::Shader::set_mat4(const char *uniform_name, const glm::mat4 &matrix)
 {
     glUniformMatrix4fv(this->get_uniform_location(uniform_name), 1, GL_FALSE, &matrix[0][0]);
 }
+
+void mk::Shader::set_vec4(const char *uniform_name, const glm::vec4 &vector)
+{
+    glUniform4f(this->get_uniform_location(uniform_name), vector[0], vector[1], vector[2], vector[3]);
+}

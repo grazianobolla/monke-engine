@@ -13,6 +13,7 @@ namespace mk
         bool load(const char *vert_path, const char *frag_path);
         void use();
         void set_mat4(const char *uniform_name, const glm::mat4 &matrix);
+        void set_vec4(const char *uniform_name, const glm::vec4 &vector);
 
     private:
         unsigned int create_shader(const char *path, unsigned int type);

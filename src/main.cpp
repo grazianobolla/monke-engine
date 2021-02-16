@@ -2,9 +2,12 @@
 #include "sprite.h"
 #include "resource_loader.h"
 
+static void input_cb(GLFWwindow *window, int key, int scancode, int action, int mods);
+
 class Game : public mk::Engine
 {
     mk::Sprite sprite, sprite_1;
+
     void start()
     {
         mk::ResourceLoader::load_texture("textures/happy.png", "happy_texture");
@@ -15,12 +18,33 @@ class Game : public mk::Engine
         sprite_1.load("grass_texture", "default_shader");
     }
 
-    void update()
+    glm::vec2 pos;
+    void update(float delta)
     {
-        double x, y;
-        glfwGetCursorPos(this->display.window, &x, &y);
-        sprite_1.draw({200, 60});
-        sprite.draw({x, y}, {.3, .3});
+        sprite_1.draw(pos);
+        sprite.draw(input.mouse_position, {.3, .3});
+
+        if (input.key_states[GLFW_KEY_D] > 0)
+        {
+            pos.x += 500 * delta;
+        }
+
+        if (input.key_states[GLFW_KEY_A] > 0)
+        {
+            pos.x -= 500 * delta;
+        }
+
+        if (input.key_states[GLFW_KEY_W] > 0)
+        {
+            pos.y -= 500 * delta;
+        }
+
+        if (input.key_states[GLFW_KEY_S] > 0)
+        {
+            pos.y += 500 * delta;
+        }
+
+        fst("x:" << pos.x << " y:" << pos.y << " mouse: x:" << input.mouse_position.x << " y:" << input.mouse_position.y);
     }
 };
 
