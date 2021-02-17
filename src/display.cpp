@@ -38,8 +38,8 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
     glViewport(0, 0, this->width, this->height);
 
     //TODO:temp
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void mk::Display::framebuffer_resize_cb(GLFWwindow *window, int new_width, int new_height)
