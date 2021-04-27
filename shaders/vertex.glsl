@@ -1,5 +1,6 @@
 #version 330 core
-layout (location = 0) in vec4 vert_data;
+layout (location = 0) in vec2 vert_data;
+layout (location = 1) in vec2 uv_data;
 out vec2 texture_coordinates;
 
 uniform mat4 model;
@@ -8,6 +9,6 @@ uniform mat4 projection;
 
 void main()
 {
-    gl_Position = projection * model * vec4(vert_data.xy, 0, 1);
-    texture_coordinates = vert_data.zw;
+    gl_Position = projection * model * vec4(vert_data, 0, 1);
+    texture_coordinates = uv_data;
 }

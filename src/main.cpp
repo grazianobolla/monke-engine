@@ -16,7 +16,7 @@ class Game : public mk::Engine
 
     void update(float delta)
     {
-        sprite.draw(input.mouse_position, {3, 3});
+        sprite.draw_partial(input.mouse_position, {32, 32, 32, 32}, {3, 3});
     }
 };
 
