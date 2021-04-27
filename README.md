@@ -7,4 +7,4 @@ This for example, is how you render a Sprite that follows your cursor:
 (Keep in mind this code is for v0.1)
 
 And here is a video wew you can see, a few things like mouse and keyboard input, sprites and alpha transparency:
-https://youtu.be/A6KFYkGvCeQ
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/A6KFYkGvCeQ/0.jpg)](http://www.youtube.com/watch?v=A6KFYkGvCeQ "Showcase")
