@@ -1,6 +1,6 @@
 # monke-engine
 Monke Engine aims to be a simple and fast game engine, capable of reproducing any ideas quickly and efficiently.
-It aims to be the option for those who want something optimized and reliable, while keeping the code tight.
+Made for those who want something simple and low-level while maintaining simplicity.
 
 This for example, is how you render a Sprite that follows your cursor:
 ![Code Example](https://imgur.com/Fzqyw7I.png "Code Example")
