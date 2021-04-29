@@ -19,7 +19,7 @@ bool mk::Shader::load(const char *vert_path, const char *frag_path)
     glDeleteShader(vertex_id);
     glDeleteShader(fragment_id);
 
-    log_info("loaded shader " << vert_path << " and " << frag_path);
+    //log_info("loaded shader " << vert_path << " and " << frag_path);
     return true;
 }
 

@@ -5,18 +5,23 @@
 
 #include <glad/glad.h>
 
-void mk::Sprite::load(const char *texture_resource_name, const char *shader_resource_name)
+void mk::Sprite::load(const char *texture_resource_name, const glm::vec4 &tex_coord, const char *shader_resource_name)
 {
     this->setup_sprite_vertex_data(this->vao_id, this->uv_id, false);
 
     this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get(shader_resource_name));
     this->texture = static_cast<mk::Texture *>(mk::ResourceLoader::get(texture_resource_name));
 
-    if (shader == NULL)
+    if (shader == nullptr)
         log_info("warning: shader " << shader_resource_name << " could not be loaded");
 
-    if (texture == NULL)
+    if (texture == nullptr)
         log_info("warning: texture " << texture_resource_name << " could not be loaded");
+
+    if (shader != nullptr && texture != nullptr)
+        this->loaded = true;
+
+    this->update_rect(tex_coord);
 }
 
 void mk::Sprite::set_tint(const glm::vec4 &tint)
@@ -26,7 +31,7 @@ void mk::Sprite::set_tint(const glm::vec4 &tint)
 
 void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
 {
-    if (this->shader == NULL || this->texture == NULL)
+    if (this->loaded == false)
         return;
 
     this->shader->use();
@@ -48,8 +53,11 @@ void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
-void mk::Sprite::set_rect(const glm::vec4 &tex_coord)
+void mk::Sprite::update_rect(const glm::vec4 &tex_coord)
 {
+    if (this->loaded == false)
+        return;
+
     this->texture_coordinates = tex_coord;
     //texture data
     float rect_x = tex_coord.x / this->texture->width;

@@ -11,6 +11,7 @@ namespace mk
     {
     private:
         static std::vector<mk::Tickable *> tickable_elements;
+        void initialize();
 
     public:
         mk::Display display;

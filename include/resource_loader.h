@@ -20,6 +20,7 @@ namespace mk
         static void load_texture(const char *path, const char *key);
         static void *get(const char *resource_name);
         static void delete_resource(const char *resource_name, RESOURCE_TYPE resource_type);
+        static void log_resources();
 
     private:
         static std::map<const char *, void *> resources;

@@ -8,7 +8,7 @@ namespace mk
     {
     private:
         glm::vec2 frame_size;
-        using Sprite::set_rect;
+        using Sprite::update_rect;
         int last_frame = 0;
 
     public:

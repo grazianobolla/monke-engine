@@ -1,12 +1,17 @@
 #include "resource_loader.h"
 #include "log.h"
 
+#include <string.h>
+
 std::map<const char *, void *> mk::ResourceLoader::resources;
 
 void mk::ResourceLoader::load_shader(const char *vert_path, const char *frag_path, const char *key)
 {
     if (exists(key))
+    {
+        log_info("shader " << key << " already exists, skipping");
         return;
+    }
 
     mk::Shader *temp_shader = new mk::Shader();
 
@@ -17,12 +22,16 @@ void mk::ResourceLoader::load_shader(const char *vert_path, const char *frag_pat
     }
 
     resources.insert({key, static_cast<void *>(temp_shader)});
+    log_info("loaded shader " << vert_path << " and " << frag_path << " to key '" << key << "'");
 }
 
 void mk::ResourceLoader::load_texture(const char *path, const char *key)
 {
     if (exists(key))
+    {
+        log_info("texture " << key << " already exists, skipping");
         return;
+    }
 
     mk::Texture *temp_texture = new mk::Texture();
 
@@ -37,22 +46,15 @@ void mk::ResourceLoader::load_texture(const char *path, const char *key)
 
 void *mk::ResourceLoader::get(const char *resource_name)
 {
-    if (exists(resource_name) == false)
+    for (std::map<const char *, void *>::iterator it = resources.begin(); it != resources.end(); ++it)
     {
-        log_info("cant get resource " << resource_name << " it does not exist");
-        return NULL;
+        if (strcmp(resource_name, it->first) == 0)
+        {
+            return it->second;
+        }
     }
 
-    return resources.at(resource_name);
-}
-
-bool mk::ResourceLoader::exists(const char *key)
-{
-    if (resources.find(key) != resources.end())
-    {
-        return true;
-    }
-    return false;
+    return nullptr;
 }
 
 void mk::ResourceLoader::delete_resource(const char *resource_name, RESOURCE_TYPE resource_type)
@@ -84,4 +86,20 @@ void mk::ResourceLoader::delete_resource(const char *resource_name, RESOURCE_TYP
     }
 
     log_info(resource_type << resource_name << " does not exist");
+}
+
+bool mk::ResourceLoader::exists(const char *key)
+{
+    if (get(key) == nullptr)
+        return false;
+    return true;
+}
+
+void mk::ResourceLoader::log_resources()
+{
+    log_info("\nlisting resource loader contents: ");
+    for (std::map<const char *, void *>::iterator it = resources.begin(); it != resources.end(); ++it)
+    {
+        fst("key:" << it->first << " value:" << it->second);
+    }
 }

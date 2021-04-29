@@ -11,7 +11,7 @@ void mk::AnimatedSprite::update()
     {
         int newX = current_frame * this->frame_size.x;
 
-        this->set_rect({newX, this->texture_coordinates.y, this->texture_coordinates.w, this->texture_coordinates.z});
+        this->update_rect({newX, this->texture_coordinates.y, this->texture_coordinates.w, this->texture_coordinates.z});
         this->last_frame = current_frame;
     }
 }
@@ -28,8 +28,6 @@ void mk::AnimatedSprite::stop()
 
 void mk::AnimatedSprite::configure_animation(int frames, float duration, const glm::vec2 &frame_siz)
 {
-    this->set_rect({0, frame_siz.y, frame_siz.x, frame_siz.y});
-
     this->frame_count = frames;
     this->frame_duration = duration;
     this->frame_size = frame_siz;
