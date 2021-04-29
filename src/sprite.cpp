@@ -1,13 +1,13 @@
 #include "sprite.h"
-#include "log.h"
-#include "resource_loader.h"
 #include "engine.h"
+#include "resource_loader.h"
+#include "log.h"
 
 #include <glad/glad.h>
 
 void mk::Sprite::load(const char *texture_resource_name, const char *shader_resource_name)
 {
-    this->setup_sprite_vertex_data();
+    this->setup_sprite_vertex_data(this->vao_id, this->uv_id, false);
 
     this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get(shader_resource_name));
     this->texture = static_cast<mk::Texture *>(mk::ResourceLoader::get(texture_resource_name));
@@ -17,6 +17,11 @@ void mk::Sprite::load(const char *texture_resource_name, const char *shader_reso
 
     if (texture == NULL)
         log_info("warning: texture " << texture_resource_name << " could not be loaded");
+}
+
+void mk::Sprite::set_tint(const glm::vec4 &tint)
+{
+    this->shader->set_vec4("tint", tint);
 }
 
 void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
@@ -30,42 +35,27 @@ void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
     glm::mat4 model_matrix = glm::mat4(1);
     model_matrix = glm::translate(model_matrix, {position, 0});
 
-    model_matrix = glm::scale(model_matrix, {this->texture->width * scale.x,
-                                             this->texture->height * scale.y,
+    model_matrix = glm::scale(model_matrix, {this->texture_coordinates.w * scale.x,
+                                             this->texture_coordinates.z * scale.y,
                                              0});
 
     this->shader->set_mat4("model", model_matrix);
 
     this->texture->use();
 
-    glBindVertexArray(this->sprite_vao_id);
+    //draw and update uv's
+    glBindVertexArray(this->vao_id);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
-void mk::Sprite::draw_partial(const glm::vec2 &position, const glm::vec4 &texture_coordinates, const glm::vec2 &scale)
+void mk::Sprite::set_rect(const glm::vec4 &tex_coord)
 {
-    if (this->shader == NULL || this->texture == NULL)
-        return;
-
-    this->shader->use();
-    this->shader->set_mat4("projection", mk::Display::projection);
-
-    glm::mat4 model_matrix = glm::mat4(1);
-    model_matrix = glm::translate(model_matrix, {position, 0});
-
-    model_matrix = glm::scale(model_matrix, {texture_coordinates.w * scale.x,
-                                             texture_coordinates.z * scale.y,
-                                             0});
-
-    this->shader->set_mat4("model", model_matrix);
-
-    this->texture->use();
-
+    this->texture_coordinates = tex_coord;
     //texture data
-    float rect_x = texture_coordinates.x / this->texture->width;
-    float rect_y = texture_coordinates.y / this->texture->height;
-    float rect_width = texture_coordinates.z / this->texture->width;
-    float rect_height = texture_coordinates.w / this->texture->height;
+    float rect_x = tex_coord.x / this->texture->width;
+    float rect_y = tex_coord.y / this->texture->height;
+    float rect_width = tex_coord.z / this->texture->width;
+    float rect_height = tex_coord.w / this->texture->height;
 
     float uv_data[8] = {
         rect_x, rect_y + rect_height,
@@ -73,19 +63,13 @@ void mk::Sprite::draw_partial(const glm::vec2 &position, const glm::vec4 &textur
         rect_x, rect_y,
         rect_x + rect_width, rect_y};
 
-    //draw and update uv's
-    glBindVertexArray(this->sprite_vao_id);
-    glBindBuffer(GL_ARRAY_BUFFER, this->uv_array_buffer);
+    //update uv's
+    //glBindVertexArray(this->vao_id); <-------
+    glBindBuffer(GL_ARRAY_BUFFER, this->uv_id);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(uv_data), uv_data);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
-void mk::Sprite::set_tint(const glm::vec4 &tint)
-{
-    this->shader->set_vec4("tint", tint);
-}
-
-void mk::Sprite::setup_sprite_vertex_data()
+void mk::Sprite::setup_sprite_vertex_data(unsigned int &vertex_array_object_id, unsigned int &uv_array_object_id, bool uv_static)
 {
     //used for the vertex array and as the uv initial data
     float data[] = {
@@ -98,29 +82,33 @@ void mk::Sprite::setup_sprite_vertex_data()
         2, 3, 1,
         2, 0, 1};
 
-    glGenVertexArrays(1, &this->sprite_vao_id);
-    glBindVertexArray(this->sprite_vao_id);
+    glGenVertexArrays(1, &vertex_array_object_id);
+    glBindVertexArray(vertex_array_object_id);
 
-    unsigned int vertices_array_buffer, ebo;
+    //vertex buffer
+    unsigned int vbo;
 
-    //create and fill buffers
-    glGenBuffers(1, &vertices_array_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertices_array_buffer);
+    //element index buffer
+    unsigned int ebo_id;
+    glGenBuffers(1, &ebo_id);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_id);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    //vertex data
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
-    glGenBuffers(1, &uv_array_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, uv_array_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_DYNAMIC_DRAW);
+    //uv texture buffer
+    glGenBuffers(1, &uv_array_object_id);
+    glBindBuffer(GL_ARRAY_BUFFER, uv_array_object_id);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, uv_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
 
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(1);
 
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    log_info("created vertex array object");
+    log_info("created vertex array object vao: " << vertex_array_object_id << " vbo: " << vbo << " uv data: " << uv_array_object_id);
 }

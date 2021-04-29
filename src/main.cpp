@@ -1,22 +1,27 @@
 #include "engine.h"
 #include "sprite.h"
 #include "resource_loader.h"
+#include "animated_sprite.h"
 
 class Game : public mk::Engine
 {
-    mk::Sprite sprite;
+    mk::AnimatedSprite as;
 
     void start()
     {
         mk::ResourceLoader::load_texture("textures/sheet.png", "sheet_texture");
+        mk::ResourceLoader::load_texture("textures/grass.png", "grass");
         mk::ResourceLoader::load_shader("shaders/vertex.glsl", "shaders/fragment.glsl", "default_shader");
 
-        sprite.load("sheet_texture", "default_shader");
+        as.load("sheet_texture", "default_shader");
+        as.configure_animation(4, 0.1f, {32, 32});
+        as.play();
     }
 
+    float counter = 0;
     void update(float delta)
     {
-        sprite.draw_partial(input.mouse_position, {32, 32, 32, 32}, {3, 3});
+        as.draw(input.mouse_position);
     }
 };
 

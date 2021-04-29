@@ -13,18 +13,20 @@ namespace mk
     public:
         Sprite() {}
         void load(const char *texture_resource_name, const char *shader_resource_name);
-        void draw(const glm::vec2 &position, const glm::vec2 &scale = {1, 1});
-        void draw_partial(const glm::vec2 &position, const glm::vec4 &texture_coordinates, const glm::vec2 &scale = {1, 1});
         void set_tint(const glm::vec4 &tint);
+        void draw(const glm::vec2 &position, const glm::vec2 &scale = {1, 1});
+        void set_rect(const glm::vec4 &tex_coord);
 
-    private:
-        unsigned int sprite_vao_id = 0, uv_array_buffer = 0;
+    protected:
+        unsigned int vao_id = 0;
+        unsigned int uv_id = 0;
+        glm::vec4 texture_coordinates;
 
         //pointers to shader and texture data, necessary to
         //render the sprite, can be shared among Sprites
         Shader *shader;
         Texture *texture;
 
-        void setup_sprite_vertex_data();
+        void setup_sprite_vertex_data(unsigned int &vertex_array_object_id, unsigned int &uv_array_object_id, bool uv_static);
     };
 } // namespace mk

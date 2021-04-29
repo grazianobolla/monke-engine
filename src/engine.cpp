@@ -1,5 +1,7 @@
 #include "engine.h"
 
+std::vector<mk::Tickable *> mk::Engine::tickable_elements;
+
 void mk::Engine::run(int width, int height, const char *title)
 {
     this->display.create(width, height, title);
@@ -15,6 +17,10 @@ void mk::Engine::run(int width, int height, const char *title)
         delta = now - last_time;
         last_time = now;
 
+        //update tickable elements
+        for (mk::Tickable *e : this->tickable_elements)
+            e->update();
+
         glClear(GL_COLOR_BUFFER_BIT);
 
         this->update(delta);
@@ -24,4 +30,10 @@ void mk::Engine::run(int width, int height, const char *title)
     }
 
     glfwTerminate();
+}
+
+void mk::Engine::add_tickable_element(mk::Tickable *element)
+{
+    tickable_elements.push_back(element);
+    log_info("added new tickable element");
 }

@@ -1,11 +1,17 @@
 #pragma once
 #include "display.h"
 #include "input.h"
+#include "tickable.h"
+
+#include <vector>
 
 namespace mk
 {
     class Engine
     {
+    private:
+        static std::vector<mk::Tickable *> tickable_elements;
+
     public:
         mk::Display display;
         mk::Input input;
@@ -14,5 +20,7 @@ namespace mk
         void run(int width, int height, const char *title);
         virtual void start() = 0;
         virtual void update(float delta) = 0;
+
+        static void add_tickable_element(mk::Tickable *element);
     };
 } // namespace mk
