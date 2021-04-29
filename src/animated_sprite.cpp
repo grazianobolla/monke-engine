@@ -5,13 +5,14 @@
 
 void mk::AnimatedSprite::update()
 {
-    this->current_frame = static_cast<int>(glfwGetTime() * (1 / this->frame_duration)) % this->frame_count + 1;
+    this->current_frame = static_cast<int>(glfwGetTime() * (1 / this->frame_duration)) % this->frame_count;
 
-    if (this->playing == true)
+    if (this->playing == true && current_frame != last_frame)
     {
         int newX = current_frame * this->frame_size.x;
 
         this->set_rect({newX, this->texture_coordinates.y, this->texture_coordinates.w, this->texture_coordinates.z});
+        this->last_frame = current_frame;
     }
 }
 

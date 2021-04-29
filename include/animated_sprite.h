@@ -9,6 +9,7 @@ namespace mk
     private:
         glm::vec2 frame_size;
         using Sprite::set_rect;
+        int last_frame = 0;
 
     public:
         int current_frame = 0, frame_count = 0;

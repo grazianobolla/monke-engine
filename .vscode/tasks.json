@@ -6,7 +6,7 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "-O2",
+                //"-O2",
                 "-Iinclude",
                 "src/**.cpp",
                 "-o",

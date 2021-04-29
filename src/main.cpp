@@ -14,14 +14,18 @@ class Game : public mk::Engine
         mk::ResourceLoader::load_shader("shaders/vertex.glsl", "shaders/fragment.glsl", "default_shader");
 
         as.load("sheet_texture", "default_shader");
-        as.configure_animation(4, 0.1f, {32, 32});
-        as.play();
+        as.configure_animation(4, 0.5f, {32, 32});
     }
 
     float counter = 0;
     void update(float delta)
     {
-        as.draw(input.mouse_position);
+        if (input.mouse_button[0] == input.PRESSED)
+            as.play();
+        else
+            as.stop();
+
+        as.draw(input.mouse_position, {6, 6});
     }
 };
 
