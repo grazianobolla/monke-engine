@@ -4,7 +4,7 @@
 #include "algorithm"
 
 std::vector<mk::Tickable *> mk::Engine::tickable_elements;
-mk::Texture *mk::Engine::last_texture = nullptr;
+void *mk::Engine::last_texture = nullptr;
 
 void mk::Engine::run(int width, int height, const char *title)
 {

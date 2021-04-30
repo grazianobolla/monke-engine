@@ -1,7 +1,6 @@
 #pragma once
 #include "display.h"
 #include "input.h"
-#include "texture.h"
 
 #include <vector>
 
@@ -20,7 +19,7 @@ namespace mk
         mk::Display display;
         mk::Input input;
 
-        static Texture *last_texture;
+        static void *last_texture;
 
         Engine(){};
         void run(int width, int height, const char *title);

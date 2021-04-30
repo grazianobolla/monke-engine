@@ -6,7 +6,6 @@
 class Game : public mk::Engine
 {
     mk::AnimatedSprite anim_sprite;
-    mk::Sprite sprite;
 
     void start()
     {
@@ -14,8 +13,6 @@ class Game : public mk::Engine
 
         anim_sprite.load("dude", {0, 0, 17, 19});
         anim_sprite.configure_animation(3, 0.1f, {17, 19});
-
-        sprite.load("dude", {10, 10, 7, 9});
     }
 
     void update(float delta)
@@ -28,8 +25,6 @@ class Game : public mk::Engine
             anim_sprite.stop();
 
         anim_sprite.draw({200, 200}, {5, 5});
-
-        //sprite.draw(input.mouse_position, {15, 15});
     }
 };
 
