@@ -12,6 +12,8 @@ namespace mk
     {
     public:
         Sprite() {}
+        ~Sprite();
+
         void load(const char *texture_resource_name, const glm::vec4 &tex_coord, const char *shader_resource_name = "default_shader");
         void set_tint(const glm::vec4 &tint);
         void draw(const glm::vec2 &position, const glm::vec2 &scale = {1, 1});
@@ -19,7 +21,10 @@ namespace mk
 
     protected:
         unsigned int vao_id = 0;
-        unsigned int uv_id = 0;
+        unsigned int vertex_data_id = 0;
+        unsigned int uv_data_id = 0;
+        unsigned int ebo_id = 0;
+
         glm::vec4 texture_coordinates;
 
         //pointers to shader and texture data, necessary to
@@ -29,6 +34,6 @@ namespace mk
 
         bool loaded = false;
 
-        void setup_sprite_vertex_data(unsigned int &vertex_array_object_id, unsigned int &uv_array_object_id, bool uv_static);
+        void setup_sprite_vertex_data(unsigned int &vertex_array_object, unsigned int &vertex_data, unsigned int &uv_data, unsigned int &ebo, bool uv_static);
     };
 } // namespace mk

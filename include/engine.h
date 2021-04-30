@@ -1,12 +1,13 @@
 #pragma once
 #include "display.h"
 #include "input.h"
-#include "tickable.h"
 
 #include <vector>
 
 namespace mk
 {
+    class Tickable;
+
     class Engine
     {
     private:
@@ -23,5 +24,6 @@ namespace mk
         virtual void update(float delta) = 0;
 
         static void add_tickable_element(mk::Tickable *element);
+        static void remove_tickable_element(mk::Tickable *element);
     };
 } // namespace mk

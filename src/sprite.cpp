@@ -7,7 +7,7 @@
 
 void mk::Sprite::load(const char *texture_resource_name, const glm::vec4 &tex_coord, const char *shader_resource_name)
 {
-    this->setup_sprite_vertex_data(this->vao_id, this->uv_id, false);
+    this->setup_sprite_vertex_data(this->vao_id, this->vertex_data_id, this->uv_data_id, this->ebo_id, false);
 
     this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get(shader_resource_name));
     this->texture = static_cast<mk::Texture *>(mk::ResourceLoader::get(texture_resource_name));
@@ -73,11 +73,11 @@ void mk::Sprite::update_rect(const glm::vec4 &tex_coord)
 
     //update uv's
     //glBindVertexArray(this->vao_id); <-------
-    glBindBuffer(GL_ARRAY_BUFFER, this->uv_id);
+    glBindBuffer(GL_ARRAY_BUFFER, this->uv_data_id);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(uv_data), uv_data);
 }
 
-void mk::Sprite::setup_sprite_vertex_data(unsigned int &vertex_array_object_id, unsigned int &uv_array_object_id, bool uv_static)
+void mk::Sprite::setup_sprite_vertex_data(unsigned int &vertex_array, unsigned int &vertex_data, unsigned int &uv_data, unsigned int &ebo, bool uv_static)
 {
     //used for the vertex array and as the uv initial data
     float data[] = {
@@ -90,33 +90,40 @@ void mk::Sprite::setup_sprite_vertex_data(unsigned int &vertex_array_object_id, 
         2, 3, 1,
         2, 0, 1};
 
-    glGenVertexArrays(1, &vertex_array_object_id);
-    glBindVertexArray(vertex_array_object_id);
-
-    //vertex buffer
-    unsigned int vbo;
+    glGenVertexArrays(1, &vertex_array);
+    glBindVertexArray(vertex_array);
 
     //element index buffer
-    unsigned int ebo_id;
-    glGenBuffers(1, &ebo_id);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_id);
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     //vertex data
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glGenBuffers(1, &vertex_data);
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_data);
     glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
     //uv texture buffer
-    glGenBuffers(1, &uv_array_object_id);
-    glBindBuffer(GL_ARRAY_BUFFER, uv_array_object_id);
+    glGenBuffers(1, &uv_data);
+    glBindBuffer(GL_ARRAY_BUFFER, uv_data);
     glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, uv_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
 
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(1);
 
-    log_info("created vertex array object vao: " << vertex_array_object_id << " vbo: " << vbo << " uv data: " << uv_array_object_id);
+    log_info("created vertex array object vao: " << vertex_array << " vbo: " << vertex_data << " uv data: " << uv_data << " ebo: " << ebo);
+}
+
+mk::Sprite::~Sprite()
+{
+    unsigned int temp_id = this->vao_id;
+    glDeleteBuffers(1, &this->vertex_data_id);
+    glDeleteBuffers(1, &this->uv_data_id);
+    glDeleteBuffers(1, &this->ebo_id);
+    glDeleteVertexArrays(1, &this->vao_id);
+
+    log_info("erased sprite " << temp_id);
 }

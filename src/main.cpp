@@ -1,11 +1,10 @@
 #include "engine.h"
 #include "resource_loader.h"
-#include "sprite.h"
+#include "animated_sprite.h"
 
 class Game : public mk::Engine
 {
-    //create sprite
-    mk::Sprite sprite;
+    mk::AnimatedSprite anim_sprite;
 
     void start()
     {
@@ -13,13 +12,19 @@ class Game : public mk::Engine
         mk::ResourceLoader::load_texture("textures/sheet.png", "sheet_texture");
 
         //bind the texture to the sprite and select a rectangle, top-left is 0, 0
-        sprite.load("sheet_texture", {0, 0, 32, 32});
+        anim_sprite.load("sheet_texture", {0, 0, 32, 32});
+        anim_sprite.configure_animation(4, 0.5f, {32, 32});
     }
 
     void update(float delta)
     {
-        //draw the sprite at the current mouse position
-        sprite.draw(input.mouse_position);
+        if (input.mouse_button[0])
+        {
+            mk::AnimatedSprite anim_sprite;
+            anim_sprite.load("sheet_texture", {0, 0, 32, 32});
+            anim_sprite.configure_animation(4, 0.5f, {32, 32});
+            anim_sprite.draw(input.mouse_position);
+        }
     }
 };
 
