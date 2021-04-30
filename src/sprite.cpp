@@ -40,8 +40,8 @@ void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
     glm::mat4 model_matrix = glm::mat4(1);
     model_matrix = glm::translate(model_matrix, {position, 0});
 
-    model_matrix = glm::scale(model_matrix, {this->texture_coordinates.w * scale.x,
-                                             this->texture_coordinates.z * scale.y,
+    model_matrix = glm::scale(model_matrix, {this->texture_coordinates.z * scale.x,
+                                             this->texture_coordinates.w * scale.y,
                                              0});
 
     this->shader->set_mat4("model", model_matrix);
@@ -55,6 +55,7 @@ void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
 
 void mk::Sprite::update_rect(const glm::vec4 &tex_coord)
 {
+    fst(tex_coord.x << " " << tex_coord.y << " " << tex_coord.z << " " << tex_coord.w);
     if (this->loaded == false)
         return;
 

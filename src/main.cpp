@@ -9,22 +9,17 @@ class Game : public mk::Engine
     void start()
     {
         //load texture on the engine
-        mk::ResourceLoader::load_texture("textures/sheet.png", "sheet_texture");
+        mk::ResourceLoader::load_texture("textures/dude.png", "dude");
 
         //bind the texture to the sprite and select a rectangle, top-left is 0, 0
-        anim_sprite.load("sheet_texture", {0, 0, 32, 32});
-        anim_sprite.configure_animation(4, 0.5f, {32, 32});
+        anim_sprite.load("dude", {0, 0, 32, 19});
+        anim_sprite.configure_animation(3, 0.2f, {32, 19});
+        anim_sprite.play();
     }
 
     void update(float delta)
     {
-        if (input.mouse_button[0])
-        {
-            mk::AnimatedSprite anim_sprite;
-            anim_sprite.load("sheet_texture", {0, 0, 32, 32});
-            anim_sprite.configure_animation(4, 0.5f, {32, 32});
-            anim_sprite.draw(input.mouse_position);
-        }
+        anim_sprite.draw(input.mouse_position, {10, 10});
     }
 };
 

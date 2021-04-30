@@ -11,7 +11,7 @@ void mk::AnimatedSprite::update()
     {
         int newX = current_frame * this->frame_size.x;
 
-        this->update_rect({newX, this->texture_coordinates.y, this->texture_coordinates.w, this->texture_coordinates.z});
+        this->update_rect({newX, this->texture_coordinates.y, this->texture_coordinates.z, this->texture_coordinates.w});
         this->last_frame = current_frame;
     }
 }
