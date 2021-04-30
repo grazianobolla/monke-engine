@@ -7,9 +7,10 @@ namespace mk
     {
     public:
         virtual void update() = 0;
+
         ~Tickable()
         {
             mk::Engine::remove_tickable_element(this);
         }
     };
-};
+}

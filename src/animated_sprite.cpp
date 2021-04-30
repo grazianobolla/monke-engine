@@ -16,8 +16,10 @@ void mk::AnimatedSprite::update()
     }
 }
 
-void mk::AnimatedSprite::play()
+void mk::AnimatedSprite::play(bool horizontal_invertied, bool vertical_inverted)
 {
+    this->h_inverted = horizontal_invertied;
+    this->v_inverted = vertical_inverted;
     this->playing = true;
 }
 

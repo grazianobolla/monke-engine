@@ -1,25 +1,35 @@
 #include "engine.h"
 #include "resource_loader.h"
 #include "animated_sprite.h"
+#include "signal.h"
 
 class Game : public mk::Engine
 {
     mk::AnimatedSprite anim_sprite;
+    mk::Sprite sprite;
 
     void start()
     {
-        //load texture on the engine
         mk::ResourceLoader::load_texture("textures/dude.png", "dude");
 
-        //bind the texture to the sprite and select a rectangle, top-left is 0, 0
-        anim_sprite.load("dude", {0, 0, 32, 19});
-        anim_sprite.configure_animation(3, 0.2f, {32, 19});
-        anim_sprite.play();
+        anim_sprite.load("dude", {0, 0, 17, 19});
+        anim_sprite.configure_animation(3, 0.1f, {17, 19});
+
+        sprite.load("dude", {10, 10, 7, 9});
     }
 
     void update(float delta)
     {
-        anim_sprite.draw(input.mouse_position, {10, 10});
+        if (input.key_states[GLFW_KEY_RIGHT] == input.PRESSED)
+            anim_sprite.play(false);
+        else if (input.key_states[GLFW_KEY_LEFT] == input.PRESSED)
+            anim_sprite.play(true);
+        else
+            anim_sprite.stop();
+
+        anim_sprite.draw({200, 200}, {5, 5});
+
+        //sprite.draw(input.mouse_position, {15, 15});
     }
 };
 

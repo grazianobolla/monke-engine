@@ -4,6 +4,7 @@
 #include "algorithm"
 
 std::vector<mk::Tickable *> mk::Engine::tickable_elements;
+mk::Texture *mk::Engine::last_texture = nullptr;
 
 void mk::Engine::run(int width, int height, const char *title)
 {
@@ -55,5 +56,4 @@ void mk::Engine::remove_tickable_element(mk::Tickable *element)
 void mk::Engine::initialize()
 {
     mk::ResourceLoader::load_shader("shaders/vertex.glsl", "shaders/fragment.glsl", "default_shader");
-    log_info("initialized engine");
 }

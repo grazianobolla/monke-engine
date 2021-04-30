@@ -1,5 +1,6 @@
 #include "texture.h"
 #include "log.h"
+#include "engine.h"
 
 #include <glad/glad.h>
 
@@ -39,6 +40,11 @@ bool mk::Texture::load(const char *path)
 
 void mk::Texture::use()
 {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, this->id);
+    //we dont call glBindTexture if the current texture is the same, this way we save some resources
+    if (mk::Engine::last_texture != this)
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, this->id);
+        mk::Engine::last_texture = this;
+    }
 }

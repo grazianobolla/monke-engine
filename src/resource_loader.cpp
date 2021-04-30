@@ -59,9 +59,6 @@ void *mk::ResourceLoader::get(const char *resource_name)
 
 void mk::ResourceLoader::delete_resource(const char *resource_name, RESOURCE_TYPE resource_type)
 {
-    //for debug
-    std::string resource_type_string(resource_type == RESOURCE_TYPE::SHADER ? "shader " : "texture ");
-
     if (exists(resource_name) == true)
     {
         void *resource_pointer = resources.at(resource_name);

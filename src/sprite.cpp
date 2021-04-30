@@ -46,6 +46,8 @@ void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
 
     this->shader->set_mat4("model", model_matrix);
 
+    this->shader->set_vec2("texture_coordinates_multiplier", {((h_inverted == true) ? -1 : 1), ((v_inverted == true) ? -1 : 1)});
+
     this->texture->use();
 
     //draw and update uv's
@@ -55,7 +57,6 @@ void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
 
 void mk::Sprite::update_rect(const glm::vec4 &tex_coord)
 {
-    fst(tex_coord.x << " " << tex_coord.y << " " << tex_coord.z << " " << tex_coord.w);
     if (this->loaded == false)
         return;
 
@@ -120,11 +121,8 @@ void mk::Sprite::setup_sprite_vertex_data(unsigned int &vertex_array, unsigned i
 
 mk::Sprite::~Sprite()
 {
-    unsigned int temp_id = this->vao_id;
     glDeleteBuffers(1, &this->vertex_data_id);
     glDeleteBuffers(1, &this->uv_data_id);
     glDeleteBuffers(1, &this->ebo_id);
     glDeleteVertexArrays(1, &this->vao_id);
-
-    log_info("erased sprite " << temp_id);
 }

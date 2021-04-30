@@ -75,3 +75,8 @@ void mk::Shader::set_vec4(const char *uniform_name, const glm::vec4 &vector)
 {
     glUniform4f(this->get_uniform_location(uniform_name), vector[0], vector[1], vector[2], vector[3]);
 }
+
+void mk::Shader::set_vec2(const char *uniform_name, const glm::vec2 &vector)
+{
+    glUniform2f(this->get_uniform_location(uniform_name), vector[0], vector[1]);
+}

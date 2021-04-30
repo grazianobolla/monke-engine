@@ -11,6 +11,8 @@ namespace mk
     class Sprite
     {
     public:
+        bool h_inverted = false, v_inverted = false;
+
         Sprite() {}
         ~Sprite();
 

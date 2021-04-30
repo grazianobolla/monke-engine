@@ -16,7 +16,7 @@ namespace mk
         float frame_duration = 0;
         bool playing = false;
 
-        void play();
+        void play(bool horizontal_invertied = false, bool vertical_inverted = false);
         void stop();
         void configure_animation(int frames, float duration, const glm::vec2 &frame_siz);
         void update();
