@@ -41,10 +41,10 @@ bool mk::Texture::load(const char *path)
 void mk::Texture::use()
 {
     //we dont call glBindTexture if the current texture is the same, this way we save some resources
-    if (mk::Engine::last_texture != this)
+    if (mk::Engine::state_manager.current_texture != this)
     {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, this->id);
-        mk::Engine::last_texture = this;
+        mk::Engine::state_manager.current_texture = this;
     }
 }

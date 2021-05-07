@@ -7,7 +7,7 @@
 
 void mk::Sprite::load(const char *texture_resource_name, const glm::vec4 &tex_coord, const char *shader_resource_name)
 {
-    this->setup_sprite_vertex_data(this->vao_id, this->vertex_data_id, this->uv_data_id, this->ebo_id, false);
+    mk::setup_sprite_vertex_data(this->vao_id, this->vertex_data_id, this->uv_data_id, this->ebo_id, false);
 
     this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get(shader_resource_name));
     this->texture = static_cast<mk::Texture *>(mk::ResourceLoader::get(texture_resource_name));
@@ -29,17 +29,23 @@ void mk::Sprite::set_tint(const glm::vec4 &tint)
     this->shader->set_vec4("tint", tint);
 }
 
-void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
+void mk::Sprite::draw(const glm::vec2 &position, float angle, const glm::vec2 &scale)
 {
     if (this->loaded == false)
         return;
 
     this->shader->use();
-    this->shader->set_mat4("projection", mk::Display::projection);
+
+    if (mk::Engine::state_manager.current_projection_matrix != mk::Display::projection)
+    {
+        this->shader->set_mat4("projection", mk::Display::projection);
+        mk::Engine::state_manager.current_projection_matrix = mk::Display::projection;
+        fst("updated projection matrix");
+    }
 
     glm::mat4 model_matrix = glm::mat4(1);
     model_matrix = glm::translate(model_matrix, {position, 0});
-
+    model_matrix = glm::rotate(model_matrix, glm::radians(angle), glm::vec3(0, 0, 1));
     model_matrix = glm::scale(model_matrix, {this->texture_coordinates.z * scale.x,
                                              this->texture_coordinates.w * scale.y,
                                              0});
@@ -51,7 +57,7 @@ void mk::Sprite::draw(const glm::vec2 &position, const glm::vec2 &scale)
     this->texture->use();
 
     //draw and update uv's
-    glBindVertexArray(this->vao_id);
+    mk::Engine::state_manager.change_vao(this->vao_id);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
@@ -79,7 +85,7 @@ void mk::Sprite::update_rect(const glm::vec4 &tex_coord)
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(uv_data), uv_data);
 }
 
-void mk::Sprite::setup_sprite_vertex_data(unsigned int &vertex_array, unsigned int &vertex_data, unsigned int &uv_data, unsigned int &ebo, bool uv_static)
+void mk::setup_sprite_vertex_data(unsigned int &vertex_array, unsigned int &vertex_data, unsigned int &uv_data, unsigned int &ebo, bool uv_static)
 {
     //used for the vertex array and as the uv initial data
     float data[] = {

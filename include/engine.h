@@ -1,6 +1,7 @@
 #pragma once
 #include "display.h"
 #include "input.h"
+#include "state_manager.h"
 
 #include <vector>
 
@@ -16,6 +17,7 @@ namespace mk
         void initialize();
 
     public:
+        static mk::StateManager state_manager;
         mk::Display display;
         mk::Input input;
 
