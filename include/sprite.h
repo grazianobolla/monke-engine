@@ -8,7 +8,7 @@
 
 namespace mk
 {
-    void setup_sprite_vertex_data(unsigned int &vertex_array_object, unsigned int &vertex_data, unsigned int &uv_data, unsigned int &ebo, bool uv_static);
+    void setup_sprite_vertex_data(unsigned int &vertex_array_object, unsigned int &uv_data, bool uv_static);
 
     class Sprite
     {
@@ -25,9 +25,7 @@ namespace mk
 
     protected:
         unsigned int vao_id = 0;
-        unsigned int vertex_data_id = 0;
         unsigned int uv_data_id = 0;
-        unsigned int ebo_id = 0;
 
         glm::vec4 texture_coordinates;
 

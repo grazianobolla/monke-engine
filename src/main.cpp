@@ -5,13 +5,13 @@
 
 class Game : public mk::Engine
 {
-    mk::AnimatedSprite anim_sprite[3];
+    mk::AnimatedSprite anim_sprite[10000];
 
     void start()
     {
         mk::ResourceLoader::load_texture("textures/dude.png", "dude");
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 10000; i++)
         {
             anim_sprite[i].load("dude", {0, 0, 17, 19});
             anim_sprite[i].configure_animation(3, 0.1f, {17, 19});
@@ -20,7 +20,7 @@ class Game : public mk::Engine
 
     void update(float delta)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 10000; i++)
         {
             if (input.key_states[GLFW_KEY_RIGHT] == input.PRESSED)
                 anim_sprite[i].play(false);
