@@ -9,7 +9,7 @@ uniform vec2 texture_coordinates_multiplier;
 
 void main()
 {
-    vec4 f = texture(tex, texture_coordinates * texture_coordinates_multiplier) * tint;
+    vec4 f = texture(tex, texture_coordinates);
     if(f.a == 0) discard;
     fragment = f;
 } 

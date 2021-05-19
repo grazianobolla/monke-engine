@@ -27,6 +27,7 @@ namespace mk
         void run(int width, int height, const char *title);
         virtual void start() = 0;
         virtual void update(float delta) = 0;
+        virtual void render() = 0;
 
         static void add_tickable_element(mk::Tickable *element);
         static void remove_tickable_element(mk::Tickable *element);

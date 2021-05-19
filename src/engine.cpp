@@ -1,17 +1,20 @@
 #include "engine.h"
 #include "resource_loader.h"
 #include "tickable.h"
-#include "algorithm"
+
+#include <algorithm>
 
 std::vector<mk::Tickable *> mk::Engine::tickable_elements;
 mk::StateManager mk::Engine::state_manager;
 
 void mk::Engine::run(int width, int height, const char *title)
 {
+    //initialize opengl
     this->display.create(width, height, title);
-    this->input.set(this->display.window);
-
     this->initialize();
+
+    //input
+    this->input.set(this->display.window);
 
     this->start();
     double now = 0, last_time = 0;
@@ -23,14 +26,15 @@ void mk::Engine::run(int width, int height, const char *title)
         delta = now - last_time;
         last_time = now;
 
-        //update tickable elements
+        //logic
         for (mk::Tickable *e : this->tickable_elements)
             e->update();
 
-        glClear(GL_COLOR_BUFFER_BIT);
-
         this->update(delta);
 
+        //rendering
+        glClear(GL_COLOR_BUFFER_BIT);
+        this->render();
         glfwSwapBuffers(display.window);
         glfwPollEvents();
     }
