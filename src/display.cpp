@@ -49,3 +49,10 @@ void mk::Display::framebuffer_resize_cb(GLFWwindow *window, int new_width, int n
     glViewport(0, 0, new_width, new_height);
     projection = glm::ortho(0.0f, static_cast<float>(new_width), static_cast<float>(new_height), 0.0f, -1.0f, 1.0f);
 }
+
+glm::vec2 mk::Display::get_size()
+{
+    int w, h;
+    glfwGetFramebufferSize(this->window, &w, &h);
+    return {w, h};
+}
