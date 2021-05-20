@@ -35,7 +35,7 @@ class Game : public Engine
                 sprite.texture_rect = {frame, 0, 32, 32};
 
                 //send the draw call
-                renderer.draw(sprite, {x, y + 64});
+                renderer.draw(sprite, {x, y});
             }
     }
 };
