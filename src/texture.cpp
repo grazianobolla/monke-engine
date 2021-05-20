@@ -34,7 +34,9 @@ bool mk::Texture::load(const char *path)
     glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(image_data);
 
-    log_info("loaded texture " << path);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    log_info("loaded texture " << path << " (" << this << ")");
     return true;
 }
 
@@ -46,5 +48,6 @@ void mk::Texture::use()
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, this->id);
         mk::Engine::state_manager.current_texture = this;
+        fst("binded texture");
     }
 }

@@ -1,5 +1,7 @@
 #pragma once
 #include "sprite.h"
+#include "shader.h"
+#include "texture.h"
 
 #include <glm/glm.hpp>
 
@@ -18,12 +20,13 @@ namespace mk
     class SpriteRenderer
     {
     public:
-        SpriteRenderer() {}
+        SpriteRenderer();
         ~SpriteRenderer() {}
 
         void begin();
-        void draw(const Sprite &sprite, glm::vec2 position);
-        void flush();
+        void draw(const Sprite &sprite, glm::vec2 position, glm::vec2 scale);
+        void flush(mk::Texture *texture);
+        void end();
 
         void init();
 
@@ -33,5 +36,8 @@ namespace mk
 
         //opengl buffers
         unsigned int vao_id = 0, vbo_id = 0;
+
+        mk::Shader *shader = nullptr;
+        mk::Texture *current_texture = nullptr;
     };
 } //namespace mk

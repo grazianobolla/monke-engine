@@ -2,9 +2,7 @@
 layout (location = 0) in vec4 vert_data;
 out vec2 texture_coordinates;
 
-uniform mat4 model;
 uniform mat4 projection;
-//uniform mat4 view;
 
 void main()
 {

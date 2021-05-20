@@ -1,5 +1,6 @@
 #pragma once
 #include "opengl_object.h"
+#include <glm/glm.hpp>
 
 namespace mk
 {

@@ -5,27 +5,26 @@
 class Game : public mk::Engine
 {
     mk::SpriteRenderer sprite_renderer;
-    mk::Sprite sprite;
+    mk::Sprite sprite, sprite1;
 
     void start()
     {
         sprite_renderer.init();
 
         mk::ResourceLoader::load_texture("textures/happy.png", "happy");
-        sprite.load("happy", {0, 0, 256, 256});
+        mk::ResourceLoader::load_texture("textures/sheet.png", "sheet");
+        sprite.load("sheet", {0, 0, 32, 32});
+        sprite1.load("happy", {0, 0, 512, 512});
     }
 
-    void update(float delta)
-    {
-    }
+    void update(float delta) {}
 
     void render()
     {
-
-        for (int i = 0; i < 500; i++)
-            sprite_renderer.draw(sprite, input.mouse_position);
-
-        sprite_renderer.flush();
+        sprite_renderer.begin();
+        sprite_renderer.draw(sprite, {60, 60}, {1, 1});
+        sprite_renderer.draw(sprite1, input.mouse_position, {0.15f, 0.15f});
+        sprite_renderer.end();
     }
 };
 
