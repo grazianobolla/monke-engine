@@ -37,7 +37,6 @@ void mk::Engine::run(int width, int height, const char *title)
 
         //rendering
         glClear(GL_COLOR_BUFFER_BIT);
-        this->renderer.begin();
         this->render();
         this->renderer.flush();
         glfwSwapBuffers(display.window);

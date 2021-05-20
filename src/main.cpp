@@ -3,22 +3,20 @@
 
 class Game : public mk::Engine
 {
-    mk::Sprite sprite, sprite1;
+    mk::Sprite sprite;
 
     void start()
     {
         mk::ResourceLoader::load_texture("textures/sheet.png", "sheet");
-        mk::ResourceLoader::load_texture("textures/happy.png", "happy");
         sprite.load("sheet");
-        sprite1.load("happy");
     }
 
     void update(float delta) {}
 
     void render()
     {
-        renderer.draw(sprite, input.mouse_position, {1, 1});
-        renderer.draw(sprite1, {200, 200}, {.5f, .5f});
+        for (int i = 0; i < 50000; i++)
+            renderer.draw(sprite, input.mouse_position, {1, 1});
     }
 };
 

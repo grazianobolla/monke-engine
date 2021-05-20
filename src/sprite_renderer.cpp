@@ -29,15 +29,15 @@ void mk::SpriteRenderer::draw(const Sprite &sprite, glm::vec2 position, glm::vec
 void mk::SpriteRenderer::check_flush(mk::Texture *new_texture)
 {
     //if we filled the stack, we flush
-    if (sprite_count > MAX_SPRITES)
+    if (sprite_count + 1 > MAX_SPRITES)
     {
         this->flush();
     }
 
     if (this->texture != new_texture)
     {
-        this->flush();
         this->texture = new_texture;
+        this->flush();
     }
 }
 
@@ -77,7 +77,7 @@ void mk::SpriteRenderer::push_sprite_data(const Sprite &sprite, glm::vec2 positi
 void mk::SpriteRenderer::flush()
 {
     //only draw if we have something to send
-    if (this->has_data == false)
+    if (this->has_data == false || this->shader == nullptr || this->texture == nullptr)
         return;
 
     this->has_data = false;
