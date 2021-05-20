@@ -1,7 +1,6 @@
 #pragma once
 #include "sprite.h"
 #include "shader.h"
-#include "texture.h"
 
 #include <glm/glm.hpp>
 
@@ -24,10 +23,10 @@ namespace mk
         ~SpriteRenderer() {}
 
         void begin();
-        void draw(const Sprite &sprite, glm::vec2 position, glm::vec2 scale);
+        void draw(const Sprite &sprite, glm::vec2 position, glm::vec2 scale = {1, 1});
         void flush();
 
-        void init();
+        void initialize();
 
     private:
         float vertex_data[MAX_SPRITES * SPRITE_SIZE_IN_FLOATS];
@@ -36,6 +35,13 @@ namespace mk
         //opengl buffers
         unsigned int vao_id = 0, vbo_id = 0;
 
+        //if this is true, there is data on the buffer waiting to be sended
+        bool has_data = false;
+
         mk::Shader *shader = nullptr;
+        mk::Texture *texture = nullptr;
+
+        void push_sprite_data(const Sprite &sprite, glm::vec2 position, glm::vec2 scale);
+        void check_flush(mk::Texture *);
     };
 } //namespace mk

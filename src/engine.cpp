@@ -13,8 +13,9 @@ void mk::Engine::run(int width, int height, const char *title)
     this->display.create(width, height, title);
     this->initialize();
 
-    //input
-    this->input.set(this->display.window);
+    this->input.set(this->display.window); //input
+
+    this->renderer.initialize(); //initialize renderer
 
     this->start();
     double now = 0, last_time = 0;
@@ -30,13 +31,16 @@ void mk::Engine::run(int width, int height, const char *title)
         for (mk::Tickable *e : this->tickable_elements)
             e->update();
 
+        glfwPollEvents();
+
         this->update(delta);
 
         //rendering
         glClear(GL_COLOR_BUFFER_BIT);
+        this->renderer.begin();
         this->render();
+        this->renderer.flush();
         glfwSwapBuffers(display.window);
-        glfwPollEvents();
     }
 
     glfwTerminate();

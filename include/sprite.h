@@ -13,6 +13,6 @@ namespace mk
         TextureRect texture_rect;
 
         Sprite() {}
-        void load(const char *texture_resource_name, TextureRect tex_rect = {0, 0, 0, 0});
+        void load(const char *texture_resource_name, TextureRect tex_rect = {-1, -1, -1, -1});
     };
 };

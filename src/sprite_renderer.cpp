@@ -12,20 +12,37 @@ mk::SpriteRenderer::SpriteRenderer()
 
 void mk::SpriteRenderer::begin()
 {
-    int sprite_offset = sprite_count * SPRITE_SIZE_IN_FLOATS;
+    //we dont need to clear the array, it will be overwritten on the draw() call
+    //int sprite_offset = sprite_count * SPRITE_SIZE_IN_FLOATS;
+    //memset(this->vertex_data, 0, sprite_offset * sizeof(float));
 
-    memset(this->vertex_data, 0, sprite_offset * sizeof(float)); //clear vertex array, only what we have used, no need on clearing the rest
-    this->sprite_count = 0;                                      //reset sprite counter
+    this->sprite_count = 0; //reset sprite counter
 }
 
 void mk::SpriteRenderer::draw(const Sprite &sprite, glm::vec2 position, glm::vec2 scale)
 {
+    this->check_flush(sprite.texture);
+    this->push_sprite_data(sprite, position, scale);
+    this->sprite_count++;
+}
+
+void mk::SpriteRenderer::check_flush(mk::Texture *new_texture)
+{
     //if we filled the stack, we flush
-    if (sprite_count + 1 > MAX_SPRITES)
+    if (sprite_count > MAX_SPRITES)
     {
         this->flush();
     }
 
+    if (this->texture != new_texture)
+    {
+        this->flush();
+        this->texture = new_texture;
+    }
+}
+
+void mk::SpriteRenderer::push_sprite_data(const Sprite &sprite, glm::vec2 position, glm::vec2 scale)
+{
     glm::vec2 size = {sprite.texture->width * scale.x, sprite.texture->height * scale.y};
 
     glm::vec2 tex_size(sprite.texture_rect.z / sprite.texture->width, sprite.texture_rect.w / sprite.texture->height);
@@ -43,24 +60,30 @@ void mk::SpriteRenderer::draw(const Sprite &sprite, glm::vec2 position, glm::vec
 
     };
 
-    int sprite_offset = sprite_count * SPRITE_SIZE_IN_FLOATS;
+    int sprt_offst = sprite_count * SPRITE_SIZE_IN_FLOATS;
 
     for (int i = 0; i < VERTEX_PER_SPRITE; i++)
     {
         int ver_offset = i * VERTEX_SIZE_IN_FLOATS; //space between each vertex
 
         //add those vertices to the vertex array
-        memcpy(this->vertex_data + sprite_offset + ver_offset, sprite_vertices[i].data, sizeof(sprite_vertices[i].data));
+        memcpy(this->vertex_data + sprt_offst + ver_offset, sprite_vertices[i].data, sizeof(sprite_vertices[i].data));
     }
 
-    this->sprite_count++;
+    this->has_data = true;
 }
 
 //send data to the GPU
 void mk::SpriteRenderer::flush()
 {
+    //only draw if we have something to send
+    if (this->has_data == false)
+        return;
+
+    this->has_data = false;
+
     //bind texture
-    //this->current_texture->use();
+    this->texture->use();
 
     //bind shader
     this->shader->use();
@@ -84,7 +107,7 @@ void mk::SpriteRenderer::flush()
     this->begin();
 }
 
-void mk::SpriteRenderer::init()
+void mk::SpriteRenderer::initialize()
 {
     //set shader
     this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get("default_shader"));

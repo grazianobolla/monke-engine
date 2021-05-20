@@ -2,6 +2,7 @@
 #include "display.h"
 #include "input.h"
 #include "state_manager.h"
+#include "sprite_renderer.h"
 
 #include <vector>
 
@@ -20,6 +21,7 @@ namespace mk
         static mk::StateManager state_manager;
         mk::Display display;
         mk::Input input;
+        mk::SpriteRenderer renderer;
 
         static void *last_texture;
 

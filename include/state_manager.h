@@ -6,6 +6,7 @@ namespace mk
     struct StateManager
     {
         void *current_texture = nullptr;
+        void *current_shader = nullptr;
         unsigned int current_vao = 0;
         glm::mat4 current_projection_matrix = glm::mat4(0);
 
