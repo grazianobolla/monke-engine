@@ -1,4 +1,4 @@
-# monke-engine ![Grade](https://www.code-inspector.com/project/22868/status/svg "Grade")
+# Monke Engine (Game Engine) ![Grade](https://www.code-inspector.com/project/22868/status/svg "Grade")
 
 Monke Engine aims to be a simple and fast game engine, capable of reproducing any ideas quickly and efficiently.
 Made for those who want something low-level while maintaining simplicity.
