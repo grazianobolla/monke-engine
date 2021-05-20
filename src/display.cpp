@@ -40,6 +40,8 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
     //TODO:temp
     //glEnable(GL_BLEND);
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void mk::Display::framebuffer_resize_cb(GLFWwindow *window, int new_width, int new_height)

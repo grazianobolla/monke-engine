@@ -22,15 +22,9 @@ void mk::SpriteRenderer::draw(const Sprite &sprite, glm::vec2 position, glm::vec
 {
     //if we filled the stack, we flush
     if (sprite_count + 1 > MAX_SPRITES)
-        this->flush(sprite.texture);
-
-    if (this->current_texture != sprite.texture)
     {
-        current_texture = sprite.texture;
-        this->flush(sprite.texture);
+        this->flush();
     }
-
-    int sprite_offset = sprite_count * SPRITE_SIZE_IN_FLOATS;
 
     glm::vec2 size = {sprite.texture->width * scale.x, sprite.texture->height * scale.y};
 
@@ -49,6 +43,8 @@ void mk::SpriteRenderer::draw(const Sprite &sprite, glm::vec2 position, glm::vec
 
     };
 
+    int sprite_offset = sprite_count * SPRITE_SIZE_IN_FLOATS;
+
     for (int i = 0; i < VERTEX_PER_SPRITE; i++)
     {
         int ver_offset = i * VERTEX_SIZE_IN_FLOATS; //space between each vertex
@@ -60,9 +56,13 @@ void mk::SpriteRenderer::draw(const Sprite &sprite, glm::vec2 position, glm::vec
     this->sprite_count++;
 }
 
-//flish vertex data to the GPU
-void mk::SpriteRenderer::flush(mk::Texture *texture)
+//send data to the GPU
+void mk::SpriteRenderer::flush()
 {
+    //bind texture
+    //this->current_texture->use();
+
+    //bind shader
     this->shader->use();
 
     if (mk::Engine::state_manager.current_projection_matrix != mk::Display::projection)
@@ -72,8 +72,6 @@ void mk::SpriteRenderer::flush(mk::Texture *texture)
         fst("updated projection matrix");
     }
 
-    texture->use();
-
     mk::Engine::state_manager.change_vao(this->vao_id); //just in case
 
     //send data
@@ -81,11 +79,9 @@ void mk::SpriteRenderer::flush(mk::Texture *texture)
     glBufferSubData(GL_ARRAY_BUFFER, 0, sprite_count * SPRITE_SIZE_IN_FLOATS * sizeof(float), this->vertex_data);
 
     glDrawArrays(GL_TRIANGLES, 0, sprite_count * VERTEX_PER_SPRITE); //draw vertices
-}
 
-void mk::SpriteRenderer::end()
-{
-    this->flush(current_texture);
+    //prepare to render again
+    this->begin();
 }
 
 void mk::SpriteRenderer::init()

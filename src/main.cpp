@@ -15,16 +15,18 @@ class Game : public mk::Engine
         mk::ResourceLoader::load_texture("textures/sheet.png", "sheet");
         sprite.load("sheet", {0, 0, 32, 32});
         sprite1.load("happy", {0, 0, 512, 512});
+
+        static_cast<mk::Texture *>(mk::ResourceLoader::get("sheet"))->use();
     }
 
     void update(float delta) {}
 
     void render()
     {
-        sprite_renderer.begin();
         sprite_renderer.draw(sprite, {60, 60}, {1, 1});
+        sprite_renderer.draw(sprite, {500, 60}, {1, 1});
         sprite_renderer.draw(sprite1, input.mouse_position, {0.15f, 0.15f});
-        sprite_renderer.end();
+        sprite_renderer.flush();
     }
 };
 

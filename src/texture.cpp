@@ -36,14 +36,15 @@ bool mk::Texture::load(const char *path)
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    log_info("loaded texture " << path << " (" << this << ")");
+    log_info("loaded texture " << path << " (" << this << ")"
+                               << " id:" << this->id);
     return true;
 }
 
 void mk::Texture::use()
 {
     //we dont call glBindTexture if the current texture is the same, this way we save some resources
-    if (mk::Engine::state_manager.current_texture != this)
+    if (mk::Engine::state_manager.current_texture != this && this != nullptr)
     {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, this->id);
