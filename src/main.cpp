@@ -1,22 +1,27 @@
 #include "engine.h"
 #include "resource_loader.h"
 
-class Game : public mk::Engine
+using namespace mk;
+
+class Game : public Engine
 {
-    mk::Sprite sprite;
+    Sprite sprite;
 
     void start()
     {
-        mk::ResourceLoader::load_texture("textures/sheet.png", "sheet");
-        sprite.load("sheet");
+        //load the texture into memory
+        ResourceLoader::load_texture("textures/grass.png", "grass");
+
+        //attach texture to the sprite
+        sprite.load("grass");
     }
 
     void update(float delta) {}
 
     void render()
     {
-        for (int i = 0; i < 50000; i++)
-            renderer.draw(sprite, input.mouse_position, {1, 1});
+        //render the sprite over our cursor
+        renderer.draw(sprite, input.mouse_position);
     }
 };
 
