@@ -6,6 +6,7 @@ using namespace mk;
 class Game : public Engine
 {
     Sprite sprite, sprite1;
+    Vector2 pos;
 
     void start()
     {
@@ -16,11 +17,13 @@ class Game : public Engine
         sprite1.load("happy");
     }
 
-    void update(float delta) {}
+    void update(float delta)
+    {
+    }
 
     void render()
     {
-        renderer.draw(sprite, input.mouse_pos);
+        renderer.draw(sprite, input.get_mouse_pos());
         renderer.draw(sprite1, {100, 100});
     }
 };

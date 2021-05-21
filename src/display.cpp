@@ -28,7 +28,7 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
     glfwMakeContextCurrent(this->window);
 
     //TODO: create a proper thing for enabling this:
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
 
     //sets the callback for when the window is resized
     glfwSetFramebufferSizeCallback(this->window, this->framebuffer_resize_cb);
@@ -56,4 +56,14 @@ mk::Vector2 mk::Display::get_size()
     int w, h;
     glfwGetFramebufferSize(this->window, &w, &h);
     return {w, h};
+}
+
+void mk::Display::clear_buffer()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void mk::Display::swap_buffer()
+{
+    glfwSwapBuffers(this->window);
 }

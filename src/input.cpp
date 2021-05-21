@@ -1,13 +1,13 @@
 #include "input.h"
 
 int mk::Input::key_states[GLFW_KEY_LAST];
-mk::Vector2 mk::Input::mouse_pos;
 int mk::Input::mouse_button[GLFW_MOUSE_BUTTON_LAST];
 
-void mk::Input::set(GLFWwindow *window)
+void mk::Input::set(GLFWwindow *win)
 {
+    this->window = win;
+
     glfwSetKeyCallback(window, this->key_input_callback);
-    glfwSetCursorPosCallback(window, this->cursor_position_callback);
     glfwSetMouseButtonCallback(window, this->mouse_button_callback);
 
     //initialize key array
@@ -20,12 +20,14 @@ void mk::Input::key_input_callback(GLFWwindow *window, int key, int scancode, in
     key_states[key] = action > 0 ? KEY_STATE::PRESSED : KEY_STATE::NONE;
 }
 
-void mk::Input::cursor_position_callback(GLFWwindow *window, double x, double y)
-{
-    mouse_pos = {x, y};
-}
-
 void mk::Input::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
     mouse_button[button] = action > 0 ? KEY_STATE::PRESSED : KEY_STATE::NONE;
+}
+
+mk::Vector2 mk::Input::get_mouse_pos()
+{
+    double x, y;
+    glfwGetCursorPos(this->window, &x, &y);
+    return {x, y};
 }

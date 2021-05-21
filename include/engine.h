@@ -14,7 +14,6 @@ namespace mk
     {
     private:
         static std::vector<mk::Tickable *> tickable_elements;
-
         void initialize();
 
     public:
@@ -27,6 +26,9 @@ namespace mk
 
         Engine(){};
         void run(int width, int height, const char *title);
+        void compute_logic(float delta);
+        void compute_rendering();
+
         virtual void start() = 0;
         virtual void update(float delta) = 0;
         virtual void render() = 0;

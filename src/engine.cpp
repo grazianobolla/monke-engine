@@ -16,6 +16,7 @@ void mk::Engine::run(int width, int height, const char *title)
     this->renderer.initialize();
 
     this->start(); //virtual function
+
     double now = 0, last_time = 0;
     float delta = 0;
 
@@ -25,22 +26,29 @@ void mk::Engine::run(int width, int height, const char *title)
         delta = now - last_time;
         last_time = now;
 
-        //logic
-        glfwPollEvents();
-
-        for (mk::Tickable *e : this->tickable_elements)
-            e->update();
-
-        this->update(delta); //virtual function
-
-        //rendering
-        glClear(GL_COLOR_BUFFER_BIT);
-        this->render(); //virtual function
-        this->renderer.flush();
-        glfwSwapBuffers(display.window);
+        this->compute_logic(delta);
+        this->compute_rendering();
     }
 
     glfwTerminate();
+}
+
+void mk::Engine::compute_logic(float delta)
+{
+    glfwPollEvents();
+
+    for (mk::Tickable *e : this->tickable_elements)
+        e->update();
+
+    this->update(delta); //virtual function
+}
+
+void mk::Engine::compute_rendering()
+{
+    this->display.clear_buffer();
+    this->render(); //virtual function
+    this->renderer.flush();
+    this->display.swap_buffer();
 }
 
 void mk::Engine::add_tickable_element(mk::Tickable *element)
