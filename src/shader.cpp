@@ -71,17 +71,17 @@ unsigned int mk::Shader::get_uniform_location(const char *uniform_name)
     return glGetUniformLocation(this->id, uniform_name);
 }
 
-void mk::Shader::set_mat4(const char *uniform_name, const glm::mat4 &matrix)
+void mk::Shader::set_mat4(const char *uniform_name, const mk::Mat4 &matrix)
 {
     glUniformMatrix4fv(this->get_uniform_location(uniform_name), 1, GL_FALSE, &matrix[0][0]);
 }
 
-void mk::Shader::set_vec4(const char *uniform_name, const glm::vec4 &vector)
+void mk::Shader::set_vec4(const char *uniform_name, const mk::Vector4 &vector)
 {
     glUniform4f(this->get_uniform_location(uniform_name), vector[0], vector[1], vector[2], vector[3]);
 }
 
-void mk::Shader::set_vec2(const char *uniform_name, const glm::vec2 &vector)
+void mk::Shader::set_vec2(const char *uniform_name, const mk::Vector2 &vector)
 {
     glUniform2f(this->get_uniform_location(uniform_name), vector[0], vector[1]);
 }

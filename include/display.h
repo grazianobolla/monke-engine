@@ -1,10 +1,10 @@
 #pragma once
 #include "log.h"
+#include "types.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <string>
@@ -19,7 +19,8 @@ namespace mk
 
         Display() {}
         void create(int width = 800, int height = 600, const char *title = "OpenGL Window", int opengl_major = 3, int opengl_minor = 3);
-        glm::vec2 get_size();
+        mk::Vector2 get_size();
+
     private:
         int width, height;
         int opengl_major, opengl_minor;

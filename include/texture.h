@@ -1,12 +1,11 @@
 #pragma once
-#include "opengl_object.h"
-#include <glm/glm.hpp>
 
 namespace mk
 {
-    class Texture : public mk::OpenGLObject
+    class Texture
     {
     public:
+        unsigned int id = 0;
         int width, height, channels; //stores image information
 
         Texture() {}

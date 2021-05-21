@@ -12,16 +12,18 @@ mk::SpriteRenderer::SpriteRenderer()
 
 void mk::SpriteRenderer::begin()
 {
-    //we dont need to clear the array, it will be overwritten on the draw() call
-    //int sprite_offset = sprite_count * SPRITE_SIZE_IN_FLOATS;
-    //memset(this->vertex_data, 0, sprite_offset * sizeof(float));
-
     this->sprite_count = 0; //reset sprite counter
 }
 
-void mk::SpriteRenderer::draw(const Sprite &sprite, glm::vec2 position, glm::vec2 scale)
+void mk::SpriteRenderer::draw(const Sprite &sprite, Vector2 position, Vector2 scale)
 {
-    this->check_flush(sprite.texture);
+    if (sprite.loaded == false)
+    {
+        log_info("trying to draw a sprite that isn't loaded");
+        return;
+    }
+
+    this->check_flush(sprite.texture_ptr);
     this->push_sprite_data(sprite, position, scale);
     this->sprite_count++;
 }
@@ -36,20 +38,20 @@ void mk::SpriteRenderer::check_flush(mk::Texture *new_texture)
 
     if (this->texture != new_texture)
     {
-        this->texture = new_texture;
         this->flush();
+        this->texture = new_texture;
     }
 }
 
-void mk::SpriteRenderer::push_sprite_data(const Sprite &sprite, glm::vec2 position, glm::vec2 scale)
+void mk::SpriteRenderer::push_sprite_data(const Sprite &sprite, Vector2 position, Vector2 scale)
 {
-    glm::vec2 size = {sprite.texture->width * scale.x, sprite.texture->height * scale.y};
+    Vector2 size = {sprite.texture_ptr->width * scale.x, sprite.texture_ptr->height * scale.y};
 
-    glm::vec2 tex_size(sprite.texture_rect.z / sprite.texture->width, sprite.texture_rect.w / sprite.texture->height);
-    glm::vec2 tex_coords(sprite.texture_rect.x / sprite.texture->width, sprite.texture_rect.y / sprite.texture->height);
+    Vector2 tex_size(sprite.texture_rect.z / sprite.texture_ptr->width, sprite.texture_rect.w / sprite.texture_ptr->height);
+    Vector2 tex_coords(sprite.texture_rect.x / sprite.texture_ptr->width, sprite.texture_rect.y / sprite.texture_ptr->height);
 
     //define every vertex the sprite has
-    Vertex sprite_vertices[VERTEX_PER_SPRITE] = {
+    float sprite_vertices[VERTEX_PER_SPRITE][VERTEX_SIZE_IN_FLOATS] = {
         {position.x, position.y, tex_coords.x, tex_coords.y},                                                 //top left
         {position.x + size.x * tex_size.x, position.y * tex_size.y, tex_coords.x + tex_size.x, tex_coords.y}, //top right
         {position.x, position.y + size.y, tex_coords.x, tex_coords.y + tex_size.y},                           //bottom left
@@ -67,7 +69,7 @@ void mk::SpriteRenderer::push_sprite_data(const Sprite &sprite, glm::vec2 positi
         int ver_offset = i * VERTEX_SIZE_IN_FLOATS; //space between each vertex
 
         //add those vertices to the vertex array
-        memcpy(this->vertex_data + sprt_offst + ver_offset, sprite_vertices[i].data, sizeof(sprite_vertices[i].data));
+        memcpy(this->vertex_data + sprt_offst + ver_offset, sprite_vertices[i], VERTEX_SIZE_IN_FLOATS * sizeof(float));
     }
 
     this->has_data = true;

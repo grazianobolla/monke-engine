@@ -1,5 +1,5 @@
 #pragma once
-#include <glm/glm.hpp>
+#include "types.h"
 
 namespace mk
 {
@@ -8,7 +8,7 @@ namespace mk
         void *current_texture = nullptr;
         void *current_shader = nullptr;
         unsigned int current_vao = 0;
-        glm::mat4 current_projection_matrix = glm::mat4(0);
+        mk::Mat4 current_projection_matrix = mk::Mat4(0);
 
         void change_vao(unsigned int id);
     };

@@ -1,6 +1,7 @@
 #pragma once
+#include "types.h"
+
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
 
 namespace mk
 {
@@ -16,7 +17,7 @@ namespace mk
         Input() {}
         void set(GLFWwindow *window);
         static int key_states[GLFW_KEY_LAST];
-        static glm::vec2 mouse_position;
+        static mk::Vector2 mouse_position;
         static int mouse_button[GLFW_MOUSE_BUTTON_LAST];
 
     private:

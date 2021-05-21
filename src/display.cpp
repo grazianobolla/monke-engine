@@ -37,10 +37,10 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
 
     glViewport(0, 0, this->width, this->height);
 
-    //TODO:temp
     //glEnable(GL_BLEND);
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    //TODO:create some debug stuff for things like this
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
@@ -50,7 +50,7 @@ void mk::Display::framebuffer_resize_cb(GLFWwindow *window, int new_width, int n
     projection = glm::ortho(0.0f, static_cast<float>(new_width), static_cast<float>(new_height), 0.0f, -1.0f, 1.0f);
 }
 
-glm::vec2 mk::Display::get_size()
+mk::Vector2 mk::Display::get_size()
 {
     int w, h;
     glfwGetFramebufferSize(this->window, &w, &h);

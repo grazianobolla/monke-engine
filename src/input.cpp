@@ -1,7 +1,7 @@
 #include "input.h"
 
 int mk::Input::key_states[GLFW_KEY_LAST];
-glm::vec2 mk::Input::mouse_position;
+mk::Vector2 mk::Input::mouse_position;
 int mk::Input::mouse_button[GLFW_MOUSE_BUTTON_LAST];
 
 void mk::Input::set(GLFWwindow *window)

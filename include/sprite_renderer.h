@@ -1,21 +1,15 @@
 #pragma once
 #include "sprite.h"
 #include "shader.h"
+#include "types.h"
 
-#include <glm/glm.hpp>
-
-#define MAX_SPRITES 5000
+#define MAX_SPRITES 5000         //max amounr of sprites allowed until flush
 #define SPRITE_SIZE_IN_FLOATS 24 //6 vertexs, each vertex is 4 floats
 #define VERTEX_SIZE_IN_FLOATS 4  //2 for position and 2 for texture
 #define VERTEX_PER_SPRITE 6
 
 namespace mk
 {
-    struct Vertex
-    {
-        float data[4];
-    };
-
     class SpriteRenderer
     {
     public:
@@ -23,7 +17,7 @@ namespace mk
         ~SpriteRenderer() {}
 
         void begin();
-        void draw(const Sprite &sprite, glm::vec2 position, glm::vec2 scale = {1, 1});
+        void draw(const mk::Sprite &sprite, mk::Vector2 position, mk::Vector2 scale = {1, 1});
         void flush();
 
         void initialize();

@@ -13,11 +13,12 @@ void mk::Engine::run(int width, int height, const char *title)
     this->display.create(width, height, title);
     this->initialize();
 
-    this->input.set(this->display.window); //input
+    //initialize input
+    this->input.set(this->display.window);
+    //initialize renderer
+    this->renderer.initialize();
 
-    this->renderer.initialize(); //initialize renderer
-
-    this->start();
+    this->start(); //virtual func
     double now = 0, last_time = 0;
     float delta = 0;
 
