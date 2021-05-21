@@ -8,6 +8,7 @@
                 "-g",
                 //"-O2",
                 "-Iinclude",
+                "-Iinclude/external",
                 "src/**.cpp",
                 "-o",
                 "app.o",

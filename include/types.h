@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 
+//rename glm types
 namespace mk
 {
     typedef glm::vec2 Vector2;

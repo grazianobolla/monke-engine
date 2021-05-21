@@ -15,6 +15,7 @@ void mk::Sprite::load(const char *texture_resource_name, mk::Rect tex_rect)
     else
         this->texture_rect = tex_rect;
 
+    //check if the sprite is loaded
     if (this->texture_ptr != nullptr && this->texture_rect != mk::Rect{-1, -1, -1, -1})
     {
         this->loaded = true;
