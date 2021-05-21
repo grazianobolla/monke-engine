@@ -1,9 +1,30 @@
-# monke-engine
+# Monke Engine (Game Engine) ![Grade](https://www.code-inspector.com/project/22868/status/svg "Grade")
+
 Monke Engine aims to be a simple and fast game engine, capable of reproducing any ideas quickly and efficiently.
 Made for those who want something low-level while maintaining simplicity.
 
+# Examples
+## Single Static Sprite
 This for example, is how you render a Sprite that follows your cursor:
-![Code Example](https://raw.githubusercontent.com/grazianobolla/monke-engine/main/readme/draw_sprite.png "Code Example")
-(Keep in mind this code is for beta-v1)
+![Code Example](https://github.com/grazianobolla/monke-engine/blob/main/readme/simple_sprite_code.png "Code Example")
+#### This is how it looks:
 
-And [here is a video](https://youtu.be/A6KFYkGvCeQ) were you can see a few things like mouse and keyboard input, sprites and alpha transparency.
+![Code Example](https://github.com/grazianobolla/monke-engine/blob/main/readme/simple_sprite_example.png "Code Example")
+
+## Multiple Animated Sprites
+Drawing multiple sprites it's also quite easy, for example this is one simple way to render a tilemap.
+First we load our texture, in this case a 128x32 sprite sheet with numbers:
+
+![Code Example](https://github.com/grazianobolla/monke-engine/blob/main/readme/sheet.png "Code Example")
+
+We can then tell the engine to dynamically update the sprites *Texture Coordinates* and render them on a loop.
+
+![Code Example](https://github.com/grazianobolla/monke-engine/blob/main/readme/tilemap_code.png "Code Example")
+
+#### Compile and see how it looks:
+
+![Tilemap Gif](https://github.com/grazianobolla/monke-engine/blob/main/readme/tilemap_gif.gif)
+
+As you can see, the framerate is extremely high, with this tilemap on a GTX1060 it was around 14000 FPS!
+
+![Framerate](https://github.com/grazianobolla/monke-engine/blob/main/readme/tilemap_framerate.png "Framerate")
