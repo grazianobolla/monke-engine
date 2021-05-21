@@ -1,4 +1,5 @@
 #include "display.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 glm::mat4 mk::Display::projection;
 
@@ -27,7 +28,7 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
     glfwMakeContextCurrent(this->window);
 
     //TODO: create a proper thing for enabling this:
-    glfwSwapInterval(0);
+    glfwSwapInterval(1);
 
     //sets the callback for when the window is resized
     glfwSetFramebufferSizeCallback(this->window, this->framebuffer_resize_cb);

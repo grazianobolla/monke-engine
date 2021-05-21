@@ -9,16 +9,13 @@ mk::StateManager mk::Engine::state_manager;
 
 void mk::Engine::run(int width, int height, const char *title)
 {
-    //initialize opengl
+    //initialize things
     this->display.create(width, height, title);
     this->initialize();
-
-    //initialize input
     this->input.set(this->display.window);
-    //initialize renderer
     this->renderer.initialize();
 
-    this->start(); //virtual func
+    this->start(); //virtual function
     double now = 0, last_time = 0;
     float delta = 0;
 
@@ -29,16 +26,16 @@ void mk::Engine::run(int width, int height, const char *title)
         last_time = now;
 
         //logic
+        glfwPollEvents();
+
         for (mk::Tickable *e : this->tickable_elements)
             e->update();
 
-        glfwPollEvents();
-
-        this->update(delta);
+        this->update(delta); //virtual function
 
         //rendering
         glClear(GL_COLOR_BUFFER_BIT);
-        this->render();
+        this->render(); //virtual function
         this->renderer.flush();
         glfwSwapBuffers(display.window);
     }

@@ -1,7 +1,7 @@
 #include "input.h"
 
 int mk::Input::key_states[GLFW_KEY_LAST];
-mk::Vector2 mk::Input::mouse_position;
+mk::Vector2 mk::Input::mouse_pos;
 int mk::Input::mouse_button[GLFW_MOUSE_BUTTON_LAST];
 
 void mk::Input::set(GLFWwindow *window)
@@ -22,7 +22,7 @@ void mk::Input::key_input_callback(GLFWwindow *window, int key, int scancode, in
 
 void mk::Input::cursor_position_callback(GLFWwindow *window, double x, double y)
 {
-    mouse_position = {x, y};
+    mouse_pos = {x, y};
 }
 
 void mk::Input::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)

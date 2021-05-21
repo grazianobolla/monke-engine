@@ -20,7 +20,7 @@ class Game : public Engine
 
     void render()
     {
-        renderer.draw(sprite, input.mouse_position);
+        renderer.draw(sprite, input.mouse_pos);
         renderer.draw(sprite1, {100, 100});
     }
 };

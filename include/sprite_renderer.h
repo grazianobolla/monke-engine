@@ -16,11 +16,10 @@ namespace mk
         SpriteRenderer();
         ~SpriteRenderer() {}
 
+        void initialize();
         void begin();
         void draw(const mk::Sprite &sprite, mk::Vector2 position, mk::Vector2 scale = {1, 1});
         void flush();
-
-        void initialize();
 
     private:
         float vertex_data[MAX_SPRITES * SPRITE_SIZE_IN_FLOATS];
@@ -36,6 +35,6 @@ namespace mk
         mk::Texture *texture = nullptr;
 
         void push_sprite_data(const Sprite &sprite, glm::vec2 position, glm::vec2 scale);
-        void check_flush(mk::Texture *);
+        void check_flush(mk::Texture *new_texture);
     };
 } //namespace mk

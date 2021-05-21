@@ -7,7 +7,26 @@
 
 mk::SpriteRenderer::SpriteRenderer()
 {
-    memset(this->vertex_data, 0, sizeof(vertex_data));
+    memset(this->vertex_data, 0, sizeof(vertex_data)); //initialize array to 0
+}
+
+void mk::SpriteRenderer::initialize()
+{
+    //set shader
+    this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get("default_shader"));
+
+    //set vertex data
+    glGenVertexArrays(1, &vao_id);
+    glBindVertexArray(vao_id);
+
+    glGenBuffers(1, &vbo_id);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_id);
+
+    //init empty vertex buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(this->vertex_data), NULL, GL_DYNAMIC_DRAW);
+
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
 }
 
 void mk::SpriteRenderer::begin()
@@ -78,16 +97,14 @@ void mk::SpriteRenderer::push_sprite_data(const Sprite &sprite, Vector2 position
 //send data to the GPU
 void mk::SpriteRenderer::flush()
 {
-    //only draw if we have something to send
+    //only draw if we have data, a shader and a texture binded
     if (this->has_data == false || this->shader == nullptr || this->texture == nullptr)
         return;
 
     this->has_data = false;
 
-    //bind texture
+    //bind texture and shader
     this->texture->use();
-
-    //bind shader
     this->shader->use();
 
     if (mk::Engine::state_manager.current_projection_matrix != mk::Display::projection)
@@ -107,23 +124,4 @@ void mk::SpriteRenderer::flush()
 
     //prepare to render again
     this->begin();
-}
-
-void mk::SpriteRenderer::initialize()
-{
-    //set shader
-    this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get("default_shader"));
-
-    //set vertex data
-    glGenVertexArrays(1, &vao_id);
-    glBindVertexArray(vao_id);
-
-    glGenBuffers(1, &vbo_id);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_id);
-
-    //init empty vertex buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(this->vertex_data), NULL, GL_DYNAMIC_DRAW);
-
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
 }

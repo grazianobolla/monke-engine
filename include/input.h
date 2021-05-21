@@ -14,11 +14,12 @@ namespace mk
             PRESSED
         };
 
+        static mk::Vector2 mouse_pos;
+        static int key_states[GLFW_KEY_LAST];
+        static int mouse_button[GLFW_MOUSE_BUTTON_LAST];
+
         Input() {}
         void set(GLFWwindow *window);
-        static int key_states[GLFW_KEY_LAST];
-        static mk::Vector2 mouse_position;
-        static int mouse_button[GLFW_MOUSE_BUTTON_LAST];
 
     private:
         static void key_input_callback(GLFWwindow *window, int key, int scancode, int action, int mods);

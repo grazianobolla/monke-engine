@@ -10,6 +10,7 @@
                 "-Iinclude",
                 "-Iinclude/external",
                 "src/**.cpp",
+                "src/external/**.cpp",
                 "-o",
                 "app.o",
                 "-lglfw",
