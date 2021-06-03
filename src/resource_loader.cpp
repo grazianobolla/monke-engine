@@ -3,7 +3,7 @@
 
 #include <string.h>
 
-std::map<const char *, void *> mk::ResourceLoader::resources;
+std::map<const char *, mk::ResourcePointer> mk::ResourceLoader::resources;
 
 void mk::ResourceLoader::load_shader(const char *vert_path, const char *frag_path, const char *key)
 {
@@ -21,7 +21,7 @@ void mk::ResourceLoader::load_shader(const char *vert_path, const char *frag_pat
         return;
     }
 
-    resources.insert({key, static_cast<void *>(temp_shader)});
+    resources.insert({key, static_cast<ResourcePointer>(temp_shader)});
     log_info("loaded shader " << vert_path << " and " << frag_path << " to key '" << key << "'");
 }
 
@@ -41,12 +41,12 @@ void mk::ResourceLoader::load_texture(const char *path, const char *key)
         return;
     }
 
-    resources.insert({key, static_cast<void *>(temp_texture)});
+    resources.insert({key, static_cast<ResourcePointer>(temp_texture)});
 }
 
-void *mk::ResourceLoader::get(const char *resource_name)
+mk::ResourcePointer mk::ResourceLoader::get(const char *resource_name)
 {
-    for (std::map<const char *, void *>::iterator it = resources.begin(); it != resources.end(); ++it)
+    for (std::map<const char *, ResourcePointer>::iterator it = resources.begin(); it != resources.end(); ++it)
     {
         if (strcmp(resource_name, it->first) == 0)
         {
@@ -61,7 +61,7 @@ void mk::ResourceLoader::delete_resource(const char *resource_name, RESOURCE_TYP
 {
     if (exists(resource_name) == true)
     {
-        void *resource_pointer = resources.at(resource_name);
+        ResourcePointer resource_pointer = resources.at(resource_name);
         resources.erase(resource_name);
 
         if (resource_type == RESOURCE_TYPE::SHADER)
@@ -95,7 +95,7 @@ bool mk::ResourceLoader::exists(const char *key)
 void mk::ResourceLoader::log_resources()
 {
     log_info("\nlisting resource loader contents: ");
-    for (std::map<const char *, void *>::iterator it = resources.begin(); it != resources.end(); ++it)
+    for (std::map<const char *, ResourcePointer>::iterator it = resources.begin(); it != resources.end(); ++it)
     {
         fst("key:" << it->first << " value:" << it->second);
     }

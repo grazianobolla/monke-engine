@@ -107,14 +107,14 @@ void mk::SpriteRenderer::flush()
     this->texture->use();
     this->shader->use();
 
-    if (mk::Engine::state_manager.current_projection_matrix != mk::Display::projection)
+    if (mk::StateManager::get()->current_projection_matrix != mk::Display::projection)
     {
         this->shader->set_mat4("projection", mk::Display::projection);
-        mk::Engine::state_manager.current_projection_matrix = mk::Display::projection;
+        mk::StateManager::get()->current_projection_matrix = mk::Display::projection;
         fst("updated projection matrix");
     }
 
-    mk::Engine::state_manager.change_vao(this->vao_id); //just in case
+    mk::StateManager::get()->change_vao(this->vao_id); //just in case
 
     //send data
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_id);

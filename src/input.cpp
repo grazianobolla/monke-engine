@@ -1,4 +1,5 @@
 #include "input.h"
+#include "log.h"
 
 int mk::Input::key_states[GLFW_KEY_LAST];
 int mk::Input::mouse_button[GLFW_MOUSE_BUTTON_LAST];
@@ -6,7 +7,6 @@ int mk::Input::mouse_button[GLFW_MOUSE_BUTTON_LAST];
 void mk::Input::set(GLFWwindow *win)
 {
     this->window = win;
-
     glfwSetKeyCallback(window, this->key_input_callback);
     glfwSetMouseButtonCallback(window, this->mouse_button_callback);
 

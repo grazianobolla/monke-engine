@@ -43,10 +43,10 @@ bool mk::Texture::load(const char *path)
 
 void mk::Texture::use()
 {
-    if (mk::Engine::state_manager.current_texture != this)
+    if (mk::StateManager::get()->current_texture != this)
     {
         //glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, this->id);
-        mk::Engine::state_manager.current_texture = this;
+        mk::StateManager::get()->current_texture = this;
     }
 }

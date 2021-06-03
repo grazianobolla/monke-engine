@@ -1,11 +1,5 @@
 #include "engine.h"
 #include "resource_loader.h"
-#include "tickable.h"
-
-#include <algorithm>
-
-std::vector<mk::Tickable *> mk::Engine::tickable_elements;
-mk::StateManager mk::Engine::state_manager;
 
 void mk::Engine::run(int width, int height, const char *title)
 {
@@ -36,10 +30,6 @@ void mk::Engine::run(int width, int height, const char *title)
 void mk::Engine::compute_logic(float delta)
 {
     glfwPollEvents();
-
-    for (mk::Tickable *e : this->tickable_elements)
-        e->update();
-
     this->update(delta); //virtual function
 }
 
@@ -49,21 +39,6 @@ void mk::Engine::compute_rendering()
     this->render(); //virtual function
     this->renderer.flush();
     this->display.swap_buffer();
-}
-
-void mk::Engine::add_tickable_element(mk::Tickable *element)
-{
-    tickable_elements.push_back(element);
-    log_info("added new tickable element");
-}
-
-void mk::Engine::remove_tickable_element(mk::Tickable *element)
-{
-    auto found_element = std::find(tickable_elements.begin(), tickable_elements.end(), element);
-    if (found_element != std::end(tickable_elements))
-        tickable_elements.erase(found_element);
-
-    log_info("deleted tickable element");
 }
 
 void mk::Engine::initialize()

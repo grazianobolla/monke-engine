@@ -19,6 +19,7 @@ namespace mk
         mk::Vector2 get_size();
         void clear_buffer();
         void swap_buffer();
+
     private:
         int width, height;
         int opengl_major, opengl_minor;
