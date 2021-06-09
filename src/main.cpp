@@ -1,48 +1,29 @@
 #include "engine.h"
 #include "resource_loader.h"
 
-using namespace mk;
-
-class Game : public Engine
+class Game : public mk::Engine
 {
-    Sprite sprite, sprite1;
-    Vector2 pos = {0, 0}, mouse;
+    mk::Sprite sprite;
+    mk::Vector2 pos = {100, 100}, mouse;
 
     void start()
     {
         //load the texture into memory
-        ResourceLoader::load_texture("textures/sheet.png", "sheet");
-        ResourceLoader::load_texture("textures/happy.png", "happy");
-        sprite.load("sheet");
-        sprite1.load("happy");
+        mk::ResourceLoader::load_texture("textures/happy.png", "happy");
+        sprite.load("happy");
 
         mouse = input.get_mouse_pos();
     }
 
-    int interval = 0;
     void update(float delta)
     {
-        if (input.key_states[GLFW_KEY_F1])
-        {
-            if (interval == 0)
-                interval = 1;
-            else
-                interval = 0;
-            glfwSwapInterval(interval);
-        }
-        if (input.key_states[GLFW_KEY_RIGHT])
-            pos.x += 1000 * delta;
-        if (input.key_states[GLFW_KEY_LEFT])
-            pos.x -= 1000 * delta;
-        pos.y = 100;
-
         mouse = input.get_mouse_pos();
+        pos += mk::math::Normalize((mouse - pos)) * delta * 1000.0f;
     }
 
     void render()
     {
-        renderer.draw(sprite, mouse);
-        renderer.draw(sprite1, pos, {0.2f, 0.2f});
+        renderer.draw(sprite, pos, {.1f, .1f});
     }
 };
 

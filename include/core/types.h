@@ -5,9 +5,10 @@
 namespace mk
 {
     typedef glm::vec2 Vector2;
-    typedef glm::vec4 Vector4;
     typedef glm::vec4 Rect;
 
-    typedef glm::mat4 Mat4;
-
+    namespace math
+    {
+        mk::Vector2 Normalize(const mk::Vector2 &);
+    }
 } //namespace mk
