@@ -1,9 +1,13 @@
-#include "sprite_renderer.h"
-#include "engine.h"
-#include "resource_loader.h"
+#include "core/sprite_renderer.h"
+#include "core/engine.h"
+#include "core/resource_loader.h"
+#include "core/types.h"
+
+#include "external/glad/glad.h"
 
 #include <cstring>
-#include <glad/glad.h>
+
+mk::StateManager *state_manager = mk::StateManager::get();
 
 mk::SpriteRenderer::SpriteRenderer()
 {
@@ -34,7 +38,7 @@ void mk::SpriteRenderer::begin()
     this->sprite_count = 0; //reset sprite counter
 }
 
-void mk::SpriteRenderer::draw(const Sprite &sprite, Vector2 position, Vector2 scale)
+void mk::SpriteRenderer::draw(const mk::Sprite &sprite, mk::Vector2f position, mk::Vector2f scale)
 {
     if (sprite.loaded == false)
     {
@@ -62,12 +66,12 @@ void mk::SpriteRenderer::check_flush(mk::Texture *new_texture)
     }
 }
 
-void mk::SpriteRenderer::push_sprite_data(const Sprite &sprite, Vector2 position, Vector2 scale)
+void mk::SpriteRenderer::push_sprite_data(const mk::Sprite &sprite, mk::Vector2f position, mk::Vector2f scale)
 {
-    Vector2 size = {sprite.texture_ptr->width * scale.x, sprite.texture_ptr->height * scale.y};
+    mk::Vector2f size = {sprite.texture_ptr->width * scale.x, sprite.texture_ptr->height * scale.y};
 
-    Vector2 tex_size(sprite.texture_rect.z / sprite.texture_ptr->width, sprite.texture_rect.w / sprite.texture_ptr->height);
-    Vector2 tex_coords(sprite.texture_rect.x / sprite.texture_ptr->width, sprite.texture_rect.y / sprite.texture_ptr->height);
+    mk::Vector2f tex_size = {sprite.texture_rect.w / sprite.texture_ptr->width, sprite.texture_rect.h / sprite.texture_ptr->height};
+    mk::Vector2f tex_coords = {sprite.texture_rect.x / sprite.texture_ptr->width, sprite.texture_rect.y / sprite.texture_ptr->height};
 
     //define every vertex the sprite has
     float sprite_vertices[VERTEX_PER_SPRITE][VERTEX_SIZE_IN_FLOATS] = {
@@ -107,14 +111,18 @@ void mk::SpriteRenderer::flush()
     this->texture->use();
     this->shader->use();
 
-    if (mk::StateManager::get()->current_projection_matrix != mk::Display::projection)
+    if (state_manager->current_projection_matrix != mk::Display::projection)
     {
         this->shader->set_mat4("projection", mk::Display::projection);
-        mk::StateManager::get()->current_projection_matrix = mk::Display::projection;
+        state_manager->current_projection_matrix = mk::Display::projection;
         fst("updated projection matrix");
     }
 
-    mk::StateManager::get()->change_vao(this->vao_id); //just in case
+    if (state_manager->current_vao != this->vao_id)
+    {
+        glBindVertexArray(this->vao_id);
+        state_manager->current_vao = this->vao_id;
+    }
 
     //send data
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_id);

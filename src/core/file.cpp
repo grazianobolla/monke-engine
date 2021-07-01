@@ -1,5 +1,5 @@
-#include "file.h"
-#include "log.h"
+#include "core/file.h"
+#include "core/log.h"
 
 #include <fstream>
 #include <sstream>

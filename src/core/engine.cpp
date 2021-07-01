@@ -1,5 +1,5 @@
-#include "engine.h"
-#include "resource_loader.h"
+#include "core/engine.h"
+#include "core/resource_loader.h"
 
 #include <thread>
 

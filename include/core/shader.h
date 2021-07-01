@@ -1,7 +1,6 @@
 #pragma once
-#include "types.h"
-
-#include <glad/glad.h>
+#include "external/glm/glm.hpp"
+#include "external/glad/glad.h"
 
 namespace mk
 {

@@ -1,10 +1,9 @@
-#include "engine.h"
-#include "resource_loader.h"
+#include "core/engine.h"
+#include "core/resource_loader.h"
 
 class Game : public mk::Engine
 {
     mk::Sprite sprite;
-    mk::Vector2 pos = {100, 100}, mouse;
 
     void start()
     {
@@ -12,18 +11,18 @@ class Game : public mk::Engine
         mk::ResourceLoader::load_texture("textures/happy.png", "happy");
         sprite.load("happy");
 
-        mouse = input.get_mouse_pos();
+        mk::Rectf r = {1, 1, 1, 1}, b = {2, 5, 4, 5}, c = {1, 2, 1, 1};
+
+        fst((r == c));
     }
 
     void update(float delta)
     {
-        mouse = input.get_mouse_pos();
-        pos += mk::math::Normalize((mouse - pos)) * delta * 1000.0f;
     }
 
     void render()
     {
-        renderer.draw(sprite, pos, {.1f, .1f});
+        renderer.draw(sprite, {input.get_mouse_pos().x, input.get_mouse_pos().y}, {.1f, .1f});
     }
 };
 

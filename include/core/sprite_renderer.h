@@ -1,7 +1,9 @@
 #pragma once
-#include "sprite.h"
-#include "shader.h"
-#include "types.h"
+#include "core/sprite.h"
+#include "core/shader.h"
+#include "core/types.h"
+
+#include "external/glm/glm.hpp"
 
 #define MAX_SPRITES 5000         //max amounr of sprites allowed until flush
 #define SPRITE_SIZE_IN_FLOATS 24 //6 vertexs, each vertex is 4 floats
@@ -18,7 +20,7 @@ namespace mk
 
         void initialize();
         void begin();
-        void draw(const mk::Sprite &sprite, mk::Vector2 position, mk::Vector2 scale = {1, 1});
+        void draw(const mk::Sprite &sprite, mk::Vector2f position, mk::Vector2f scale = {1, 1});
         void flush();
 
     private:
@@ -34,7 +36,7 @@ namespace mk
         mk::Shader *shader = nullptr;
         mk::Texture *texture = nullptr;
 
-        void push_sprite_data(const Sprite &sprite, mk::Vector2 position, mk::Vector2 scale);
+        void push_sprite_data(const Sprite &sprite, mk::Vector2f position, mk::Vector2f scale);
         void check_flush(mk::Texture *new_texture);
     };
 } //namespace mk

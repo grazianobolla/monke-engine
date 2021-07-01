@@ -1,7 +1,7 @@
-#include "shader.h"
-#include "file.h"
-#include "log.h"
-#include "state_manager.h"
+#include "core/shader.h"
+#include "core/file.h"
+#include "core/log.h"
+#include "core/state_manager.h"
 
 bool mk::Shader::load(const char *vert_path, const char *frag_path)
 {

@@ -1,11 +1,11 @@
-#include "collider.h"
+#include "core/collider.h"
 
-mk::Collider::Collider(const mk::Rect &rect)
+mk::Collider::Collider(const mk::Rectf &rect)
 {
     this->collision_shape = rect;
 }
 
-bool mk::Collider::CollidingWith(const mk::Rect &rect)
+bool mk::Collider::CollidingWith(const mk::Rectf &rect)
 {
     return false;
 }

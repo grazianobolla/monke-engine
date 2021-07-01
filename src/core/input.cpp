@@ -1,5 +1,5 @@
-#include "input.h"
-#include "log.h"
+#include "core/input.h"
+#include "core/log.h"
 
 int mk::Input::key_states[GLFW_KEY_LAST];
 int mk::Input::mouse_button[GLFW_MOUSE_BUTTON_LAST];
@@ -25,7 +25,7 @@ void mk::Input::mouse_button_callback(GLFWwindow *window, int button, int action
     mouse_button[button] = action > 0 ? KEY_STATE::PRESSED : KEY_STATE::NONE;
 }
 
-mk::Vector2 mk::Input::get_mouse_pos()
+mk::Vector2i mk::Input::get_mouse_pos()
 {
     double x, y;
     glfwGetCursorPos(this->window, &x, &y);

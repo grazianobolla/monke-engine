@@ -1,5 +1,7 @@
-#include "display.h"
-#include <glm/gtc/matrix_transform.hpp>
+#include "core/display.h"
+#include "core/types.h"
+
+#include "external/glm/gtc/matrix_transform.hpp"
 
 glm::mat4 mk::Display::projection;
 
@@ -51,7 +53,7 @@ void mk::Display::framebuffer_resize_cb(GLFWwindow *window, int new_width, int n
     projection = glm::ortho(0.0f, static_cast<float>(new_width), static_cast<float>(new_height), 0.0f, -1.0f, 1.0f);
 }
 
-mk::Vector2 mk::Display::get_size()
+mk::Vector2i mk::Display::get_size()
 {
     int w, h;
     glfwGetFramebufferSize(this->window, &w, &h);

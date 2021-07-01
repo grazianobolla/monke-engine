@@ -1,5 +1,5 @@
 #pragma once
-#include "types.h"
+#include "core/types.h"
 
 #include <GLFW/glfw3.h>
 
@@ -20,7 +20,7 @@ namespace mk
 
         Input() {}
         void set(GLFWwindow *win);
-        mk::Vector2 get_mouse_pos();
+        mk::Vector2i get_mouse_pos();
 
     private:
         static void key_input_callback(GLFWwindow *window, int key, int scancode, int action, int mods);

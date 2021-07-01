@@ -1,8 +1,10 @@
 #pragma once
-#include "log.h"
-#include "types.h"
+#include "core/log.h"
+#include "core/types.h"
 
-#include <glad/glad.h>
+#include "external/glm/glm.hpp"
+#include "external/glad/glad.h"
+
 #include <GLFW/glfw3.h>
 #include <string>
 
@@ -16,7 +18,7 @@ namespace mk
 
         Display() {}
         void create(int width = 800, int height = 600, const char *title = "OpenGL Window", int opengl_major = 3, int opengl_minor = 3);
-        mk::Vector2 get_size();
+        mk::Vector2i get_size();
         void clear_buffer();
         void swap_buffer();
 

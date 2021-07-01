@@ -1,11 +1,11 @@
-#include "texture.h"
-#include "log.h"
-#include "engine.h"
+#include "core/texture.h"
+#include "core/engine.h"
+#include "core/log.h"
 
-#include <glad/glad.h>
+#include "external/glad/glad.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
+#include "external/stb_image.h"
 
 bool mk::Texture::load(const char *path)
 {

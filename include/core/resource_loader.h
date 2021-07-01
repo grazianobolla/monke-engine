@@ -1,6 +1,6 @@
 #pragma once
-#include "shader.h"
-#include "texture.h"
+#include "core/shader.h"
+#include "core/texture.h"
 
 #include <map>
 

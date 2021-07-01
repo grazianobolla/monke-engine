@@ -1,5 +1,5 @@
-#include "resource_loader.h"
-#include "log.h"
+#include "core/resource_loader.h"
+#include "core/log.h"
 
 #include <string.h>
 

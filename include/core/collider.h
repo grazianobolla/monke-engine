@@ -1,15 +1,15 @@
 #pragma once
-#include "types.h"
+#include "core/types.h"
 
 namespace mk
 {
     struct Collider
     {
     public:
-        Collider(const mk::Rect &);
-        bool CollidingWith(const mk::Rect &);
+        Collider(const mk::Rectf &);
+        bool CollidingWith(const mk::Rectf &);
 
     private:
-        mk::Rect collision_shape;
+        mk::Rectf collision_shape;
     };
 }

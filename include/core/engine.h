@@ -1,8 +1,8 @@
 #pragma once
-#include "display.h"
-#include "input.h"
-#include "state_manager.h"
-#include "sprite_renderer.h"
+#include "core/display.h"
+#include "core/input.h"
+#include "core/state_manager.h"
+#include "core/sprite_renderer.h"
 
 #include <vector>
 
