@@ -12,6 +12,7 @@
                 "src/core/**.cpp",
                 "src/external/**.cpp",
                 "src/types/**.cpp",
+               // "src/game/**.cpp",
                 "-o",
                 "app.o",
                 "-lglfw",

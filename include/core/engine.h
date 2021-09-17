@@ -1,7 +1,6 @@
 #pragma once
 #include "core/display.h"
 #include "core/input.h"
-#include "core/state_manager.h"
 #include "core/sprite_renderer.h"
 
 #include <vector>

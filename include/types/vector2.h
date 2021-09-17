@@ -9,21 +9,30 @@ namespace mk
         T x = 0, y = 0;
 
         Vector2() {}
-        template <typename P>
 
+        template <typename P>
         Vector2(P _x, P _y)
         {
-            this->x = static_cast<T>(_x);
-            this->y = static_cast<T>(_y);
+            x = static_cast<T>(_x);
+            y = static_cast<T>(_y);
+        }
+
+        template <typename P>
+        operator Vector2<P>() const
+        {
+            return Vector2<P>(
+                static_cast<P>(x),
+                static_cast<P>(y));
         }
 
         void Normalize()
         {
-            float magnitude = std::sqrt(this->x * this->x + this->y * this->y);
+            float magnitude = std::sqrt(x * x + y * y);
+
             if (magnitude > 0)
             {
-                this->x /= magnitude;
-                this->y /= magnitude;
+                x /= magnitude;
+                y /= magnitude;
             }
         }
     };

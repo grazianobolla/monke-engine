@@ -1,7 +1,6 @@
 #include "core/shader.h"
 #include "core/file.h"
 #include "core/log.h"
-#include "core/state_manager.h"
 
 bool mk::Shader::load(const char *vert_path, const char *frag_path)
 {
@@ -59,11 +58,8 @@ unsigned int mk::Shader::create_shader(const char *path, unsigned int type)
 
 void mk::Shader::use()
 {
-    if (mk::StateManager::get()->current_shader != this)
-    {
-        glUseProgram(this->id);
-        mk::StateManager::get()->current_shader = this;
-    }
+    //TODO: not bind if already binded
+    glUseProgram(this->id);
 }
 
 unsigned int mk::Shader::get_uniform_location(const char *uniform_name)

@@ -25,7 +25,7 @@ void mk::Engine::run(int width, int height, const char *title)
         this->compute_logic(delta);
         this->compute_rendering();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(1)); //prevents too much CPU use TODO: handle this
+        std::this_thread::sleep_for(std::chrono::milliseconds(1)); //TODO: handle this
     }
 
     glfwTerminate();

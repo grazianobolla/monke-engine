@@ -7,8 +7,6 @@
 
 #include <cstring>
 
-mk::StateManager *state_manager = mk::StateManager::get();
-
 mk::SpriteRenderer::SpriteRenderer()
 {
     memset(this->vertex_data, 0, sizeof(vertex_data)); //initialize array to 0
@@ -57,12 +55,14 @@ void mk::SpriteRenderer::check_flush(mk::Texture *new_texture)
     if (sprite_count + 1 > MAX_SPRITES)
     {
         this->flush();
+        return;
     }
 
     if (this->texture != new_texture)
     {
         this->flush();
         this->texture = new_texture;
+        return;
     }
 }
 
@@ -111,18 +111,11 @@ void mk::SpriteRenderer::flush()
     this->texture->use();
     this->shader->use();
 
-    if (state_manager->current_projection_matrix != mk::Display::projection)
-    {
-        this->shader->set_mat4("projection", mk::Display::projection);
-        state_manager->current_projection_matrix = mk::Display::projection;
-        fst("updated projection matrix");
-    }
+    //set projection
+    this->shader->set_mat4("projection", mk::Display::projection);
 
-    if (state_manager->current_vao != this->vao_id)
-    {
-        glBindVertexArray(this->vao_id);
-        state_manager->current_vao = this->vao_id;
-    }
+    //bind vao
+    glBindVertexArray(this->vao_id);
 
     //send data
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_id);

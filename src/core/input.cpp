@@ -31,3 +31,11 @@ mk::Vector2i mk::Input::get_mouse_pos()
     glfwGetCursorPos(this->window, &x, &y);
     return {x, y};
 }
+
+bool mk::Input::is_key_pressed(int key_code)
+{
+    if (key_code > GLFW_KEY_LAST)
+        return false;
+
+    return key_states[key_code] == KEY_STATE::PRESSED;
+}
