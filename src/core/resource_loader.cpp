@@ -3,6 +3,7 @@
 
 #include <string.h>
 
+// resource map <path/key, pointer> format
 std::map<const char *, mk::ResourcePointer> mk::ResourceLoader::resources;
 
 void mk::ResourceLoader::load_shader(const char *vert_path, const char *frag_path, const char *key)
@@ -25,36 +26,25 @@ void mk::ResourceLoader::load_shader(const char *vert_path, const char *frag_pat
     log_info("loaded shader " << vert_path << " and " << frag_path << " to key '" << key << "'");
 }
 
-void mk::ResourceLoader::load_texture(const char *path, const char *key)
+mk::Texture *mk::ResourceLoader::load_texture(const char *path)
 {
-    if (exists(key))
+    // check if the texture is saved in the resource map
+    if (exists(path))
     {
-        log_info("texture " << key << " already exists, skipping");
-        return;
+        log_info("texture " << path << " already exists, skipping");
+        return static_cast<mk::Texture *>(resources.at(path));
     }
 
     mk::Texture *temp_texture = new mk::Texture();
 
     if (temp_texture->load(path) == false)
     {
-        log_info("error while loading " << key << " texture (maybe file does not exist)");
-        return;
+        log_info("error while loading " << path << " texture (maybe file does not exist)");
+        return nullptr;
     }
 
-    resources.insert({key, static_cast<ResourcePointer>(temp_texture)});
-}
-
-mk::ResourcePointer mk::ResourceLoader::get(const char *resource_name)
-{
-    for (std::map<const char *, ResourcePointer>::iterator it = resources.begin(); it != resources.end(); ++it)
-    {
-        if (strcmp(resource_name, it->first) == 0)
-        {
-            return it->second;
-        }
-    }
-
-    return nullptr;
+    resources.insert({path, static_cast<ResourcePointer>(temp_texture)});
+    return temp_texture;
 }
 
 void mk::ResourceLoader::delete_resource(const char *resource_name, RESOURCE_TYPE resource_type)
@@ -83,6 +73,19 @@ void mk::ResourceLoader::delete_resource(const char *resource_name, RESOURCE_TYP
     }
 
     log_info(resource_type << resource_name << " does not exist");
+}
+
+mk::ResourcePointer mk::ResourceLoader::get(const char *resource_name)
+{
+    for (std::map<const char *, ResourcePointer>::iterator it = resources.begin(); it != resources.end(); ++it)
+    {
+        if (strcmp(resource_name, it->first) == 0)
+        {
+            return it->second;
+        }
+    }
+
+    return nullptr;
 }
 
 bool mk::ResourceLoader::exists(const char *key)

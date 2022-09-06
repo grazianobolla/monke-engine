@@ -14,6 +14,6 @@ namespace mk
 
         Sprite() {}
         Sprite(const char *texture_resource_name, mk::Rectf tex_rect = {-1, -1, -1, -1});
-        void load(const char *texture_resource_name, mk::Rectf tex_rect = {-1, -1, -1, -1});
+        void load(const char *path, mk::Rectf tex_rect = {-1, -1, -1, -1});
     };
 };
