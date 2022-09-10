@@ -36,7 +36,7 @@ void mk::SpriteRenderer::begin()
     this->sprite_count = 0; //reset sprite counter
 }
 
-void mk::SpriteRenderer::draw(const mk::Sprite &sprite, mk::Vector2f position, mk::Vector2f scale)
+void mk::SpriteRenderer::draw(const mk::Sprite &sprite, mk::Vector2 position, mk::Vector2 scale)
 {
     if (sprite.loaded == false)
     {
@@ -66,12 +66,12 @@ void mk::SpriteRenderer::check_flush(mk::Texture *new_texture)
     }
 }
 
-void mk::SpriteRenderer::push_sprite_data(const mk::Sprite &sprite, mk::Vector2f position, mk::Vector2f scale)
+void mk::SpriteRenderer::push_sprite_data(const mk::Sprite &sprite, mk::Vector2 position, mk::Vector2 scale)
 {
-    mk::Vector2f size = {sprite.texture_ptr->width * scale.x, sprite.texture_ptr->height * scale.y};
+    mk::Vector2 size = {sprite.texture_ptr->width * scale.x, sprite.texture_ptr->height * scale.y};
 
-    mk::Vector2f tex_size = {sprite.texture_rect.w / sprite.texture_ptr->width, sprite.texture_rect.h / sprite.texture_ptr->height};
-    mk::Vector2f tex_coords = {sprite.texture_rect.x / sprite.texture_ptr->width, sprite.texture_rect.y / sprite.texture_ptr->height};
+    mk::Vector2 tex_size = {sprite.texture_rect.w / sprite.texture_ptr->width, sprite.texture_rect.h / sprite.texture_ptr->height};
+    mk::Vector2 tex_coords = {sprite.texture_rect.x / sprite.texture_ptr->width, sprite.texture_rect.y / sprite.texture_ptr->height};
 
     //define every vertex the sprite has
     float sprite_vertices[VERTEX_PER_SPRITE][VERTEX_SIZE_IN_FLOATS] = {
