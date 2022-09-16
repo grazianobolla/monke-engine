@@ -4,27 +4,22 @@
 
 class Game : public mk::Engine
 {
-    mk::Sprite sprite, sprite_sheet;
+    mk::Sprite sprite;
     mk::Vector2 pos;
 
     void start()
     {
         // load the texture into memory
-        sprite.load("textures/happy.png");
-        sprite_sheet.load("textures/happy.png");
+        sprite.load("textures/sheet.png", {0, 0, 16, 16});
     }
 
     void update(float delta)
     {
-        if (input.is_mouse_pressed(GLFW_MOUSE_BUTTON_1))
-            pos += mk::Vector2(64, 16) * delta;
-
-        fst(pos.to_string());
     }
 
     void render()
     {
-        renderer.draw(sprite_sheet, input.get_mouse_pos() + pos, mk::Vector2(0.1f, 0.1f));
+        renderer.draw(sprite, {0, 0}, {1, 1});
     }
 };
 
