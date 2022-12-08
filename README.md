@@ -9,6 +9,8 @@ Made for those who want something low-level while maintaining simplicity.
 - Create a main.cpp file (there is a demo in the repo)
 - Run using `export LD_LIBRARY_PATH=/usr/local/lib && g++ YOURMAINFILE.cpp -Iinclude -lmonke -lGL -lglfw -o app.o && ./app.o`
 
+[DEMO REPO](https://github.com/grazianobolla/monke-engine-demo)
+
 # Examples
 ## Single Static Sprite
 This for example, is how you render a Sprite that follows your cursor:
