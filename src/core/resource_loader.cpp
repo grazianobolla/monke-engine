@@ -1,5 +1,5 @@
-#include "core/resource_loader.h"
-#include "core/log.h"
+#include "monke/core/resource_loader.h"
+#include "monke/core/log.h"
 
 #include <string.h>
 

@@ -1,9 +1,9 @@
 #pragma once
-#include "core/log.h"
-#include "core/types.h"
+#include "monke/core/log.h"
+#include "monke/core/types.h"
 
-#include "external/glm/glm.hpp"
-#include "external/glad/glad.h"
+#include "monke/external/glm/glm.hpp"
+#include "monke/external/glad/glad.h"
 
 #include <GLFW/glfw3.h>
 #include <string>

@@ -1,5 +1,5 @@
-#include "core/engine.h"
-#include "core/resource_loader.h"
+#include "monke/core/engine.h"
+#include "monke/core/resource_loader.h"
 
 #include <thread>
 

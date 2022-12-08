@@ -1,5 +1,5 @@
-#include "core/input.h"
-#include "core/log.h"
+#include "monke/core/input.h"
+#include "monke/core/log.h"
 
 int mk::Input::keyboard_states[GLFW_KEY_LAST];
 int mk::Input::mouse_states[GLFW_MOUSE_BUTTON_LAST];

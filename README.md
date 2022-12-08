@@ -5,11 +5,7 @@ Made for those who want something low-level while maintaining simplicity.
 
 # Use (linux)
 - Compile using `make`
-- Create a new project folder and copy `include` and `shaders` into it
-- Create a main.cpp file (there is a demo in the repo)
-- Run using `export LD_LIBRARY_PATH=/usr/local/lib && g++ YOURMAINFILE.cpp -Iinclude -lmonke -lGL -lglfw -o app.o && ./app.o`
-
-[DEMO REPO](https://github.com/grazianobolla/monke-engine-demo)
+- Download the [demo repo](https://github.com/grazianobolla/monke-engine-demo) and have fun!
 
 # Examples
 ## Single Static Sprite

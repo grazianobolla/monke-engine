@@ -1,7 +1,7 @@
-#include "core/display.h"
-#include "core/types.h"
+#include "monke/core/display.h"
+#include "monke/core/types.h"
 
-#include "external/glm/gtc/matrix_transform.hpp"
+#include "monke/external/glm/gtc/matrix_transform.hpp"
 
 glm::mat4 mk::Display::projection;
 

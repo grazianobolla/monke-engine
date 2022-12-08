@@ -1,9 +1,9 @@
 #pragma once
-#include "core/sprite.h"
-#include "core/shader.h"
-#include "core/types.h"
+#include "monke/core/sprite.h"
+#include "monke/core/shader.h"
+#include "monke/core/types.h"
 
-#include "external/glm/glm.hpp"
+#include "monke/external/glm/glm.hpp"
 
 #define MAX_SPRITES 5000         // max amounr of sprites allowed until flush
 #define SPRITE_SIZE_IN_FLOATS 24 // 6 vertexs, each vertex is 4 floats

@@ -1,6 +1,6 @@
 #pragma once
-#include "core/shader.h"
-#include "core/texture.h"
+#include "monke/core/shader.h"
+#include "monke/core/texture.h"
 
 #include <map>
 

@@ -1,6 +1,6 @@
-#include "core/sprite.h"
-#include "core/resource_loader.h"
-#include "core/log.h"
+#include "monke/core/sprite.h"
+#include "monke/core/resource_loader.h"
+#include "monke/core/log.h"
 
 mk::Sprite::Sprite(const char *texture_path, mk::Rectf tex_rect)
 {

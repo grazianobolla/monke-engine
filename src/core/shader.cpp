@@ -1,6 +1,6 @@
-#include "core/shader.h"
-#include "core/file.h"
-#include "core/log.h"
+#include "monke/core/shader.h"
+#include "monke/core/file.h"
+#include "monke/core/log.h"
 
 bool mk::Shader::load(const char *vert_path, const char *frag_path)
 {

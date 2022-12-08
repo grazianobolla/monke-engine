@@ -1,6 +1,6 @@
 #pragma once
-#include "core/texture.h"
-#include "core/types.h"
+#include "monke/core/texture.h"
+#include "monke/core/types.h"
 
 namespace mk
 {

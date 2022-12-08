@@ -1,7 +1,7 @@
 #pragma once
-#include "core/display.h"
-#include "core/input.h"
-#include "core/sprite_renderer.h"
+#include "monke/core/display.h"
+#include "monke/core/input.h"
+#include "monke/core/sprite_renderer.h"
 
 #include <vector>
 

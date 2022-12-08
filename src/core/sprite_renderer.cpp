@@ -1,9 +1,9 @@
-#include "core/sprite_renderer.h"
-#include "core/engine.h"
-#include "core/resource_loader.h"
-#include "core/types.h"
+#include "monke/core/sprite_renderer.h"
+#include "monke/core/engine.h"
+#include "monke/core/resource_loader.h"
+#include "monke/core/types.h"
 
-#include "external/glad/glad.h"
+#include "monke/external/glad/glad.h"
 
 #include <cstring>
 

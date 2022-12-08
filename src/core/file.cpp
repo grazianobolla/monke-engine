@@ -1,5 +1,5 @@
-#include "core/file.h"
-#include "core/log.h"
+#include "monke/core/file.h"
+#include "monke/core/log.h"
 
 #include <fstream>
 #include <sstream>
