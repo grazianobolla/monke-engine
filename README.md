@@ -3,6 +3,12 @@
 Monke Engine aims to be a simple and fast game engine, capable of reproducing any ideas quickly and efficiently.
 Made for those who want something low-level while maintaining simplicity.
 
+# Use (linux)
+- Compile using `make`
+- Create a new project folder and copy `include` and `shaders` into it
+- Create a main.cpp file (there is a demo in the repo)
+- Run using `export LD_LIBRARY_PATH=/usr/local/lib && g++ YOURMAINFILE.cpp -Iinclude -lmonke -lGL -lglfw -o app.o && ./app.o`
+
 # Examples
 ## Single Static Sprite
 This for example, is how you render a Sprite that follows your cursor:

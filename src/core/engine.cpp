@@ -5,13 +5,13 @@
 
 void mk::Engine::run(int width, int height, const char *title)
 {
-    //initialize things
+    // initialize things
     this->display.create(width, height, title);
     this->initialize();
     this->input.set(this->display.window);
-    this->renderer.initialize();
+    this->sprite_renderer.initialize();
 
-    this->start(); //virtual function
+    this->start(); // virtual function
 
     double now = 0, last_time = 0;
     float delta = 0;
@@ -25,7 +25,7 @@ void mk::Engine::run(int width, int height, const char *title)
         this->compute_logic(delta);
         this->compute_rendering();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(1)); //TODO: handle this
+        std::this_thread::sleep_for(std::chrono::milliseconds(1)); // TODO: handle this
     }
 
     glfwTerminate();
@@ -34,14 +34,14 @@ void mk::Engine::run(int width, int height, const char *title)
 void mk::Engine::compute_logic(float delta)
 {
     glfwPollEvents();
-    this->update(delta); //virtual function
+    this->update(delta); // virtual function
 }
 
 void mk::Engine::compute_rendering()
 {
     this->display.clear_buffer();
-    this->render(); //virtual function
-    this->renderer.flush();
+    this->render(); // virtual function
+    this->sprite_renderer.flush();
     this->display.swap_buffer();
 }
 

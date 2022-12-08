@@ -15,7 +15,7 @@ namespace mk
     public:
         mk::Display display;
         mk::Input input;
-        mk::SpriteRenderer renderer;
+        mk::SpriteRenderer sprite_renderer;
 
         Engine(){};
         void run(int width, int height, const char *title);
