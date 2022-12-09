@@ -21,6 +21,7 @@ namespace mk
         void initialize();
         void begin();
         void draw(const mk::Sprite &sprite);
+        void draw(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale);
         void flush();
 
     private:
@@ -36,7 +37,7 @@ namespace mk
         mk::Shader *shader = nullptr;
         mk::Texture *texture = nullptr;
 
-        void push_sprite_data(const Sprite &sprite, mk::Vector2 position, mk::Vector2 scale);
+        void push_draw_data(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale);
         void check_flush(mk::Texture *new_texture);
     };
 } // namespace mk

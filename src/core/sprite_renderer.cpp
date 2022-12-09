@@ -45,7 +45,14 @@ void mk::SpriteRenderer::draw(const mk::Sprite &sprite)
     }
 
     this->check_flush(sprite.texture_ptr);
-    this->push_sprite_data(sprite, sprite.position, sprite.scale);
+    this->push_draw_data(sprite.texture_ptr, sprite.texture_rect, sprite.position, sprite.scale);
+    this->sprite_count++;
+}
+
+void mk::SpriteRenderer::draw(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale)
+{
+    this->check_flush(texture);
+    this->push_draw_data(texture, texture_rect, position, scale);
     this->sprite_count++;
 }
 
@@ -66,22 +73,22 @@ void mk::SpriteRenderer::check_flush(mk::Texture *new_texture)
     }
 }
 
-void mk::SpriteRenderer::push_sprite_data(const mk::Sprite &sprite, mk::Vector2 position, mk::Vector2 scale)
+void mk::SpriteRenderer::push_draw_data(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale)
 {
-    mk::Vector2 size = {sprite.texture_ptr->width * scale.x, sprite.texture_ptr->height * scale.y};
+    mk::Vector2 size = {texture->width * scale.x, texture->height * scale.y};
 
-    mk::Vector2 tex_size = {sprite.texture_rect.w / sprite.texture_ptr->width, sprite.texture_rect.h / sprite.texture_ptr->height};
-    mk::Vector2 tex_coords = {sprite.texture_rect.x / sprite.texture_ptr->width, sprite.texture_rect.y / sprite.texture_ptr->height};
+    mk::Vector2 tex_size = {texture_rect.w / texture->width, texture_rect.h / texture->height};
+    mk::Vector2 tex_coords = {texture_rect.x / texture->width, texture_rect.y / texture->height};
 
     // define every vertex the sprite has
     float sprite_vertices[VERTEX_PER_SPRITE][VERTEX_SIZE_IN_FLOATS] = {
-        {position.x, position.y, tex_coords.x, tex_coords.y},                                                 // top left
-        {position.x + size.x * tex_size.x, position.y * tex_size.y, tex_coords.x + tex_size.x, tex_coords.y}, // top right
-        {position.x, position.y + size.y * tex_size.y, tex_coords.x, tex_coords.y + tex_size.y},              // bottom left
+        {position.x, position.y, tex_coords.x, tex_coords.y},                                    // top left
+        {position.x + size.x * tex_size.x, position.y, tex_coords.x + tex_size.x, tex_coords.y}, // top right
+        {position.x, position.y + size.y * tex_size.y, tex_coords.x, tex_coords.y + tex_size.y}, // bottom left
 
         {position.x, position.y + size.y * tex_size.y, tex_coords.x, tex_coords.y + tex_size.y},                                    // bottom left
         {position.x + size.x * tex_size.x, position.y + size.y * tex_size.y, tex_coords.x + tex_size.x, tex_coords.y + tex_size.y}, // bottom right
-        {position.x + size.x * tex_size.x, position.y * tex_size.y, tex_coords.x + tex_size.x, tex_coords.y},                       // top right
+        {position.x + size.x * tex_size.x, position.y, tex_coords.x + tex_size.x, tex_coords.y},                                    // top right
 
     };
 

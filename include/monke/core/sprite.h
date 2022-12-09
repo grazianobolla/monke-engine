@@ -7,9 +7,9 @@ namespace mk
     class Sprite
     {
     public:
-        mk::Texture *texture_ptr;
-        mk::Rectf texture_rect;
         mk::Vector2 position, scale;
+        mk::Rectf texture_rect;
+        mk::Texture *texture_ptr;
 
         bool loaded = false;
 

@@ -61,6 +61,12 @@ namespace mk
             return Vector2(x * other, y * other);
         }
 
+        template <typename P>
+        Vector2 operator/(const P &other)
+        {
+            return Vector2(x / other, y / other);
+        }
+
         std::string to_string()
         {
             return "(" + std::to_string(x) + " " + std::to_string(y) + ")";
