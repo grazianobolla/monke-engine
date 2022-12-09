@@ -5,9 +5,14 @@
 
 void mk::Engine::run(int width, int height, const char *title)
 {
-    // initialize things
+    // creates windows obj
     this->display.create(width, height, title);
+
+    // loads resources like shaders/textures
     this->initialize();
+
+    glfwSetWindowUserPointer(this->display.window, this);
+
     this->input.set(this->display.window);
     this->sprite_renderer.initialize();
 
@@ -41,7 +46,10 @@ void mk::Engine::compute_rendering()
 {
     this->display.clear_buffer();
     this->render(); // virtual function
+
     this->sprite_renderer.flush();
+    // other flushes here..
+
     this->display.swap_buffer();
 }
 

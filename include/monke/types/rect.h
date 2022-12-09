@@ -1,4 +1,5 @@
 #pragma once
+// TODO: create rectf.ZERO or NULL
 
 namespace mk
 {
@@ -18,7 +19,7 @@ namespace mk
             h = static_cast<T>(_h);
         }
 
-        //operators
+        // operators
         bool operator==(const Rect &rect)
         {
             if (this->x == rect.x && this->y == rect.y &&
@@ -38,4 +39,4 @@ namespace mk
     };
 
     typedef Rect<float> Rectf;
-} //namespace mk
+} // namespace mk

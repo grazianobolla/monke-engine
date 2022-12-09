@@ -36,7 +36,7 @@ void mk::SpriteRenderer::begin()
     this->sprite_count = 0; // reset sprite counter
 }
 
-void mk::SpriteRenderer::draw(const mk::Sprite &sprite, mk::Vector2 position, mk::Vector2 scale)
+void mk::SpriteRenderer::draw(const mk::Sprite &sprite)
 {
     if (sprite.loaded == false)
     {
@@ -45,7 +45,7 @@ void mk::SpriteRenderer::draw(const mk::Sprite &sprite, mk::Vector2 position, mk
     }
 
     this->check_flush(sprite.texture_ptr);
-    this->push_sprite_data(sprite, position, scale);
+    this->push_sprite_data(sprite, sprite.position, sprite.scale);
     this->sprite_count++;
 }
 

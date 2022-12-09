@@ -2,14 +2,12 @@
 #include "monke/core/resource_loader.h"
 #include "monke/core/log.h"
 
-mk::Sprite::Sprite(const char *texture_path, mk::Rectf tex_rect)
+mk::Sprite::Sprite(const char *texture_path, mk::Vector2 _position, mk::Vector2 _scale, mk::Rectf _rect)
 {
-    this->load(texture_path, tex_rect);
-}
-
-void mk::Sprite::load(const char *path, mk::Rectf tex_rect)
-{
-    this->texture_ptr = mk::ResourceLoader::load_texture(path);
+    this->texture_ptr = mk::ResourceLoader::load_texture(texture_path);
+    this->position = _position;
+    this->scale = _scale;
+    this->texture_rect = _rect;
 
     if (this->texture_ptr == nullptr)
     {
@@ -17,14 +15,5 @@ void mk::Sprite::load(const char *path, mk::Rectf tex_rect)
         return;
     }
 
-    if (tex_rect == mk::Rectf{-1, -1, -1, -1})
-        this->texture_rect = {0, 0, this->texture_ptr->width, this->texture_ptr->height};
-    else
-        this->texture_rect = tex_rect;
-
-    // check if the sprite is loaded
-    if (this->texture_ptr != nullptr && this->texture_rect != mk::Rectf{-1, -1, -1, -1})
-    {
-        this->loaded = true;
-    }
+    this->loaded = true;
 }

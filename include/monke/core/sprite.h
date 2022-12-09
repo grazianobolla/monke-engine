@@ -7,13 +7,13 @@ namespace mk
     class Sprite
     {
     public:
-        mk::Rectf texture_rect;
         mk::Texture *texture_ptr;
+        mk::Rectf texture_rect;
+        mk::Vector2 position, scale;
 
         bool loaded = false;
 
         Sprite() {}
-        Sprite(const char *texture_resource_name, mk::Rectf tex_rect = {-1, -1, -1, -1});
-        void load(const char *path, mk::Rectf tex_rect = {-1, -1, -1, -1});
+        Sprite(const char *texture_path, mk::Vector2 position = {0, 0}, mk::Vector2 scale = {0, 0}, mk::Rectf texture_rect = {0, 0, 0, 0});
     };
 };

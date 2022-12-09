@@ -11,21 +11,16 @@ namespace mk
         GLFWwindow *window;
 
         Input() {}
-        void set(GLFWwindow *win);
+        void set(GLFWwindow *);
         mk::Vector2 get_mouse_pos();
-        bool is_key_pressed(int key_code);
-        bool is_mouse_pressed(int key_code);
 
-    private:
-        enum KEY_STATE
+        enum TYPE
         {
-            NONE,
-            PRESSED
+            KEYBOARD,
+            MOUSE
         };
 
-        static int keyboard_states[GLFW_KEY_LAST];
-        static int mouse_states[GLFW_MOUSE_BUTTON_LAST];
-
+    private:
         static void key_input_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
         static void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
     };
