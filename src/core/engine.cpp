@@ -11,6 +11,7 @@ void mk::Engine::run(int width, int height, const char *title)
     // loads resources like shaders/textures
     this->initialize();
 
+    // sets user pointer to this (engine object)
     glfwSetWindowUserPointer(this->display.window, this);
 
     this->input.set(this->display.window);

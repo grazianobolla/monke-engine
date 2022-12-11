@@ -5,6 +5,11 @@
 
 namespace mk
 {
+    struct InputEvent
+    {
+        int type, code, action;
+    };
+
     class Input
     {
     public:

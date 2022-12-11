@@ -23,7 +23,7 @@ namespace mk
         void compute_rendering();
 
         virtual void start() = 0;
-        virtual void input_event(int type, int code, int action) = 0;
+        virtual void on_input(mk::InputEvent event) = 0;
         virtual void update(float delta) = 0;
         virtual void render() = 0;
     };
