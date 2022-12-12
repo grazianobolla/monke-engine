@@ -5,10 +5,11 @@
 
 #include "monke/external/glm/glm.hpp"
 
-#define MAX_SPRITES 5000         // max amount of sprites allowed until flush
-#define SPRITE_SIZE_IN_FLOATS 24 // 6 vertexs, each vertex is 4 floats
-#define VERTEX_SIZE_IN_FLOATS 4  // 2 for position and 2 for texture
+#define MAX_SPRITES 5000        // max amount of sprites allowed until flush
+#define VERTEX_SIZE_IN_FLOATS 4 // 2 for position and 2 for texture
 #define VERTEX_PER_SPRITE 6
+
+#define SPRITE_SIZE_IN_FLOATS (VERTEX_SIZE_IN_FLOATS * VERTEX_PER_SPRITE)
 
 namespace mk
 {
