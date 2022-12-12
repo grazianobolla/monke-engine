@@ -1,4 +1,4 @@
-#include "monke/core/sprite_renderer.h"
+#include "monke/core/renderer.h"
 #include "monke/core/engine.h"
 #include "monke/core/resource_loader.h"
 #include "monke/core/types.h"
@@ -7,12 +7,12 @@
 
 #include <cstring>
 
-mk::SpriteRenderer::SpriteRenderer()
+mk::Renderer::Renderer()
 {
     memset(this->vertex_data, 0, sizeof(vertex_data)); // initialize array to 0
 }
 
-void mk::SpriteRenderer::initialize()
+void mk::Renderer::initialize()
 {
     // set shader
     this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get("default_shader"));
@@ -31,12 +31,12 @@ void mk::SpriteRenderer::initialize()
     glEnableVertexAttribArray(0);
 }
 
-void mk::SpriteRenderer::begin()
+void mk::Renderer::begin()
 {
     this->sprite_count = 0; // reset sprite counter
 }
 
-void mk::SpriteRenderer::draw(const mk::Sprite &sprite)
+void mk::Renderer::draw(const mk::Sprite &sprite)
 {
     if (sprite.loaded == false)
     {
@@ -49,14 +49,14 @@ void mk::SpriteRenderer::draw(const mk::Sprite &sprite)
     this->sprite_count++;
 }
 
-void mk::SpriteRenderer::draw(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale)
+void mk::Renderer::draw(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale)
 {
     this->check_flush(texture);
     this->push_draw_data(texture, texture_rect, position, scale);
     this->sprite_count++;
 }
 
-void mk::SpriteRenderer::check_flush(mk::Texture *new_texture)
+void mk::Renderer::check_flush(mk::Texture *new_texture)
 {
     // if we filled the stack, we flush
     if (sprite_count + 1 > MAX_SPRITES)
@@ -73,7 +73,7 @@ void mk::SpriteRenderer::check_flush(mk::Texture *new_texture)
     }
 }
 
-void mk::SpriteRenderer::push_draw_data(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale)
+void mk::Renderer::push_draw_data(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale)
 {
     mk::Vector2 size = {texture->width * scale.x, texture->height * scale.y};
 
@@ -106,7 +106,7 @@ void mk::SpriteRenderer::push_draw_data(mk::Texture *texture, mk::Rectf texture_
 }
 
 // send data to the GPU
-void mk::SpriteRenderer::flush()
+void mk::Renderer::flush()
 {
     // only draw if we have data, a shader and a texture binded
     if (this->has_data == false || this->shader == nullptr || this->texture == nullptr)

@@ -1,7 +1,7 @@
 #pragma once
 #include "monke/core/display.h"
 #include "monke/core/input.h"
-#include "monke/core/sprite_renderer.h"
+#include "monke/core/renderer.h"
 
 #include <vector>
 
@@ -9,13 +9,9 @@ namespace mk
 {
     class Engine
     {
-    private:
-        void initialize();
-
     public:
         mk::Display display;
         mk::Input input;
-        mk::SpriteRenderer sprite_renderer;
 
         Engine(){};
         void run(int width, int height, const char *title);
@@ -25,6 +21,10 @@ namespace mk
         virtual void start() = 0;
         virtual void on_input(mk::InputEvent event) = 0;
         virtual void update(float delta) = 0;
-        virtual void render() = 0;
+        virtual void render(mk::Renderer *batch) = 0;
+
+    private:
+        void initialize();
+        mk::Renderer renderer;
     };
 } // namespace mk

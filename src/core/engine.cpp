@@ -15,7 +15,7 @@ void mk::Engine::run(int width, int height, const char *title)
     glfwSetWindowUserPointer(this->display.window, this);
 
     this->input.set(this->display.window);
-    this->sprite_renderer.initialize();
+    this->renderer.initialize();
 
     this->start(); // virtual function
 
@@ -46,9 +46,9 @@ void mk::Engine::compute_logic(float delta)
 void mk::Engine::compute_rendering()
 {
     this->display.clear_buffer();
-    this->render(); // virtual function
+    this->render(&this->renderer); // virtual function
 
-    this->sprite_renderer.flush();
+    this->renderer.flush();
     // other flushes here..
 
     this->display.swap_buffer();

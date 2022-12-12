@@ -13,11 +13,11 @@
 
 namespace mk
 {
-    class SpriteRenderer
+    class Renderer
     {
     public:
-        SpriteRenderer();
-        ~SpriteRenderer() {}
+        Renderer();
+        ~Renderer() {}
 
         void initialize();
         void begin();

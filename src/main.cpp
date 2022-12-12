@@ -27,9 +27,9 @@ class Game : public mk::Engine
         sprite.position = input.get_mouse_pos();
     }
 
-    void render()
+    void render(mk::Renderer *renderer)
     {
-        sprite_renderer.draw(sprite);
+        renderer->draw(sprite);
     }
 };
 
