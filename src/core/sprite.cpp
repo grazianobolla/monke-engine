@@ -2,14 +2,14 @@
 #include "monke/core/resource_loader.h"
 #include "monke/core/log.h"
 
-void mk::Sprite::load(const char *texture_path, mk::Vector2 _position, float _angle, mk::Vector2 _scale, mk::Rectf _rect)
+void mk::Sprite::load(const char *texture_path, mk::Vector2 _position, float _rotation, mk::Vector2 _scale, mk::Rectf _rect)
 {
-    this->texture_ptr = mk::ResourceLoader::load_texture(texture_path);
+    this->texture = mk::ResourceLoader::load_texture(texture_path);
     this->position = _position;
     this->scale = _scale;
-    this->angle = _angle;
+    this->rotation = _rotation;
 
-    if (this->texture_ptr == nullptr)
+    if (this->texture == nullptr)
     {
         log_info("null texture");
         return;
@@ -17,7 +17,7 @@ void mk::Sprite::load(const char *texture_path, mk::Vector2 _position, float _an
 
     if (_rect == mk::Rectf{0, 0, 0, 0})
     {
-        this->texture_rect = {0, 0, this->texture_ptr->width, this->texture_ptr->height};
+        this->texture_rect = {0, 0, this->texture->width, this->texture->height};
     }
     else
     {

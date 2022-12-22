@@ -8,6 +8,7 @@ namespace mk
     {
     public:
         unsigned int id = 0;
+        bool loaded = false;
 
         Shader() {}
         bool load(const char *vert_path, const char *frag_path);

@@ -9,7 +9,7 @@
 
 bool mk::Texture::load(const char *path)
 {
-    //stbi_set_flip_vertically_on_load(false); //for some reason opengl loads images backwards
+    // stbi_set_flip_vertically_on_load(false); //for some reason opengl loads images backwards
 
     unsigned char *image_data = stbi_load(path, &this->width, &this->height, &this->channels, 0);
     if (image_data == NULL)
@@ -22,11 +22,11 @@ bool mk::Texture::load(const char *path)
     glGenTextures(1, &this->id);
     glBindTexture(GL_TEXTURE_2D, this->id);
 
-    //set texture wrapping parameters
+    // set texture wrapping parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    //set texture filtering parameters
+    // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
@@ -38,12 +38,14 @@ bool mk::Texture::load(const char *path)
 
     log_info("loaded texture " << path << " (" << this << ")"
                                << " id:" << this->id);
+
+    this->loaded = true;
     return true;
 }
 
 void mk::Texture::use()
 {
-    //TODO: not bind if already binded
-    //glActiveTexture(GL_TEXTURE0);
+    // TODO: not bind if already binded
+    // glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, this->id);
 }

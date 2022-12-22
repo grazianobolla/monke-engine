@@ -21,7 +21,7 @@ namespace mk
         virtual void start() = 0;
         virtual void on_input(mk::InputEvent event) = 0;
         virtual void update(float delta) = 0;
-        virtual void render(mk::Renderer *batch) = 0;
+        virtual void render(mk::Renderer *renderer) = 0;
 
     private:
         void initialize();

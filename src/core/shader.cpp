@@ -19,16 +19,17 @@ bool mk::Shader::load(const char *vert_path, const char *frag_path)
     glDeleteShader(vertex_id);
     glDeleteShader(fragment_id);
 
-    //log_info("loaded shader " << vert_path << " and " << frag_path);
+    log_info("loaded shader " << vert_path << " and " << frag_path << " (" << this << ")");
+    this->loaded = true;
     return true;
 }
 
 unsigned int mk::Shader::create_shader(const char *path, unsigned int type)
 {
-    //create shader
+    // create shader
     unsigned int tmp_id = glCreateShader(type);
 
-    //load source code
+    // load source code
     std::string shader_source;
     if (mk::get_file(path, shader_source) == false)
         return 0;
@@ -36,10 +37,10 @@ unsigned int mk::Shader::create_shader(const char *path, unsigned int type)
     const char *c_src = shader_source.c_str();
     glShaderSource(tmp_id, 1, &c_src, NULL);
 
-    //compile
+    // compile
     glCompileShader(tmp_id);
 
-    //compilation data
+    // compilation data
     int success;
     glGetShaderiv(tmp_id, GL_COMPILE_STATUS, &success);
 
@@ -58,7 +59,7 @@ unsigned int mk::Shader::create_shader(const char *path, unsigned int type)
 
 void mk::Shader::use()
 {
-    //TODO: not bind if already binded
+    // TODO: not bind if already binded
     glUseProgram(this->id);
 }
 

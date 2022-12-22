@@ -15,6 +15,8 @@ void mk::Engine::run(int width, int height, const char *title)
     glfwSetWindowUserPointer(this->display.window, this);
 
     this->input.set(this->display.window);
+
+    // initialize renderer
     this->renderer.initialize();
 
     this->start(); // virtual function
@@ -56,5 +58,6 @@ void mk::Engine::compute_rendering()
 
 void mk::Engine::initialize()
 {
-    mk::ResourceLoader::load_shader("shaders/vertex.glsl", "shaders/fragment.glsl", "default_shader");
+    mk::ResourceLoader::load_shader("shaders/batch/vertex.glsl", "shaders/batch/fragment.glsl", "batch_shader");
+    mk::ResourceLoader::load_shader("shaders/sprite/vertex.glsl", "shaders/sprite/fragment.glsl", "sprite_shader");
 }
