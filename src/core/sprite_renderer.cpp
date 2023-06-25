@@ -41,8 +41,8 @@ void mk::SpriteRenderer::draw(const mk::Sprite &sprite)
     int tex_width = sprite.texture->get_width();
     int tex_height = sprite.texture->get_height();
 
-    mk::Vector2 tex_size = {sprite.texture_rect.w / tex_width, sprite.texture_rect.h / tex_height};
-    mk::Vector2 tex_coords = {sprite.texture_rect.x / tex_width, sprite.texture_rect.y / tex_height};
+    mk::Vector2 tex_size = {sprite.rect.w / tex_width, sprite.rect.h / tex_height};
+    mk::Vector2 tex_coords = {sprite.rect.x / tex_width, sprite.rect.y / tex_height};
 
     float sprite_vertex_data[SPRITE_SIZE_IN_FLOATS] =
         {0, 0, tex_coords.x, tex_coords.y,
@@ -71,7 +71,7 @@ void mk::SpriteRenderer::draw(const mk::Sprite &sprite)
 
 glm::mat4 mk::SpriteRenderer::calculateTransform(const mk::Sprite &sprite)
 {
-    glm::vec2 size = glm::vec2(sprite.texture_rect.w * sprite.scale.x, sprite.texture_rect.h * sprite.scale.y);
+    glm::vec2 size = glm::vec2(sprite.rect.w * sprite.scale.x, sprite.rect.h * sprite.scale.y);
 
     glm::mat4 transform = glm::mat4(1.0f);
     transform = glm::translate(transform, glm::vec3(sprite.position.x, sprite.position.y, 0));
