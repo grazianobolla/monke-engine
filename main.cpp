@@ -47,9 +47,9 @@ class Game : public mk::Engine
             }
         }
 
-        for (int y = 0; y < 18; y++)
+        for (int y = 0; y < (this->display.get_size().y / 32); y++)
         {
-            for (int x = 10; x < 25; x++)
+            for (int x = 10; x < (this->display.get_size().x / 32); x++)
             {
                 renderer->draw(&tex, {0, 0, 32, 32}, {x * 32, y * 32}, {1, 1});
             }

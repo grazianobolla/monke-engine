@@ -34,7 +34,7 @@ void mk::Engine::run(int width, int height, const char *title)
 
         glfwPollEvents();
 
-        mk::ImGUIHelper::new_frame(); // starts a new imGUI frame
+        mk::ImGUIHelper::new_frame();
 
         this->compute_logic(delta);
         this->compute_rendering();

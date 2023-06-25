@@ -29,8 +29,8 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
         log_info("cant create the window");
 
     glfwMakeContextCurrent(this->window);
-    glfwSwapInterval(0); // TODO: create a proper thing for enabling this (VSYNC)
-    // glfwSetFramebufferSizeCallback(this->window, this->framebuffer_resize_cb); //  sets the callback for when the window is resized
+    glfwSwapInterval(0);                                                       // TODO: create a proper thing for enabling this (VSYNC)
+    glfwSetFramebufferSizeCallback(this->window, this->framebuffer_resize_cb); //  sets the callback for when the window is resized
 
     if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == false)
         log_info("cant initialize glad");
@@ -42,7 +42,7 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
     // glEnable(GL_BLEND);
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // TODO:create some debug stuff for things like this
+    // TODO: create some debug stuff for things like this
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
