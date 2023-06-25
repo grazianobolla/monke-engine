@@ -64,10 +64,13 @@ void mk::BatchRenderer::check_flush(mk::Texture *new_texture)
 
 void mk::BatchRenderer::push_draw_data(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale)
 {
-    mk::Vector2 size = {texture->width * scale.x, texture->height * scale.y};
+    int tex_width = texture->get_width();
+    int tex_height = texture->get_height();
 
-    mk::Vector2 tex_size = {texture_rect.w / texture->width, texture_rect.h / texture->height};
-    mk::Vector2 tex_coords = {texture_rect.x / texture->width, texture_rect.y / texture->height};
+    mk::Vector2 size = {tex_width * scale.x, tex_height * scale.y};
+
+    mk::Vector2 tex_size = {texture_rect.w / tex_width, texture_rect.h / tex_height};
+    mk::Vector2 tex_coords = {texture_rect.x / tex_width, texture_rect.y / tex_height};
 
     // define every vertex the sprite has
     float sprite_vertices[VERTEX_PER_SPRITE][VERTEX_SIZE_IN_FLOATS] = {

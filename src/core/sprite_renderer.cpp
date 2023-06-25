@@ -38,8 +38,11 @@ void mk::SpriteRenderer::draw(const mk::Sprite &sprite)
     this->shader->use();
 
     // set vertex data
-    mk::Vector2 tex_size = {sprite.texture_rect.w / sprite.texture->width, sprite.texture_rect.h / sprite.texture->height};
-    mk::Vector2 tex_coords = {sprite.texture_rect.x / sprite.texture->width, sprite.texture_rect.y / sprite.texture->height};
+    int tex_width = sprite.texture->get_width();
+    int tex_height = sprite.texture->get_height();
+
+    mk::Vector2 tex_size = {sprite.texture_rect.w / tex_width, sprite.texture_rect.h / tex_height};
+    mk::Vector2 tex_coords = {sprite.texture_rect.x / tex_width, sprite.texture_rect.y / tex_height};
 
     float sprite_vertex_data[SPRITE_SIZE_IN_FLOATS] =
         {0, 0, tex_coords.x, tex_coords.y,
