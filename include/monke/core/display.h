@@ -5,8 +5,6 @@
 #include "monke/external/glm/glm.hpp"
 #include "monke/external/glad/glad.h"
 
-#include "monke/external/imgui/imgui.h"
-
 #include <GLFW/glfw3.h>
 #include <string>
 

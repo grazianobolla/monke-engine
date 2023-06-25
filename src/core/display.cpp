@@ -2,9 +2,7 @@
 #include "monke/core/types.h"
 
 #include "monke/external/glm/gtc/matrix_transform.hpp"
-#include "monke/external/imgui/imgui.h"
-#include "monke/external/imgui/imgui_impl_glfw.h"
-#include "monke/external/imgui/imgui_impl_opengl3.h"
+#include "monke/core/imgui_helper.h"
 
 glm::mat4 mk::Display::projection;
 
@@ -31,28 +29,15 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
         log_info("cant create the window");
 
     glfwMakeContextCurrent(this->window);
-
-    // TODO: create a proper thing for enabling this (VSYNC):
-    glfwSwapInterval(0);
-
-    //  sets the callback for when the window is resized
-    glfwSetFramebufferSizeCallback(this->window, this->framebuffer_resize_cb);
+    glfwSwapInterval(0);                                                       // TODO: create a proper thing for enabling this (VSYNC)
+    glfwSetFramebufferSizeCallback(this->window, this->framebuffer_resize_cb); //  sets the callback for when the window is resized
 
     if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == false)
         log_info("cant initialize glad");
 
-    glViewport(0, 0, this->width, this->height);
+    mk::ImGUIHelper::initialize_context(this->window, this->get_glsl_version()); // setup imgui context
 
-    // setup imgui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO &io = ImGui::GetIO();
-    (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-    ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(this->window, false);
-    ImGui_ImplOpenGL3_Init(this->get_glsl_version());
-    log_info("imgui context set up");
+    glViewport(0, 0, this->width, this->height);
 
     // glEnable(GL_BLEND);
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -92,8 +77,6 @@ const char *mk::Display::get_glsl_version()
 
 void mk::Display::cleanup()
 {
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+    mk::ImGUIHelper::cleanup();
     glfwDestroyWindow(this->window);
 }

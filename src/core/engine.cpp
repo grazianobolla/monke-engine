@@ -1,9 +1,7 @@
 #include "monke/core/engine.h"
 #include "monke/core/resource_loader.h"
 
-#include "monke/external/imgui/imgui.h"
-#include "monke/external/imgui/imgui_impl_glfw.h"
-#include "monke/external/imgui/imgui_impl_opengl3.h"
+#include "monke/core/imgui_helper.h"
 
 #include <thread>
 
@@ -36,11 +34,7 @@ void mk::Engine::run(int width, int height, const char *title)
 
         glfwPollEvents();
 
-        {
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
-        }
+        mk::ImGUIHelper::new_frame(); // starts a new imGUI frame
 
         this->compute_logic(delta);
         this->compute_rendering();
@@ -59,11 +53,10 @@ void mk::Engine::compute_logic(float delta)
 void mk::Engine::compute_rendering()
 {
     this->display.clear_buffer_color();
+
     this->render(&this->renderer); // virtual function
     this->renderer.flush();
-
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    mk::ImGUIHelper::render();
 
     this->display.swap_buffer();
 }

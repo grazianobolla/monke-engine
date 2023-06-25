@@ -3,7 +3,6 @@
 
 class Game : public mk::Engine
 {
-
     mk::Sprite player;
     bool m = false;
 
