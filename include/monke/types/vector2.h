@@ -50,19 +50,19 @@ namespace mk
             y *= other.y;
         }
 
-        Vector2 operator-()
+        Vector2 operator-() const
         {
             return Vector2(-x, -y);
         }
 
         template <typename P>
-        Vector2 operator*(const P &other)
+        Vector2 operator*(const P &other) const
         {
             return Vector2(x * other, y * other);
         }
 
         template <typename P>
-        Vector2 operator/(const P &other)
+        Vector2 operator/(const P &other) const
         {
             return Vector2(x / other, y / other);
         }
@@ -81,6 +81,21 @@ namespace mk
                 x /= magnitude;
                 y /= magnitude;
             }
+        }
+
+        void clamp(const Vector2 &min, const Vector2 &max)
+        {
+            if (this->x > max.x)
+                this->x = max.x;
+
+            if (this->y > max.y)
+                this->y = max.y;
+
+            if (this->x < min.x)
+                this->x = min.x;
+
+            if (this->y < min.y)
+                this->y = min.y;
         }
     };
 } // namespace mk

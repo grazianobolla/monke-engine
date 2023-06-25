@@ -36,6 +36,12 @@ namespace mk
 
             return true;
         }
+
+        bool aabb(const Rect &rect)
+        {
+            return x < rect.x + rect.w && x + w > rect.x &&
+                   y < rect.y + rect.h && y + h > rect.y;
+        }
     };
 
     typedef Rect<float> Rectf;
