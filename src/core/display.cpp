@@ -2,6 +2,9 @@
 #include "monke/core/types.h"
 
 #include "monke/external/glm/gtc/matrix_transform.hpp"
+#include "monke/external/imgui/imgui.h"
+#include "monke/external/imgui/imgui_impl_glfw.h"
+#include "monke/external/imgui/imgui_impl_opengl3.h"
 
 glm::mat4 mk::Display::projection;
 
@@ -40,6 +43,17 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
 
     glViewport(0, 0, this->width, this->height);
 
+    // setup imgui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(this->window, false);
+    ImGui_ImplOpenGL3_Init(this->get_glsl_version());
+    log_info("imgui context set up");
+
     // glEnable(GL_BLEND);
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -60,12 +74,26 @@ mk::Vector2 mk::Display::get_size()
     return {w, h};
 }
 
-void mk::Display::clear_buffer()
+void mk::Display::clear_buffer_color()
 {
+    glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void mk::Display::swap_buffer()
 {
     glfwSwapBuffers(this->window);
+}
+
+const char *mk::Display::get_glsl_version()
+{
+    return "#version 330"; // TODO: check this hardcoded value
+}
+
+void mk::Display::cleanup()
+{
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+    glfwDestroyWindow(this->window);
 }

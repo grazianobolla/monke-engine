@@ -24,7 +24,9 @@ namespace mk
         virtual void render(mk::Renderer *renderer) = 0;
 
     private:
-        void initialize();
         mk::Renderer renderer;
+
+        void initialize();
+        void on_terminate();
     };
 } // namespace mk
