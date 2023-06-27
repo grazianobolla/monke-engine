@@ -2,6 +2,7 @@
 #include "monke/core/display.h"
 #include "monke/core/input.h"
 #include "monke/core/renderer.h"
+#include "monke/core/camera.h"
 
 #include <vector>
 
@@ -12,6 +13,7 @@ namespace mk
     public:
         mk::Display display;
         mk::Input input;
+        static mk::Camera camera;
 
         Engine(){};
         void run(int width, int height, const char *title);
@@ -25,6 +27,7 @@ namespace mk
 
     private:
         mk::Renderer renderer;
+        mk::Shader *main_shader;
 
         void initialize();
         void on_terminate();

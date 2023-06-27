@@ -79,4 +79,5 @@ void mk::Display::cleanup()
 {
     mk::ImGUIHelper::cleanup();
     glfwDestroyWindow(this->window);
+    log_info("cleaning up display");
 }

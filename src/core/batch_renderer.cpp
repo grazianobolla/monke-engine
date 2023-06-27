@@ -15,7 +15,7 @@ mk::BatchRenderer::BatchRenderer()
 void mk::BatchRenderer::initialize()
 {
     // set shader
-    this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get("batch_shader"));
+    this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get("default_shader"));
 
     // set vertex data
     glGenVertexArrays(1, &vao_id);
@@ -110,11 +110,11 @@ void mk::BatchRenderer::flush()
     this->texture->use();
     this->shader->use();
 
-    // set projection
-    this->shader->set_mat4("projection", mk::Display::projection);
+    // Note: reset the model matrix, because we already send values in world space
+    const glm::mat4 tmp_matrix = glm::mat4(1);
+    this->shader->set_mat4("model", tmp_matrix);
 
-    // bind vao
-    glBindVertexArray(this->vao_id);
+    glBindVertexArray(this->vao_id); // bind vao
 
     // send data
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_id);
@@ -122,6 +122,5 @@ void mk::BatchRenderer::flush()
 
     glDrawArrays(GL_TRIANGLES, 0, sprite_count * VERTEX_PER_SPRITE); // draw vertices
 
-    // prepare to render again
-    this->begin();
+    this->begin(); // prepare to render again
 }

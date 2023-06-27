@@ -1,15 +1,18 @@
 #include "monke/core/engine.h"
+#include "monke/core/imgui_utils.h"
 #include "monke/external/imgui/imgui.h"
 
 class Game : public mk::Engine
 {
-    mk::Sprite player, player1;
+    mk::Sprite player, player1, player2;
     mk::Texture tex;
+    mk::Vector2 cam_pos;
 
     void start()
     {
-        player.load("textures/dude.png", {0, 0}, 0, {3, 3}, {0, 0, 17, 19});
-        player1.load("textures/dude.png", {0, 0}, 0, {3, 3}, {0, 0, 17, 19});
+        player.load("textures/dude.png", {0, 0}, 0, {2, 2}, {0, 0, 17, 19});
+        player1.load("textures/dude.png", {100, 100}, 0, {2, 2}, {0, 0, 17, 19});
+        player2.load("textures/dude.png", {200, 200}, 0, {2, 2}, {0, 0, 17, 19});
         tex.load("textures/sheet.png");
     }
 
@@ -18,44 +21,35 @@ class Game : public mk::Engine
     {
         if (event.action == GLFW_REPEAT)
             return;
-
-        if (event.action == GLFW_PRESS && event.code == GLFW_KEY_SPACE)
-        {
-            player.texture->mirror_x = !player.texture->mirror_x;
-            player.texture->mirror_y = !player.texture->mirror_y;
-        }
     }
 
     // every frame
     void update(float delta)
     {
-        player.position = input.get_mouse_pos();
-        player1.position = input.get_mouse_pos();
-        player.rotation += delta * 128;
-        player1.rotation -= delta * 128;
+        ImGui::Begin("Camera Test", NULL, ImGuiWindowFlags_None);
+        ImGui::DragFloat("X", &cam_pos.x, 1, -300, 300);
+        ImGui::DragFloat("Y", &cam_pos.y, 1, -300, 300);
+        if (ImGui::Button("Reset"))
+        {
+            cam_pos = {0, 0};
+        }
+        ImGui::End();
+
+        mk::Engine::camera.position = cam_pos;
     }
 
     void render(mk::Renderer *renderer)
     {
+        mk::render_engine_data();
+
         renderer->draw(player);
 
-        for (int y = 0; y < 18; y++)
-        {
-            for (int x = 0; x < 12; x++)
-            {
-                renderer->draw(&tex, {((x + y) % 4) * 32, 0, 32, 32}, {x * 32, y * 32}, {1, 1});
-            }
-        }
-
-        for (int y = 0; y < (this->display.get_size().y / 32); y++)
-        {
-            for (int x = 10; x < (this->display.get_size().x / 32); x++)
-            {
-                renderer->draw(&tex, {0, 0, 32, 32}, {x * 32, y * 32}, {1, 1});
-            }
-        }
+        for (int x = 128; x < 800; x += 32)
+            for (int y = 128; y < 600; y += 32)
+                renderer->draw(&tex, {0, 0, 32, 32}, {x, y}, {1, 1});
 
         renderer->draw(player1);
+        renderer->draw(player2);
     }
 };
 

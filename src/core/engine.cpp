@@ -5,6 +5,8 @@
 
 #include <thread>
 
+mk::Camera mk::Engine::camera;
+
 void mk::Engine::run(int width, int height, const char *title)
 {
     // creates windows obj
@@ -40,7 +42,7 @@ void mk::Engine::run(int width, int height, const char *title)
         this->compute_logic(f_delta);
         this->compute_rendering();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(1)); // TODO: handle this
+        // std::this_thread::sleep_for(std::chrono::milliseconds(1)); // TODO: handle this
     }
 
     this->on_terminate();
@@ -53,6 +55,10 @@ void mk::Engine::compute_logic(float delta)
 
 void mk::Engine::compute_rendering()
 {
+    // set main shader values (projection & camera/view)
+    this->main_shader->set_mat4("projection", this->display.projection); //  set projection
+    this->main_shader->set_mat4("view", this->camera.get_matrix());      // set camera matrix
+
     this->display.clear_buffer_color();
 
     this->render(&this->renderer); // virtual function
@@ -64,8 +70,14 @@ void mk::Engine::compute_rendering()
 
 void mk::Engine::initialize()
 {
-    mk::ResourceLoader::load_shader("shaders/batch/vertex.glsl", "shaders/batch/fragment.glsl", "batch_shader");
-    mk::ResourceLoader::load_shader("shaders/sprite/vertex.glsl", "shaders/sprite/fragment.glsl", "sprite_shader");
+    // load shaders
+    mk::ResourceLoader::load_shader("shaders/vertex.glsl", "shaders/fragment.glsl", "default_shader");
+
+    // create camera
+    this->camera = mk::Camera();
+
+    // load main shader
+    this->main_shader = static_cast<mk::Shader *>(mk::ResourceLoader::get("default_shader"));
 }
 
 void mk::Engine::on_terminate()

@@ -1,13 +1,14 @@
 #include "monke/core/sprite_renderer.h"
 #include "monke/core/resource_loader.h"
 #include "monke/core/display.h"
+#include "monke/core/engine.h"
 
 #include "monke/external/glm/gtc/matrix_transform.hpp"
 
 void mk::SpriteRenderer::initialize()
 {
     // load shader
-    this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get("sprite_shader"));
+    this->shader = static_cast<mk::Shader *>(mk::ResourceLoader::get("default_shader"));
 
     // set vertex data
     glGenVertexArrays(1, &vao_id);
@@ -52,15 +53,11 @@ void mk::SpriteRenderer::draw(const mk::Sprite &sprite)
          1, 1, tex_coords.x + tex_size.x, tex_coords.y + tex_size.y,
          1, 0, tex_coords.x + tex_size.x, tex_coords.y};
 
-    //  set projection
-    this->shader->set_mat4("projection", mk::Display::projection);
+    // calculate model_matrix
+    glm::mat4 model_matrix = this->calculateTransform(sprite);
+    this->shader->set_mat4("model", model_matrix);
 
-    // set transform
-    glm::mat4 transform = this->calculateTransform(sprite);
-    this->shader->set_mat4("transform", transform);
-
-    // bind vao
-    glBindVertexArray(this->vao_id);
+    glBindVertexArray(this->vao_id); // bind vao
 
     // send data
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo_id);

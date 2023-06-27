@@ -25,7 +25,7 @@ void mk::ImGUIHelper::cleanup()
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
-    log_info("ImGUI cleanup");
+    log_info("cleaning up ImGUI");
 }
 
 void mk::ImGUIHelper::new_frame()
@@ -49,7 +49,7 @@ bool mk::ImGUIHelper::add_mouse_event(int button, bool pressed)
 
 bool mk::ImGUIHelper::add_keyboard_event(int key, bool pressed)
 {
-    imgui_io->AddKeyEvent(key_from_glfw(key), pressed);
+    imgui_io->AddKeyEvent(ImGuiKey_T, pressed);
     return imgui_io->WantCaptureKeyboard;
 }
 
