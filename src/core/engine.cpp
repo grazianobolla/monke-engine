@@ -5,8 +5,6 @@
 
 #include <thread>
 
-mk::Camera mk::Engine::camera;
-
 void mk::Engine::run(int width, int height, const char *title)
 {
     // creates windows obj

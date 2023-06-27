@@ -13,7 +13,7 @@ namespace mk
     public:
         mk::Display display;
         mk::Input input;
-        static mk::Camera camera;
+        Camera camera;
 
         Engine(){};
         void run(int width, int height, const char *title);

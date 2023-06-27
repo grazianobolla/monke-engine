@@ -35,7 +35,7 @@ class Game : public mk::Engine
         }
         ImGui::End();
 
-        mk::Engine::camera.position = cam_pos;
+        this->camera.position = cam_pos;
     }
 
     void render(mk::Renderer *renderer)
