@@ -14,7 +14,7 @@ namespace mk
     {
     public:
         GLFWwindow *window;
-        static glm::mat4 projection;
+        static glm::mat4 projection_matrix;
 
         Display() {}
         void create(int width = 800, int height = 600, const char *title = "OpenGL Window", int opengl_major = 3, int opengl_minor = 3);

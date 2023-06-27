@@ -27,7 +27,6 @@ namespace mk
 
     private:
         mk::Renderer renderer;
-        mk::Shader *main_shader;
 
         void initialize();
         void on_terminate();

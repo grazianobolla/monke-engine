@@ -4,7 +4,7 @@
 #include "monke/external/glm/gtc/matrix_transform.hpp"
 #include "monke/core/imgui_helper.h"
 
-glm::mat4 mk::Display::projection;
+glm::mat4 mk::Display::projection_matrix;
 
 void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor)
 {
@@ -16,7 +16,7 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
     this->opengl_minor = gl_minor;
 
     // create projection matrix
-    this->projection = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
+    this->projection_matrix = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 
     // initialize opengl
     glfwInit();
@@ -49,7 +49,7 @@ void mk::Display::create(int w, int h, const char *t, int gl_major, int gl_minor
 void mk::Display::framebuffer_resize_cb(GLFWwindow *window, int new_width, int new_height)
 {
     glViewport(0, 0, new_width, new_height);
-    projection = glm::ortho(0.0f, static_cast<float>(new_width), static_cast<float>(new_height), 0.0f, -1.0f, 1.0f);
+    projection_matrix = glm::ortho(0.0f, static_cast<float>(new_width), static_cast<float>(new_height), 0.0f, -1.0f, 1.0f);
 }
 
 mk::Vector2 mk::Display::get_size()

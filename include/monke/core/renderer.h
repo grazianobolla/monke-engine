@@ -11,8 +11,10 @@ namespace mk
         void draw(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale);
         void draw(const mk::Sprite &sprite);
         void flush();
+        void update_shader(const glm::mat4 &projection_matrix, const glm::mat4 &view_matrix);
 
     private:
+        mk::Shader *default_shader; // shader used by the renderer/s
         mk::BatchRenderer batch_renderer;
         mk::SpriteRenderer sprite_renderer;
     };

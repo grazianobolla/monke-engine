@@ -55,10 +55,7 @@ void mk::Engine::compute_logic(float delta)
 
 void mk::Engine::compute_rendering()
 {
-    // set main shader values (projection & camera/view)
-    this->main_shader->set_mat4("projection", this->display.projection); //  set projection
-    this->main_shader->set_mat4("view", this->camera.get_matrix());      // set camera matrix
-
+    this->renderer.update_shader(this->display.projection_matrix, this->camera.get_matrix());
     this->display.clear_buffer_color();
 
     this->render(&this->renderer); // virtual function
@@ -70,14 +67,8 @@ void mk::Engine::compute_rendering()
 
 void mk::Engine::initialize()
 {
-    // load shaders
-    mk::ResourceLoader::load_shader("shaders/vertex.glsl", "shaders/fragment.glsl", "default_shader");
-
-    // create camera
-    this->camera = mk::Camera();
-
-    // load main shader
-    this->main_shader = static_cast<mk::Shader *>(mk::ResourceLoader::get("default_shader"));
+    mk::ResourceLoader::load_shader("shaders/vertex.glsl", "shaders/fragment.glsl", "default_shader"); // load shaders
+    this->camera = mk::Camera();                                                                       // create camera
 }
 
 void mk::Engine::on_terminate()
