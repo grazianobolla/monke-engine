@@ -35,7 +35,7 @@
 # Others
 imgui.ini
 main.cpp
-.dblite
+.sconsign.dblite
 *.sh
 main.cpp
 .vscode/
