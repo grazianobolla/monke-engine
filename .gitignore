@@ -34,10 +34,7 @@
 
 # Others
 imgui.ini
-main.cpp
 .sconsign.dblite
-*.sh
-main.cpp
 .vscode/
 build/
 monke-dev
