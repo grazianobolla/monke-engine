@@ -35,3 +35,7 @@
 # Others
 imgui.ini
 main.cpp
+.dblite
+*.sh
+main.cpp
+.vscode/
