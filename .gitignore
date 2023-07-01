@@ -39,3 +39,5 @@ main.cpp
 *.sh
 main.cpp
 .vscode/
+build/
+monke-dev

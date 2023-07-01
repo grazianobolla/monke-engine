@@ -19,7 +19,6 @@ namespace mk
 
         static ImGuiKey key_from_glfw(int glfw_code);
 
-    private:
         static ImGuiIO *imgui_io;
     };
 }
