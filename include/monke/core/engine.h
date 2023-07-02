@@ -18,7 +18,7 @@ namespace mk
         Engine(){};
 
         // Creates the window and starts the engine.
-        void run(int width, int height, const char *title, bool vsync_enabled);
+        void run(int width, int height, const char *title);
 
         virtual void start() = 0;
         virtual void on_input(mk::InputEvent event) = 0;
