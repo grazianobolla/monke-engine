@@ -17,7 +17,7 @@ namespace mk
         static glm::mat4 projection_matrix;
 
         Display() {}
-        void create(int width = 800, int height = 600, const char *title = "OpenGL Window", int opengl_major = 3, int opengl_minor = 3);
+        void create(int width = 800, int height = 600, const char *title = "OpenGL Window", int swap_interval = 1, int opengl_major = 3, int opengl_minor = 3);
 
         // Warning: this is an expensive function
         mk::Vector2 get_size();
