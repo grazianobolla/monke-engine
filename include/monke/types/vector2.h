@@ -72,15 +72,17 @@ namespace mk
             return "(" + std::to_string(x) + " " + std::to_string(y) + ")";
         }
 
-        void normalize()
+        Vector2 normalized()
         {
+            Vector2 vec = {x, y};
             float magnitude = std::sqrt(x * x + y * y);
 
             if (magnitude > 0)
             {
-                x /= magnitude;
-                y /= magnitude;
+                vec = vec / magnitude;
             }
+
+            return vec;
         }
 
         void clamp(const Vector2 &min, const Vector2 &max)

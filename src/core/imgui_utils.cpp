@@ -6,6 +6,6 @@
 void mk::render_engine_data()
 {
     ImGui::Begin("Engine Info", NULL, ImGuiWindowFlags_None);
-    ImGui::Text("Framerate: %.00f FPS", mk::ImGUIHelper::imgui_io->Framerate);
+    ImGui::Text("Framerate: %.1f FPS", mk::ImGUIHelper::imgui_io->Framerate);
     ImGui::End();
 }

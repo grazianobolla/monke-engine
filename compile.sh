@@ -1,7 +1,5 @@
 # !/bin/bash
 
-rm -r build/
-mkdir build
 scons -j4
 echo Installing library file...
 sudo cp libmonke.a /usr/local/lib

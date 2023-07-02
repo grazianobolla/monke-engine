@@ -16,7 +16,7 @@ void mk::Engine::run(int width, int height, const char *title)
     // sets user pointer to this (engine object)
     glfwSetWindowUserPointer(this->display.window, this);
 
-    this->input.set(this->display.window);
+    this->input.install_callbacks(this->display.window);
 
     // initialize renderer
     this->renderer.initialize();

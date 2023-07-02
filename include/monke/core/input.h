@@ -13,17 +13,30 @@ namespace mk
     class Input
     {
     public:
-        GLFWwindow *window;
-
-        Input() {}
-        void set(GLFWwindow *);
-        mk::Vector2 get_mouse_pos();
-
-        enum TYPE
+        enum Type
         {
             KEYBOARD,
             MOUSE
         };
+
+        enum KeyGroup
+        {
+            WASD_KEYS,
+            ARROW_KEYS
+        };
+
+        GLFWwindow *window;
+
+        Input() {}
+
+        // Installs the input callbacks on the passed window.
+        void install_callbacks(GLFWwindow *);
+
+        // Returns mouse position relative to the screen.
+        mk::Vector2 get_mouse_pos();
+
+        // Returns normalized direction vector for WASD/ARROW keys.
+        mk::Vector2 get_direction(KeyGroup group);
 
     private:
         static void key_input_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
