@@ -13,12 +13,12 @@ namespace mk
     public:
         mk::Display display;
         mk::Input input;
-        Camera camera;
+        mk::Camera camera;
 
         Engine(){};
+
+        // Creates the window and starts the engine.
         void run(int width, int height, const char *title);
-        void compute_logic(float delta);
-        void compute_rendering();
 
         virtual void start() = 0;
         virtual void on_input(mk::InputEvent event) = 0;
@@ -30,5 +30,7 @@ namespace mk
 
         void initialize();
         void on_terminate();
+        void compute_logic(float delta);
+        void compute_rendering();
     };
 } // namespace mk

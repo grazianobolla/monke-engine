@@ -1,6 +1,7 @@
 # !/bin/bash
 
 scons -j4
+echo ''
 echo Installing library file...
 sudo cp libmonke.a /usr/local/lib
 echo Installing library headers...
