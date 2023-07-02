@@ -23,7 +23,7 @@ namespace mk
 
         Input() {}
 
-        // Installs the input callbacks on the passed window.
+        // Installs the input callbacks on the specified window.
         void install_callbacks(GLFWwindow *);
 
         // Returns mouse position relative to the screen.

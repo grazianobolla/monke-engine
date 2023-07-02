@@ -15,12 +15,13 @@ void mk::Input::install_callbacks(GLFWwindow *win)
 
 void mk::Input::key_input_callback(GLFWwindow *window, int key, int code, int action, int mods)
 {
+    if (action == GLFW_REPEAT)
+        return;
+
     bool imGuiOnlyEvent = mk::ImGUIHelper::add_keyboard_event(key, action == GLFW_PRESS);
 
     if (imGuiOnlyEvent == true)
-    {
         return;
-    }
 
     calculate_input_direction(key, action);
 
@@ -58,7 +59,7 @@ mk::Vector2 mk::Input::get_mouse_pos()
 {
     double x, y;
     glfwGetCursorPos(this->window, &x, &y);
-    return {x, y};
+    return mk::Vector2(x, y);
 }
 
 mk::Vector2 mk::Input::get_direction()
