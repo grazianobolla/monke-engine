@@ -13,9 +13,10 @@ void mk::Debug::update(float delta)
 void mk::Debug::render_debug_data()
 {
     ImGui::Begin("Engine Info", NULL, ImGuiWindowFlags_None);
+    ImGui::Text("Framerate: %.1f", mk::ImGUIHelper::imgui_io->Framerate);
     ImGui::PlotLines("Frametime", this->delta_history, DELTA_SAMPLES, 0, NULL, 14, 19, ImVec2(0, 42.0f));
-    ImGui::Text("Input Dir (%.1f, %.1f)", engine->input.get_direction().x, engine->input.get_direction().y);
-    ImGui::Text("Camera Pos (%.1f, %.1f)", engine->camera.position.x, engine->camera.position.y);
+    ImGui::Text("Input Direction: (%.1f, %.1f)", engine->input.get_direction().x, engine->input.get_direction().y);
+    ImGui::Text("Camera Position: (%.1f, %.1f)", engine->camera.position.x, engine->camera.position.y);
     ImGui::End();
 }
 

@@ -15,7 +15,7 @@ void mk::Input::install_callbacks(GLFWwindow *win)
 
 void mk::Input::key_input_callback(GLFWwindow *window, int key, int code, int action, int mods)
 {
-    if (action == GLFW_REPEAT)
+    if (action == GLFW_REPEAT) // ignore repeated keys... I don't find them useful
         return;
 
     bool imGuiOnlyEvent = mk::ImGUIHelper::add_keyboard_event(key, action == GLFW_PRESS);
@@ -38,9 +38,7 @@ void mk::Input::mouse_button_callback(GLFWwindow *window, int button, int action
     bool imGuiOnlyEvent = mk::ImGUIHelper::add_mouse_event(button, action == GLFW_PRESS);
 
     if (imGuiOnlyEvent == true)
-    {
         return;
-    }
 
     // propagate event to the engine
     mk::Engine *engine = static_cast<mk::Engine *>(glfwGetWindowUserPointer(window));
@@ -72,22 +70,14 @@ void mk::Input::calculate_input_direction(int key, int action)
     int displacement = action == GLFW_PRESS ? 1 : -1;
 
     if (key == GLFW_KEY_UP || key == GLFW_KEY_W)
-    {
         input_direction.y -= displacement;
-    }
 
     if (key == GLFW_KEY_DOWN || key == GLFW_KEY_S)
-    {
         input_direction.y += displacement;
-    }
 
     if (key == GLFW_KEY_LEFT || key == GLFW_KEY_A)
-    {
         input_direction.x -= displacement;
-    }
 
     if (key == GLFW_KEY_RIGHT || key == GLFW_KEY_D)
-    {
         input_direction.x += displacement;
-    }
 }
