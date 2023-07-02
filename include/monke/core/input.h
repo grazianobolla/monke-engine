@@ -19,12 +19,6 @@ namespace mk
             MOUSE
         };
 
-        enum KeyGroup
-        {
-            WASD_KEYS,
-            ARROW_KEYS
-        };
-
         GLFWwindow *window;
 
         Input() {}
@@ -36,11 +30,14 @@ namespace mk
         mk::Vector2 get_mouse_pos();
 
         // Returns normalized direction vector for WASD/ARROW keys.
-        mk::Vector2 get_direction(KeyGroup group);
+        mk::Vector2 get_direction();
 
     private:
+        static mk::Vector2 input_direction; // stores the un-normalized direction vector for the movement keys
         static void key_input_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
         static void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
         static void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
+
+        static void calculate_input_direction(int button, int action);
     };
 } // namespace mk
