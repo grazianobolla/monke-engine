@@ -3,6 +3,8 @@
 #include "monke/core/log.h"
 #include "monke/core/imgui_helper.h"
 
+mk::Vector2 mk::Input::input_direction;
+
 void mk::Input::install_callbacks(GLFWwindow *win)
 {
     this->window = win;
@@ -20,6 +22,8 @@ void mk::Input::key_input_callback(GLFWwindow *window, int key, int code, int ac
         return;
     }
 
+    calculate_input_direction(key, action);
+
     // propagate event to the engine
     mk::Engine *engine = static_cast<mk::Engine *>(glfwGetWindowUserPointer(window));
     engine->on_input(InputEvent{
@@ -36,8 +40,6 @@ void mk::Input::mouse_button_callback(GLFWwindow *window, int button, int action
     {
         return;
     }
-
-    calculate_input_direction(button, action);
 
     // propagate event to the engine
     mk::Engine *engine = static_cast<mk::Engine *>(glfwGetWindowUserPointer(window));
@@ -64,10 +66,27 @@ mk::Vector2 mk::Input::get_direction()
     return this->input_direction.normalized();
 }
 
-void mk::Input::calculate_input_direction(int button, int action)
+void mk::Input::calculate_input_direction(int key, int action)
 {
-    if (button == GLFW_KEY_UP || button == GLFW_KEY_W)
+    int displacement = action == GLFW_PRESS ? 1 : -1;
+
+    if (key == GLFW_KEY_UP || key == GLFW_KEY_W)
     {
-        input_direction.y = action == GLFW_PRESS ? -1 : 0;
+        input_direction.y -= displacement;
+    }
+
+    if (key == GLFW_KEY_DOWN || key == GLFW_KEY_S)
+    {
+        input_direction.y += displacement;
+    }
+
+    if (key == GLFW_KEY_LEFT || key == GLFW_KEY_A)
+    {
+        input_direction.x -= displacement;
+    }
+
+    if (key == GLFW_KEY_RIGHT || key == GLFW_KEY_D)
+    {
+        input_direction.x += displacement;
     }
 }
