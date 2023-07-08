@@ -5,10 +5,11 @@
 
 #include <thread>
 
-void mk::Engine::run(int width, int height, const char *title)
+void mk::Engine::run(int width, int height, const char *title, bool vsync)
 {
     // creates windows obj
-    this->display.create(width, height, title, 1);
+    int swap_interval = vsync ? 1 : 0;
+    this->display.create(width, height, title, swap_interval);
 
     // loads resources like shaders/textures
     this->initialize();
