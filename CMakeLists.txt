@@ -8,3 +8,6 @@ link_directories(${CMAKE_SOURCE_DIR}/lib)
 add_executable(monkexe ${SOURCES})
 target_include_directories(monkexe PUBLIC include)
 target_link_libraries(monkexe -limgui -lglfw)
+
+# copy resource folder
+file(COPY ./demo/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

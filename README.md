@@ -4,7 +4,7 @@ Monke Engine aims to be a simple and fast game engine, capable of reproducing an
 Made for those who want something low-level while maintaining simplicity.
 
 # Use (linux)
-- Run `mkdir build && cd build/ && cmake .. && cmake --build .`
+- Run `mkdir build && cd build/ && cmake .. && cmake --build .` from this repos folder.
 - Then just run ´./monkexe´ to run the binary, the source code is inside the _demo_ folder.
 
 # Examples

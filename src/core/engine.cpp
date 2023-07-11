@@ -66,8 +66,8 @@ void mk::Engine::compute_rendering()
 
 void mk::Engine::initialize()
 {
-    mk::ResourceLoader::load_shader("shaders/vertex.glsl", "shaders/fragment.glsl", "default_shader"); // load shaders
-    this->camera = mk::Camera();                                                                       // create camera
+    mk::ResourceLoader::load_shader("resources/shaders/vertex.glsl", "resources/shaders/fragment.glsl", "default_shader"); // load default shaders
+    this->camera = mk::Camera();                                                                                           // create camera
 }
 
 void mk::Engine::on_terminate()
