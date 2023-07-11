@@ -32,7 +32,10 @@ unsigned int mk::Shader::create_shader(const char *path, unsigned int type)
     // load source code
     std::string shader_source;
     if (mk::get_file(path, shader_source) == false)
+    {
+        log_info("error: file " << path << " doesn't exist");
         return 0;
+    }
 
     const char *c_src = shader_source.c_str();
     glShaderSource(tmp_id, 1, &c_src, NULL);
