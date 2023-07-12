@@ -10,12 +10,6 @@ namespace mk
     {
     public:
         mk::Vector2 position;
-
-        glm::mat4 get_matrix() const
-        {
-            glm::mat4 m = glm::mat4(1);
-            m = glm::translate(m, glm::vec3(-position.x, -position.y, 0));
-            return m;
-        }
+        glm::mat4 get_matrix() const;
     };
 }

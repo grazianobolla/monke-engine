@@ -17,7 +17,7 @@ void mk::Sprite::load(const char *texture_path, mk::Vector2 _position, float _ro
 
     if (_rect == mk::Rectf{0, 0, 0, 0})
     {
-        this->rect = {0, 0, this->texture->get_height(), this->texture->get_width()};
+        this->rect = {0, 0, this->texture->get_width(), this->texture->get_height()};
     }
     else
     {
