@@ -4,6 +4,7 @@
 #include "monke/core/imgui_helper.h"
 
 mk::Vector2 mk::Input::input_direction;
+mk::Vector2 mk::Input::mouse_position;
 
 void mk::Input::install_callbacks(GLFWwindow *win)
 {
@@ -11,6 +12,7 @@ void mk::Input::install_callbacks(GLFWwindow *win)
     glfwSetKeyCallback(window, this->key_input_callback);
     glfwSetMouseButtonCallback(window, this->mouse_button_callback);
     glfwSetScrollCallback(window, this->scroll_callback);
+    glfwSetCursorPosCallback(window, this->cursor_pos_callback);
 }
 
 void mk::Input::key_input_callback(GLFWwindow *window, int key, int code, int action, int mods)
@@ -48,6 +50,11 @@ void mk::Input::mouse_button_callback(GLFWwindow *window, int button, int action
         .action = action});
 }
 
+void mk::Input::cursor_pos_callback(GLFWwindow *window, double xpos, double ypos)
+{
+    mouse_position = Vector2(xpos, ypos);
+}
+
 void mk::Input::scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
     mk::ImGUIHelper::add_scroll_event(xoffset, yoffset);
@@ -55,9 +62,7 @@ void mk::Input::scroll_callback(GLFWwindow *window, double xoffset, double yoffs
 
 mk::Vector2 mk::Input::get_mouse_pos()
 {
-    double x, y;
-    glfwGetCursorPos(this->window, &x, &y);
-    return mk::Vector2(x, y);
+    return this->mouse_position;
 }
 
 mk::Vector2 mk::Input::get_direction()

@@ -5,9 +5,9 @@ project(monke-project)
 add_compile_options(-std=c++17)
 file(GLOB_RECURSE SOURCES "src/*.cpp" "demo/*.cpp")
 link_directories(${CMAKE_SOURCE_DIR}/lib)
-add_executable(monkexe ${SOURCES})
-target_include_directories(monkexe PUBLIC include)
-target_link_libraries(monkexe -limgui -lglfw)
+add_executable(monke ${SOURCES})
+target_include_directories(monke PUBLIC include)
+target_link_libraries(monke -limgui -lglfw)
 
 # copy resource folder
 file(COPY ./demo/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

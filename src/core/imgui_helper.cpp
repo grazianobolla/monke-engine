@@ -58,6 +58,11 @@ void mk::ImGUIHelper::add_scroll_event(double x, double y)
     imgui_io->AddMouseWheelEvent(x, y);
 }
 
+void mk::ImGUIHelper::textVector2(const char *fmt, mk::Vector2 v)
+{
+    ImGui::Text(fmt, v.x, v.y);
+}
+
 ImGuiKey mk::ImGUIHelper::key_from_glfw(int glfw_code)
 {
     switch (glfw_code)

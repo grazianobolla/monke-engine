@@ -5,18 +5,23 @@ class Game : public mk::Engine
 {
     mk::Debug debug;
     mk::Texture texture;
+    mk::Sprite player;
+
+    int x = 1;
 
     void start()
     {
         debug.initialize(this);
         texture.load("resources/textures/dude.png");
+        player.load("resources/textures/dude.png", {0, 0}, 0, {4, 4}, {0, 0, 17, 19});
     }
 
     void on_input(mk::InputEvent event)
     {
         if (event.type == mk::Input::MOUSE && event.action == GLFW_PRESS && event.code == GLFW_MOUSE_BUTTON_1)
         {
-            texture.mirror_x = !texture.mirror_x;
+            player.scale.x *= -1;
+            player.scale.y *= -1;
         }
     }
 
@@ -24,13 +29,14 @@ class Game : public mk::Engine
     {
         debug.update(delta);
         this->camera.position += input.get_direction() * delta * 128;
+        player.position = input.get_mouse_pos();
+        player.rotation += 1;
     }
 
     void render(mk::Renderer *renderer)
     {
         debug.render_debug_data();
-
-        renderer->draw(&texture, {0, 0, 32, 32}, {0, 0}, {2, 2});
+        renderer->draw(player);
     }
 };
 

@@ -64,8 +64,8 @@ void mk::BatchRenderer::check_flush(mk::Texture *new_texture)
 
 void mk::BatchRenderer::push_draw_data(mk::Texture *texture, mk::Rectf texture_rect, mk::Vector2 position, mk::Vector2 scale)
 {
-    int tex_width = texture->get_width();
-    int tex_height = texture->get_height();
+    int tex_width = texture->width;
+    int tex_height = texture->height;
 
     mk::Vector2 size = {tex_width * scale.x, tex_height * scale.y};
 

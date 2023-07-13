@@ -2,6 +2,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include "monke/external/imgui/imgui.h"
+#include "monke/types/vector2.h"
 
 namespace mk
 {
@@ -18,6 +19,8 @@ namespace mk
         static void add_scroll_event(double x, double y);
 
         static ImGuiKey key_from_glfw(int glfw_code);
+
+        static void textVector2(const char *fmt, mk::Vector2 v);
 
         static ImGuiIO *imgui_io;
     };

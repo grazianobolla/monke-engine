@@ -34,10 +34,12 @@ namespace mk
 
     private:
         static mk::Vector2 input_direction; // stores the un-normalized direction vector for the movement keys
+        static mk::Vector2 mouse_position;  // stores last position recorded by callback
         static void calculate_input_direction(int key, int action);
 
         static void key_input_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
         static void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
         static void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
+        static void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos);
     };
 } // namespace mk

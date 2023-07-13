@@ -49,13 +49,3 @@ void mk::Texture::use()
     // glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, this->id);
 }
-
-int mk::Texture::get_width()
-{
-    return this->width * (this->mirror_x ? -1 : 1);
-}
-
-int mk::Texture::get_height()
-{
-    return this->height * (this->mirror_y ? -1 : 1);
-}

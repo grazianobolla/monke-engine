@@ -39,8 +39,8 @@ void mk::SpriteRenderer::draw(const mk::Sprite &sprite)
     this->shader->use();
 
     // set vertex data
-    int tex_width = sprite.texture->get_width();
-    int tex_height = sprite.texture->get_height();
+    int tex_width = sprite.texture->width;
+    int tex_height = sprite.texture->height;
 
     mk::Vector2 tex_size = {sprite.rect.w / tex_width, sprite.rect.h / tex_height};
     mk::Vector2 tex_coords = {sprite.rect.x / tex_width, sprite.rect.y / tex_height};
@@ -69,13 +69,13 @@ void mk::SpriteRenderer::draw(const mk::Sprite &sprite)
 glm::mat4 mk::SpriteRenderer::calculateTransform(const mk::Sprite &sprite)
 {
     glm::vec2 size = glm::vec2(sprite.rect.w * sprite.scale.x, sprite.rect.h * sprite.scale.y);
-
+    glm::vec3 center = glm::vec3(size.x / 2.0f, size.y / 2.0f, 0);
     glm::mat4 transform = glm::mat4(1.0f);
-    transform = glm::translate(transform, glm::vec3(sprite.position.x, sprite.position.y, 0));
+    transform = glm::translate(transform, glm::vec3(sprite.position.x, sprite.position.y, 0) - center);
 
-    transform = glm::translate(transform, glm::vec3(size.x / 2.0f, size.y / 2.0f, 0));
+    transform = glm::translate(transform, center);
     transform = glm::rotate(transform, glm::radians(sprite.rotation), glm::vec3(0, 0, 1));
-    transform = glm::translate(transform, glm::vec3(-size.x / 2.0f, -size.y / 2.0f, 0));
+    transform = glm::translate(transform, -center);
 
     transform = glm::scale(transform, glm::vec3(size, 0));
 
