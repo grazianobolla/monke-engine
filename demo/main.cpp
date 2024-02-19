@@ -1,5 +1,6 @@
 #include "monke/core/engine.h"
 #include "monke/core/debug.h"
+#include <thread>
 
 class Game : public mk::Engine
 {
@@ -30,7 +31,7 @@ class Game : public mk::Engine
         debug.update(delta);
         this->camera.position += input.get_direction() * delta * 128;
         player.position = input.get_mouse_pos();
-        player.rotation += 1;
+        player.rotation += 64 * delta;
     }
 
     void render(mk::Renderer *renderer)

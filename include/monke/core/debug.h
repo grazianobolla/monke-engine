@@ -19,5 +19,9 @@ namespace mk
     private:
         Engine *engine;
         float delta_history[DELTA_SAMPLES]; // stores the last DELTA_SAMPLES delta values in ms
+        float average_delta = 0;
+        int samples_recorded = 0;
+        int margin = 32;      // Margin at top and bottom of the graph
+        float delta_peak = 0; // Max delta value reached in the last cycle of DELTA_SAMPLES
     };
 }
