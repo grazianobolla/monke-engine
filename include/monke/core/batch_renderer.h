@@ -3,7 +3,7 @@
 #include "monke/core/shader.h"
 #include "monke/core/types.h"
 
-#include "monke/external/glm/glm.hpp"
+#include <glm/glm.hpp>
 
 namespace mk
 {

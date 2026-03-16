@@ -3,7 +3,7 @@
 #include "monke/core/display.h"
 #include "monke/core/engine.h"
 
-#include "monke/external/glm/gtc/matrix_transform.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
 void mk::SpriteRenderer::initialize()
 {

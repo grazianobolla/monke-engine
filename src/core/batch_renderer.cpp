@@ -3,7 +3,7 @@
 #include "monke/core/resource_loader.h"
 #include "monke/core/types.h"
 
-#include "monke/external/glad/glad.h"
+#include <glad/glad.h>
 
 #include <cstring>
 

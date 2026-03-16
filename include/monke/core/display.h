@@ -2,8 +2,8 @@
 #include "monke/core/log.h"
 #include "monke/core/types.h"
 
-#include "monke/external/glm/glm.hpp"
-#include "monke/external/glad/glad.h"
+#include <glm/glm.hpp>
+#include <glad/glad.h>
 
 #include <GLFW/glfw3.h>
 #include <string>

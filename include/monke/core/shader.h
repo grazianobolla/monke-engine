@@ -1,6 +1,6 @@
 #pragma once
-#include "monke/external/glm/glm.hpp"
-#include "monke/external/glad/glad.h"
+#include <glm/glm.hpp>
+#include <glad/glad.h>
 
 namespace mk
 {

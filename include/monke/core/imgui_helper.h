@@ -1,7 +1,7 @@
 // Dear ImGUI implementation helper
 #pragma once
 #include <GLFW/glfw3.h>
-#include "monke/external/imgui/imgui.h"
+#include <imgui/imgui.h>
 #include "monke/types/vector2.h"
 
 namespace mk

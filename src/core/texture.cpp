@@ -2,10 +2,8 @@
 #include "monke/core/engine.h"
 #include "monke/core/log.h"
 
-#include "monke/external/glad/glad.h"
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "monke/external/stb_image.h"
+#include <glad/glad.h>
+#include <stb/stb_image.h>
 
 bool mk::Texture::load(const char *path)
 {

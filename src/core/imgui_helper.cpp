@@ -1,8 +1,8 @@
 #include "monke/core/imgui_helper.h"
 
-#include "monke/external/imgui/imgui.h"
-#include "monke/external/imgui/imgui_impl_glfw.h"
-#include "monke/external/imgui/imgui_impl_opengl3.h"
+#include <imgui/imgui.h>
+#include <imgui/backends/imgui_impl_glfw.h>
+#include <imgui/backends/imgui_impl_opengl3.h>
 
 #include "monke/core/log.h"
 
